@@ -12,9 +12,11 @@ import {
 } from '../src/shared/core.ts'
 import type { OfficialModelSummary, RelayProviderConfig } from '../src/shared/types.ts'
 
+const cost = { input: 1, output: 2, cacheRead: 0.1, cacheWrite: 0 }
 const catalog: OfficialModelSummary[] = [
-  { provider: 'openai', id: 'gpt-5.4', name: 'GPT-5.4', api: 'openai-responses', contextWindow: 1_000_000, maxTokens: 128_000, reasoning: true, input: ['text', 'image'] },
-  { provider: 'anthropic', id: 'claude-sonnet-4-6', name: 'Claude Sonnet 4.6', api: 'anthropic-messages', contextWindow: 200_000, maxTokens: 64_000, reasoning: true, input: ['text', 'image'] },
+  { provider: 'openai', id: 'gpt-5.4', name: 'GPT-5.4', api: 'openai-responses', contextWindow: 1_000_000, maxTokens: 128_000, reasoning: true, input: ['text', 'image'], cost },
+  { provider: 'anthropic', id: 'claude-sonnet-4-6', name: 'Claude Sonnet 4.6', api: 'anthropic-messages', contextWindow: 200_000, maxTokens: 64_000, reasoning: true, input: ['text', 'image'], cost },
+  { provider: 'amazon-bedrock', id: 'bedrock-only', name: 'Bedrock only', api: 'bedrock-converse-stream', contextWindow: 128_000, maxTokens: 8_192, reasoning: false, input: ['text'], cost },
 ]
 
 function config(overrides: Partial<RelayProviderConfig> = {}): RelayProviderConfig {
@@ -53,9 +55,9 @@ describe('relay core', () => {
       excludedModels: ['unknown'],
     }), catalog)
     expect(statuses).toEqual([
-      { id: 'gpt-5.4', protocol: 'openai-responses', excluded: false, metadataSource: { provider: 'openai', id: 'gpt-5.4' }, candidates: [] },
-      { id: 'claude-alias', protocol: 'openai-completions', excluded: false, metadataSource: { provider: 'anthropic', id: 'claude-sonnet-4-6' }, candidates: [] },
-      expect.objectContaining({ id: 'unknown', protocol: 'openai-completions', excluded: true }),
+      { id: 'gpt-5.4', protocol: 'openai-responses', officialApi: 'openai-responses', supported: true, excluded: false, metadataSource: { provider: 'openai', id: 'gpt-5.4' }, candidates: [] },
+      { id: 'claude-alias', protocol: 'openai-completions', officialApi: 'anthropic-messages', supported: true, excluded: false, metadataSource: { provider: 'anthropic', id: 'claude-sonnet-4-6' }, candidates: [] },
+      expect.objectContaining({ id: 'unknown', protocol: 'openai-completions', supported: true, excluded: true }),
     ])
   })
 
@@ -64,5 +66,8 @@ describe('relay core', () => {
     expect(updateExcludedModels(['a'], ['b'], true)).toEqual(['a', 'b'])
     expect(updateExcludedModels(['a', 'b'], ['a'], false)).toEqual(['b'])
     expect(inferProtocol(undefined, 'openai-completions')).toBe('openai-completions')
+    expect(relayModelStatuses(config({ modelIds: ['bedrock-only'] }), catalog)[0]).toMatchObject({
+      id: 'bedrock-only', officialApi: 'bedrock-converse-stream', supported: false,
+    })
   })
 })

@@ -149,13 +149,13 @@ export function suggestOfficialCandidates(
     .slice(0, limit)
 }
 
-export function inferProtocol(source: OfficialModelSummary | undefined, fallback: RelayProtocol): RelayProtocol {
+export function inferProtocol(source: OfficialModelSummary | undefined, fallback: RelayProtocol): RelayProtocol | undefined {
   if (!source) return fallback
-  if (source.provider === 'anthropic' || source.api === 'anthropic-messages') return 'anthropic-messages'
-  if (source.provider === 'openai' || source.provider === 'openai-codex'
-    || source.api === 'openai-responses' || source.api === 'openai-codex-responses'
+  if (source.api === 'anthropic-messages') return 'anthropic-messages'
+  if (source.api === 'openai-completions') return 'openai-completions'
+  if (source.api === 'openai-responses' || source.api === 'openai-codex-responses'
     || source.api === 'azure-openai-responses') return 'openai-responses'
-  return 'openai-completions'
+  return undefined
 }
 
 export function resolveOfficialModel(
@@ -175,9 +175,12 @@ export function relayModelStatuses(
   const excluded = new Set(config.excludedModels)
   return [...new Set(config.modelIds.map(id => id.trim()).filter(Boolean))].map(id => {
     const source = resolveOfficialModel(id, config, catalog)
+    const protocol = config.protocolOverrides[id] ?? inferProtocol(source, config.fallbackProtocol)
     return {
       id,
-      protocol: config.protocolOverrides[id] ?? inferProtocol(source, config.fallbackProtocol),
+      ...protocol ? { protocol } : {},
+      ...source ? { officialApi: source.api } : {},
+      supported: protocol !== undefined,
       excluded: excluded.has(id),
       ...source ? { metadataSource: { provider: source.provider, id: source.id }, candidates: [] } : {
         candidates: suggestOfficialCandidates(id, catalog),

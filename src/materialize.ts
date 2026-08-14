@@ -17,17 +17,6 @@ const FULL_CATALOG: Model<Api>[] = getBuiltinProviders().flatMap(
   provider => getBuiltinModels(provider) as Model<Api>[],
 )
 
-export const OFFICIAL_SUMMARIES: readonly OfficialModelSummary[] = FULL_CATALOG.map(model => ({
-  provider: model.provider,
-  id: model.id,
-  name: model.name,
-  api: model.api,
-  contextWindow: model.contextWindow,
-  maxTokens: model.maxTokens,
-  reasoning: model.reasoning,
-  input: [...model.input],
-}))
-
 const HEADER_PROFILES = {
   claude: {
     'user-agent': 'claude-cli/2.1.198 (external, sdk-cli)',
@@ -53,22 +42,25 @@ function headersFor(model: Model<Api>): Record<string, string> | undefined {
   return undefined
 }
 
-function fullSource(summary: OfficialModelSummary): Model<Api> {
+function matchedModel(route: string, config: RelayProviderConfig, id: string, summary: OfficialModelSummary, protocol: RelayProtocol): Model<Api> {
   const source = FULL_CATALOG.find(model => model.provider === summary.provider && model.id === summary.id)
-  if (!source) throw new Error(`Official model disappeared: ${summary.provider}/${summary.id}`)
-  return source
-}
-
-function matchedModel(route: string, config: RelayProviderConfig, id: string, source: Model<Api>, protocol: RelayProtocol): Model<Api> {
-  const copied = structuredClone(source) as Model<Api>
-  delete copied.headers
-  const model: Model<Api> = {
+  const copied = source ? structuredClone(source) as Model<Api> : undefined
+  if (copied) delete copied.headers
+  const model = {
     ...copied,
     id,
+    name: summary.name,
     provider: route,
     api: protocol,
     baseUrl: baseURLForProtocol(config.baseURL, protocol),
-  }
+    reasoning: summary.reasoning,
+    input: [...summary.input],
+    ...summary.thinkingLevelMap ? { thinkingLevelMap: structuredClone(summary.thinkingLevelMap) } : {},
+    ...summary.compat ? { compat: structuredClone(summary.compat) } : {},
+    cost: { ...(summary.cost ?? copied?.cost ?? DEFAULT_COST) },
+    contextWindow: summary.contextWindow,
+    maxTokens: summary.maxTokens,
+  } as Model<Api>
   const headers = headersFor(model)
   return headers ? { ...model, headers } : model
 }
@@ -90,20 +82,29 @@ function fallbackModel(route: string, config: RelayProviderConfig, id: string, p
   return headers ? { ...model, headers } : model
 }
 
-export function materializeModels(route: string, config: RelayProviderConfig): Model<Api>[] {
+export function materializeModels(
+  route: string,
+  config: RelayProviderConfig,
+  catalog: readonly OfficialModelSummary[],
+): Model<Api>[] {
   const excluded = new Set(config.excludedModels)
   return [...new Set(config.modelIds.map(id => id.trim()).filter(Boolean))]
     .filter(id => !excluded.has(id))
-    .map(id => {
-      const summary = resolveOfficialModel(id, config, OFFICIAL_SUMMARIES)
+    .flatMap(id => {
+      const summary = resolveOfficialModel(id, config, catalog)
       const protocol = config.protocolOverrides[id] ?? inferProtocol(summary, config.fallbackProtocol)
-      return summary
-        ? matchedModel(route, config, id, fullSource(summary), protocol)
-        : fallbackModel(route, config, id, protocol)
+      if (!protocol) return []
+      return [summary
+        ? matchedModel(route, config, id, summary, protocol)
+        : fallbackModel(route, config, id, protocol)]
     })
 }
 
-export function buildRelayProvider(route: string, config: RelayProviderConfig): Provider {
+export function buildRelayProvider(
+  route: string,
+  config: RelayProviderConfig,
+  catalog: readonly OfficialModelSummary[],
+): Provider {
   return createProvider({
     id: route,
     name: config.displayName,
@@ -117,7 +118,7 @@ export function buildRelayProvider(route: string, config: RelayProviderConfig): 
         }),
       },
     },
-    models: materializeModels(route, config),
+    models: materializeModels(route, config, catalog),
     api: {
       'openai-completions': openAICompletionsApi(),
       'openai-responses': openAIResponsesApi(),

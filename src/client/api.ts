@@ -1,4 +1,4 @@
-import type { RelayConfig, RelayProviderConfig, RelayProtocol } from '../shared/types.ts'
+import type { OfficialCatalogSnapshot, RelayConfig, RelayProviderConfig, RelayProtocol } from '../shared/types.ts'
 
 const ENDPOINT = '/relay-models/api'
 
@@ -30,6 +30,7 @@ async function request<T>(body?: object): Promise<T> {
 
 export const relayPageApi = {
   load: (): Promise<RelayPageSnapshot> => request<RelayPageSnapshot>(),
+  catalog: (): Promise<OfficialCatalogSnapshot> => request<OfficialCatalogSnapshot>({ action: 'catalog' }),
 
   setProvider: (
     route: string,

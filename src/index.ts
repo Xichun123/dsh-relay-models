@@ -7,16 +7,16 @@ import { PiAiAdapter } from '@deepseek-ai/dsh-llm-pi-ai'
 import type { ResolvedPiAiProviderProfile } from '@deepseek-ai/dsh-llm-pi-ai'
 import { installSettingsSection, settingsNamespace } from '@deepseek-ai/dsh-settings'
 import type {} from '@deepseek-ai/dsh-host-webserver'
-import { buildRelayProvider, OFFICIAL_SUMMARIES } from './materialize.ts'
+import { currentOfficialCatalog, refreshOfficialCatalog } from './catalog.ts'
+import { buildRelayProvider } from './materialize.ts'
 import { normalizeBaseURL, RELAY_PROTOCOLS, relayCredentialRef, validateProviderId } from './shared/core.ts'
-import type { RelayConfig, RelayProviderConfig } from './shared/types.ts'
+import type { OfficialModelSummary, RelayConfig, RelayProviderConfig } from './shared/types.ts'
 import { installWebApi } from './web-api.ts'
 
 export const name = 'relay-models'
 export const inject = ['llm', 'settings', 'credentials', 'webServer']
 
 const NS = settingsNamespace('llm-relay-models')
-const OFFICIAL_REFS = new Set(OFFICIAL_SUMMARIES.map(model => `${model.provider}/${model.id}`))
 
 export type Config = RelayConfig
 
@@ -48,11 +48,8 @@ function validateProvider(route: string, config: RelayProviderConfig): void {
   if (config.apiKeyEnv !== relayCredentialRef(route)) {
     throw new Error(`Relay provider "${route}" must use credential reference ${relayCredentialRef(route)}`)
   }
-  for (const [remoteId, reference] of Object.entries(config.modelMappings)) {
+  for (const remoteId of Object.keys(config.modelMappings)) {
     if (!remoteId.trim()) throw new Error(`Relay provider "${route}" has an empty remote model mapping key`)
-    if (!OFFICIAL_REFS.has(`${reference.provider}/${reference.id}`)) {
-      throw new Error(`Relay provider "${route}" maps "${remoteId}" to unknown model ${reference.provider}/${reference.id}`)
-    }
   }
   for (const remoteId of Object.keys(config.protocolOverrides)) {
     if (!remoteId.trim()) throw new Error(`Relay provider "${route}" has an empty protocol override key`)
@@ -63,7 +60,10 @@ function validateConfig(config: Config): void {
   for (const [route, provider] of Object.entries(config.providers)) validateProvider(route, provider)
 }
 
-function resolveProfiles(config: Config): Map<string, ResolvedPiAiProviderProfile> {
+function resolveProfiles(
+  config: Config,
+  catalog: readonly OfficialModelSummary[],
+): Map<string, ResolvedPiAiProviderProfile> {
   const profiles = new Map<string, ResolvedPiAiProviderProfile>()
   for (const [provider, source] of Object.entries(config.providers)) {
     profiles.set(provider, {
@@ -72,7 +72,7 @@ function resolveProfiles(config: Config): Map<string, ResolvedPiAiProviderProfil
       apiKeyEnv: source.apiKeyEnv as ResolvedPiAiProviderProfile['apiKeyEnv'],
       streamIdleTimeoutMs: 300_000,
       retryPolicy: resolveRetryPolicy(undefined, `relay-models: provider "${provider}" retry policy`),
-      piProvider: buildRelayProvider(provider, source),
+      piProvider: buildRelayProvider(provider, source, catalog),
       configuredMaxTokens: new Map(),
     } as ResolvedPiAiProviderProfile)
   }
@@ -81,7 +81,7 @@ function resolveProfiles(config: Config): Map<string, ResolvedPiAiProviderProfil
 
 export function apply(ctx: Context, config: Config): void {
   let current: () => Config = () => config
-  let profiles = resolveProfiles(config)
+  let profiles = resolveProfiles(config, currentOfficialCatalog().models)
 
   const resolveApiKey = async (
     provider: string,
@@ -104,7 +104,7 @@ export function apply(ctx: Context, config: Config): void {
 
   let registration: AdapterRegistrationHandle | undefined
   const refresh = (): void => {
-    const next = resolveProfiles(current())
+    const next = resolveProfiles(current(), currentOfficialCatalog().models)
     const routes = [...next.keys()]
     const previous = profiles
     profiles = next
@@ -118,10 +118,18 @@ export function apply(ctx: Context, config: Config): void {
   }
   refresh()
 
+  ctx.effect(() => {
+    const controller = new AbortController()
+    void refreshOfficialCatalog(controller.signal).then(() => { if (!controller.signal.aborted) refresh() }).catch((error: unknown) => {
+      if (!controller.signal.aborted) ctx.logger.warn('relay-models: using bundled model catalog because pi.dev refresh failed: %s', String(error))
+    })
+    return () => { controller.abort() }
+  }, 'relay-models: refresh pi.dev model catalog')
+
   installSettingsSection(ctx, NS, Config, config, {
     validate: validateConfig,
     setSource: source => { current = source },
     onChange: refresh,
   })
-  installWebApi(ctx, NS, () => current())
+  installWebApi(ctx, NS, () => current(), refresh)
 }

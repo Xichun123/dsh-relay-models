@@ -14,7 +14,7 @@
 
 - 添加、删除和同步中转站。
 - 从 `/models` 或 `/v1/models` 自动发现模型。
-- 自动匹配 `@earendil-works/pi-ai` 官方模型元数据。
+- 从 [`pi.dev/api/models`](https://pi.dev/api/models) 获取最新官方模型元数据，并在离线时回退到随包快照。
 - 人工映射或取消映射官方元数据。
 - 按模型覆盖或清除协议。
 - 排除或恢复模型。
@@ -22,6 +22,8 @@
   - OpenAI Chat Completions
   - OpenAI Responses
   - Anthropic Messages
+
+官方目录由 Host 使用 ETag 缓存；Adapter 继续使用 DSH 对齐的 `pi-ai` 运行时。目录中的其他 API 协议会显示为需要人工覆盖，不会在未覆盖时注册为可调用模型。
 
 ## 安装
 
@@ -81,7 +83,7 @@ Base URL 可以带或不带 `/v1`。插件会为不同协议生成对应调用�
 
 插件设置使用命名空间 `llm-relay-models`。每个中转站保存 Base URL、模型列表、元数据映射、协议覆盖和排除列表。API Key 使用从 Provider ID 生成的 credentials 引用，例如 `relay-example` 对应 `RELAY_EXAMPLE_API_KEY`，由 DSH credentials provider 管理。
 
-浏览器配置请求只发送到当前 DSH 服务的同源 `/relay-models/api`，并拒绝跨源请求。发现响应上限为 4 MiB，请求体上限为 1 MiB。
+浏览器配置请求只发送到当前 DSH 服务的同源 `/relay-models/api`，并拒绝跨源请求。中转站发现响应和 pi.dev 目录响应上限均为 4 MiB，请求体上限为 1 MiB。
 
 ## 开发
 

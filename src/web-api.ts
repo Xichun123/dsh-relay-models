@@ -2,6 +2,7 @@ import type { IncomingMessage, ServerResponse } from 'node:http'
 import type { Context } from '@deepseek-ai/cordis'
 import { credentialRef } from '@deepseek-ai/dsh-credentials'
 import type { SettingsNamespace } from '@deepseek-ai/dsh-settings'
+import { currentOfficialCatalog, refreshOfficialCatalog } from './catalog.ts'
 import { discoverRelayModels } from './discovery.ts'
 import { isRelayProtocol } from './shared/core.ts'
 import type { Config } from './index.ts'
@@ -48,7 +49,12 @@ function requiredString(value: unknown, field: string): string {
   return value
 }
 
-export function installWebApi(ctx: Context, ns: SettingsNamespace, current: () => Config): void {
+export function installWebApi(
+  ctx: Context,
+  ns: SettingsNamespace,
+  current: () => Config,
+  onCatalogRefresh: () => void,
+): void {
   const state = async (): Promise<unknown> => {
     const descriptor = ctx.settings.describe({ redactSecrets: true }).find(item => item.ns === ns)
     if (!descriptor) throw new Error('Relay settings are not ready')
@@ -84,6 +90,13 @@ export function installWebApi(ctx: Context, ns: SettingsNamespace, current: () =
       }
       const input = record(await readBody(req))
       const action = requiredString(input.action, 'action')
+      if (action === 'catalog') {
+        const previous = currentOfficialCatalog()
+        const value = await refreshOfficialCatalog().catch(() => currentOfficialCatalog())
+        if (value !== previous) onCatalogRefresh()
+        reply(res, 200, { ok: true, value })
+        return
+      }
       if (action === 'discover') {
         const protocol = requiredString(input.protocol, 'protocol')
         if (!isRelayProtocol(protocol)) throw new Error('Invalid relay protocol')

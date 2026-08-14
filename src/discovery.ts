@@ -1,5 +1,6 @@
 import { LlmError } from '@deepseek-ai/dsh-llm'
 import type { LlmDiscoveredModel, LlmModelDiscoveryRequest } from '@deepseek-ai/dsh-llm'
+import { readBoundedText } from './bounded-response.ts'
 import { isRelayProtocol, modelsEndpoints, parseModelIds } from './shared/core.ts'
 import type { RelayProtocol } from './shared/types.ts'
 
@@ -17,38 +18,6 @@ function authHeaders(protocol: RelayProtocol, apiKey: string | undefined): Recor
     accept: 'application/json',
     ...apiKey ? { authorization: `Bearer ${apiKey}` } : {},
   }
-}
-
-async function boundedText(response: Response, url: string): Promise<string> {
-  const declared = Number(response.headers.get('content-length') ?? Number.NaN)
-  if (Number.isFinite(declared) && declared > MAX_RESPONSE_BYTES) {
-    await response.body?.cancel()
-    throw new LlmError(`${url} answered with more than ${MAX_RESPONSE_BYTES} bytes`, 'DISCOVERY_FAILED')
-  }
-  if (!response.body) return ''
-  const reader = response.body.getReader()
-  const chunks: Uint8Array[] = []
-  let total = 0
-  try {
-    for (;;) {
-      const { done, value } = await reader.read()
-      if (done) break
-      total += value.byteLength
-      if (total > MAX_RESPONSE_BYTES) {
-        throw new LlmError(`${url} answered with more than ${MAX_RESPONSE_BYTES} bytes`, 'DISCOVERY_FAILED')
-      }
-      chunks.push(value)
-    }
-  } finally {
-    await reader.cancel().catch(() => {})
-  }
-  const body = new Uint8Array(total)
-  let offset = 0
-  for (const chunk of chunks) {
-    body.set(chunk, offset)
-    offset += chunk.byteLength
-  }
-  return new TextDecoder().decode(body)
 }
 
 export async function discoverRelayModels(
@@ -80,7 +49,7 @@ export async function discoverRelayModels(
     }
     let payload: unknown
     try {
-      payload = JSON.parse(await boundedText(response, url))
+      payload = JSON.parse(await readBoundedText(response, url, MAX_RESPONSE_BYTES))
     } catch (error) {
       if (error instanceof LlmError) throw error
       throw new LlmError(`${url} did not answer with a valid model listing`, 'DISCOVERY_FAILED', { cause: error })
