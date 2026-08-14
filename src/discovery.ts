@@ -53,7 +53,6 @@ async function boundedText(response: Response, url: string): Promise<string> {
 
 export async function discoverRelayModels(
   request: LlmModelDiscoveryRequest,
-  storedApiKey?: () => Promise<string | undefined>,
 ): Promise<readonly LlmDiscoveredModel[]> {
   const baseURL = request.baseURL
   if (!baseURL) throw new LlmError('Relay model discovery needs a Base URL', 'DISCOVERY_FAILED')
@@ -61,7 +60,7 @@ export async function discoverRelayModels(
   if (!isRelayProtocol(protocol)) {
     throw new LlmError(`Unsupported relay protocol: ${protocol}`, 'DISCOVERY_UNSUPPORTED')
   }
-  const apiKey = request.apiKey?.trim() || await storedApiKey?.()
+  const apiKey = request.apiKey?.trim()
   let lastError = ''
   for (const url of modelsEndpoints(baseURL)) {
     let response: Response

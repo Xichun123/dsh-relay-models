@@ -8,8 +8,7 @@ import type { ResolvedPiAiProviderProfile } from '@deepseek-ai/dsh-llm-pi-ai'
 import { installSettingsSection, settingsNamespace } from '@deepseek-ai/dsh-settings'
 import type {} from '@deepseek-ai/dsh-host-webserver'
 import { buildRelayProvider, OFFICIAL_SUMMARIES } from './materialize.ts'
-import { discoverRelayModels } from './discovery.ts'
-import { isRelayProtocol, normalizeBaseURL, relayCredentialRef, relayProtocols, validateProviderId } from './shared/core.ts'
+import { normalizeBaseURL, RELAY_PROTOCOLS, relayCredentialRef, validateProviderId } from './shared/core.ts'
 import type { RelayConfig, RelayProviderConfig } from './shared/types.ts'
 import { installWebApi } from './web-api.ts'
 
@@ -17,7 +16,7 @@ export const name = 'relay-models'
 export const inject = ['llm', 'settings', 'credentials', 'webServer']
 
 const NS = settingsNamespace('llm-relay-models')
-const DEFAULT_STREAM_IDLE_TIMEOUT_MS = 300_000
+const OFFICIAL_REFS = new Set(OFFICIAL_SUMMARIES.map(model => `${model.provider}/${model.id}`))
 
 export type Config = RelayConfig
 
@@ -30,10 +29,10 @@ const providerConfig = z.object({
   displayName: z.string().required(),
   baseURL: z.string().required(),
   apiKeyEnv: z.string().required().role('credential-ref'),
-  fallbackProtocol: z.union(relayProtocols()).required(),
+  fallbackProtocol: z.union(RELAY_PROTOCOLS).required(),
   modelIds: z.array(z.string()).default([]),
   modelMappings: z.dict(officialReference).default({}),
-  protocolOverrides: z.dict(z.union(relayProtocols())).default({}),
+  protocolOverrides: z.dict(z.union(RELAY_PROTOCOLS)).default({}),
   excludedModels: z.array(z.string()).default([]),
   syncedAt: z.natural(),
 })
@@ -49,35 +48,29 @@ function validateProvider(route: string, config: RelayProviderConfig): void {
   if (config.apiKeyEnv !== relayCredentialRef(route)) {
     throw new Error(`Relay provider "${route}" must use credential reference ${relayCredentialRef(route)}`)
   }
-  if (!isRelayProtocol(config.fallbackProtocol)) throw new Error(`Relay provider "${route}" has an invalid fallback protocol`)
-  const catalog = new Set(OFFICIAL_SUMMARIES.map(model => `${model.provider}/${model.id}`))
   for (const [remoteId, reference] of Object.entries(config.modelMappings)) {
     if (!remoteId.trim()) throw new Error(`Relay provider "${route}" has an empty remote model mapping key`)
-    if (!catalog.has(`${reference.provider}/${reference.id}`)) {
+    if (!OFFICIAL_REFS.has(`${reference.provider}/${reference.id}`)) {
       throw new Error(`Relay provider "${route}" maps "${remoteId}" to unknown model ${reference.provider}/${reference.id}`)
     }
   }
-  for (const [remoteId, protocol] of Object.entries(config.protocolOverrides)) {
-    if (!remoteId.trim() || !isRelayProtocol(protocol)) {
-      throw new Error(`Relay provider "${route}" has an invalid protocol override`)
-    }
+  for (const remoteId of Object.keys(config.protocolOverrides)) {
+    if (!remoteId.trim()) throw new Error(`Relay provider "${route}" has an empty protocol override key`)
   }
-  buildRelayProvider(route, config)
 }
 
 function validateConfig(config: Config): void {
-  for (const [route, provider] of Object.entries(config.providers ?? {})) validateProvider(route, provider)
+  for (const [route, provider] of Object.entries(config.providers)) validateProvider(route, provider)
 }
 
 function resolveProfiles(config: Config): Map<string, ResolvedPiAiProviderProfile> {
-  validateConfig(config)
   const profiles = new Map<string, ResolvedPiAiProviderProfile>()
-  for (const [provider, source] of Object.entries(config.providers ?? {})) {
+  for (const [provider, source] of Object.entries(config.providers)) {
     profiles.set(provider, {
       provider,
       displayName: source.displayName,
       apiKeyEnv: source.apiKeyEnv as ResolvedPiAiProviderProfile['apiKeyEnv'],
-      streamIdleTimeoutMs: DEFAULT_STREAM_IDLE_TIMEOUT_MS,
+      streamIdleTimeoutMs: 300_000,
       retryPolicy: resolveRetryPolicy(undefined, `relay-models: provider "${provider}" retry policy`),
       piProvider: buildRelayProvider(provider, source),
       configuredMaxTokens: new Map(),
@@ -94,11 +87,11 @@ export function apply(ctx: Context, config: Config): void {
     provider: string,
     profile: ResolvedPiAiProviderProfile,
   ): Promise<string | undefined> => {
-    const ref = String(profile.apiKeyEnv ?? '')
-    const hit = ref ? (await ctx.credentials.resolve(credentialRef(ref)))?.value : undefined
+    const ref = String(profile.apiKeyEnv)
+    const hit = (await ctx.credentials.resolve(credentialRef(ref)))?.value
     if (hit) return assertUsableApiKey(hit, 'relay-models', ref)
     throw new LlmError(
-      `relay-models: no credential for provider "${provider}"; store ${ref || 'its configured API key reference'} on the Relay Models page`,
+      `relay-models: no credential for provider "${provider}"; store ${ref} on the Relay Models page`,
       'MISSING_CREDENTIAL',
     )
   }
@@ -124,18 +117,6 @@ export function apply(ctx: Context, config: Config): void {
     }
   }
   refresh()
-
-  const storedApiKey = async (provider: string | undefined): Promise<string | undefined> => {
-    if (!provider) return undefined
-    const profile = current().providers?.[provider]
-    if (!profile) return undefined
-    return (await ctx.credentials.resolve(credentialRef(profile.apiKeyEnv)))?.value
-  }
-
-  ctx.llm.registerModelDiscovery(NS, request => discoverRelayModels(
-    request,
-    () => storedApiKey(request.provider),
-  ))
 
   installSettingsSection(ctx, NS, Config, config, {
     validate: validateConfig,

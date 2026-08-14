@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
 import { OFFICIAL_MODELS } from '../shared/catalog.generated.ts'
 import {
+  RELAY_PROTOCOLS,
   relayCredentialRef,
   relayModelStatuses,
-  relayProtocols,
   suggestProviderIdentity,
   updateExcludedModels,
   validateProviderId,
@@ -14,7 +14,7 @@ import type {
   RelayProtocol,
   RelayProviderConfig,
 } from '../shared/types.ts'
-import { RelayPageApi, type RelayPageSnapshot } from './api.ts'
+import type { RelayPageApi, RelayPageSnapshot } from './api.ts'
 
 interface Props {
   api: RelayPageApi
@@ -108,7 +108,7 @@ function AddProvider({
         <label className="drm-field"><span className="drm-label">Provider ID</span><input className="drm-input" value={route} placeholder="relay-example" onChange={event => { setRoute(event.target.value) }} /></label>
         <label className="drm-field"><span className="drm-label">显示名称</span><input className="drm-input" value={displayName} placeholder="Example Relay" onChange={event => { setDisplayName(event.target.value) }} /></label>
         <label className="drm-field wide"><span className="drm-label">Base URL</span><div className="drm-actions"><input className="drm-input" value={baseURL} placeholder="https://gateway.example/v1" onChange={event => { setBaseURL(event.target.value) }} /><button className="drm-button" disabled={!baseURL} onClick={suggest}>生成名称</button></div></label>
-        <label className="drm-field"><span className="drm-label">未匹配模型的默认协议</span><select className="drm-select" value={protocol} onChange={event => { setProtocol(event.target.value as RelayProtocol) }}>{relayProtocols().map(value => <option key={value} value={value}>{protocolLabel(value)}</option>)}</select></label>
+        <label className="drm-field"><span className="drm-label">未匹配模型的默认协议</span><select className="drm-select" value={protocol} onChange={event => { setProtocol(event.target.value as RelayProtocol) }}>{RELAY_PROTOCOLS.map(value => <option key={value} value={value}>{protocolLabel(value)}</option>)}</select></label>
         <label className="drm-field"><span className="drm-label">API Key</span><input className="drm-input" type="password" autoComplete="off" value={apiKey} onChange={event => { setApiKey(event.target.value) }} /></label>
       </div>
       {error ? <div className="drm-error">{error}</div> : null}
@@ -222,7 +222,7 @@ function ProviderCard({
       <div className="drm-card-head">
         <span className="drm-card-title">{provider.displayName}</span><span className="drm-route">{route}</span>
         <span className="drm-spacer" />
-        <span className={`drm-pill ${credential?.configured ? '' : 'warn'}`}>{credential?.configured ? '密钥已配置' : '缺少密钥'}</span>
+        <span className={`drm-pill ${credential ? '' : 'warn'}`}>{credential ? '密钥已配置' : '缺少密钥'}</span>
         <div className="drm-actions"><button className="drm-button" disabled={busy} onClick={() => { void sync() }}>同步</button><button className="drm-button" onClick={() => { setExpanded(value => !value) }}>{expanded ? '收起' : '管理'}</button><button className="drm-button danger" onClick={() => { setConfirmDelete(true) }}>删除</button></div>
       </div>
       <div className="drm-summary"><span>{active.length} 个可用模型</span><span>{matched.length} 个匹配官方元数据</span><span>{active.length - matched.length} 个未匹配</span><span>{statuses.length - active.length} 个已排除</span>{provider.syncedAt ? <span>同步于 {new Date(provider.syncedAt).toLocaleString()}</span> : null}</div>
@@ -232,7 +232,7 @@ function ProviderCard({
         <>
           <div className="drm-grid">
             <label className="drm-field wide"><span className="drm-label">Base URL</span><input className="drm-input" value={baseURL} onChange={event => { setBaseURL(event.target.value) }} /></label>
-            <label className="drm-field"><span className="drm-label">默认协议</span><select className="drm-select" value={fallback} onChange={event => { setFallback(event.target.value as RelayProtocol) }}>{relayProtocols().map(value => <option key={value} value={value}>{protocolLabel(value)}</option>)}</select></label>
+            <label className="drm-field"><span className="drm-label">默认协议</span><select className="drm-select" value={fallback} onChange={event => { setFallback(event.target.value as RelayProtocol) }}>{RELAY_PROTOCOLS.map(value => <option key={value} value={value}>{protocolLabel(value)}</option>)}</select></label>
             <label className="drm-field"><span className="drm-label">替换 API Key（留空则保留）</span><input className="drm-input" type="password" autoComplete="off" value={keyDraft} onChange={event => { setKeyDraft(event.target.value) }} /></label>
           </div>
           <div className="drm-actions"><button className="drm-button primary" disabled={busy} onClick={() => { void saveConnection() }}>保存连接设置</button></div>
@@ -250,7 +250,7 @@ function ProviderCard({
                     if (value) overrides[status.id] = value
                     else delete overrides[status.id]
                     void save({ ...provider, protocolOverrides: overrides }, value ? '协议覆盖已保存' : '协议已恢复自动选择')
-                  }}><option value="">自动：{protocolLabel(status.protocol)}</option>{relayProtocols().map(value => <option key={value} value={value}>{protocolLabel(value)}</option>)}</select></td>
+                  }}><option value="">自动：{protocolLabel(status.protocol)}</option>{RELAY_PROTOCOLS.map(value => <option key={value} value={value}>{protocolLabel(value)}</option>)}</select></td>
                   <td><div className="drm-actions">{mapping ? <button className="drm-link" disabled={busy} onClick={() => {
                     const mappings = { ...provider.modelMappings }; delete mappings[status.id]
                     void save({ ...provider, modelMappings: mappings }, '人工映射已取消')

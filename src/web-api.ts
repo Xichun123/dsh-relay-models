@@ -54,9 +54,9 @@ export function installWebApi(ctx: Context, ns: SettingsNamespace, current: () =
     if (!descriptor) throw new Error('Relay settings are not ready')
     const config = current()
     const credentials = Object.fromEntries(await Promise.all(
-      [...new Set(Object.values(config.providers ?? {}).map(provider => provider.apiKeyEnv))].map(async ref => [
-        ref,
-        await ctx.credentials.describe(credentialRef(ref)),
+      Object.values(config.providers).map(async provider => [
+        provider.apiKeyEnv,
+        (await ctx.credentials.describe(credentialRef(provider.apiKeyEnv))).configured,
       ]),
     ))
     return {
@@ -87,15 +87,14 @@ export function installWebApi(ctx: Context, ns: SettingsNamespace, current: () =
       if (action === 'discover') {
         const protocol = requiredString(input.protocol, 'protocol')
         if (!isRelayProtocol(protocol)) throw new Error('Invalid relay protocol')
+        const provider = typeof input.provider === 'string' ? current().providers[input.provider] : undefined
+        const storedApiKey = provider
+          ? (await ctx.credentials.resolve(credentialRef(provider.apiKeyEnv)))?.value
+          : undefined
         const models = await discoverRelayModels({
-          provider: typeof input.provider === 'string' ? input.provider : undefined,
           baseURL: requiredString(input.baseURL, 'baseURL'),
           api: protocol,
-          apiKey: typeof input.apiKey === 'string' ? input.apiKey : undefined,
-        }, async () => {
-          const provider = typeof input.provider === 'string' ? current().providers?.[input.provider] : undefined
-          if (!provider) return undefined
-          return (await ctx.credentials.resolve(credentialRef(provider.apiKeyEnv)))?.value
+          apiKey: typeof input.apiKey === 'string' ? input.apiKey : storedApiKey,
         })
         reply(res, 200, { ok: true, value: models.map(model => model.id) })
         return
@@ -108,14 +107,14 @@ export function installWebApi(ctx: Context, ns: SettingsNamespace, current: () =
         if (typeof input.apiKey === 'string' && input.apiKey.trim()) {
           await ctx.credentials.set(credentialRef(provider.apiKeyEnv), input.apiKey.trim())
         }
-        reply(res, 200, { ok: true, value: await state() })
+        reply(res, 200, { ok: true })
         return
       }
       if (action === 'remove-provider') {
         const provider = current().providers?.[route]
         await ctx.settings.mutate(ns, [{ op: 'unset', path: ['providers', route] }], expectedRevision)
         if (provider) await ctx.credentials.unset(credentialRef(provider.apiKeyEnv))
-        reply(res, 200, { ok: true, value: await state() })
+        reply(res, 200, { ok: true })
         return
       }
       throw new Error(`Unknown action: ${action}`)

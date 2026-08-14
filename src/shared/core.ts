@@ -1,24 +1,19 @@
 import type {
   ModelCandidate,
-  OfficialModelRef,
   OfficialModelSummary,
   RelayModelStatus,
   RelayProtocol,
   RelayProviderConfig,
 } from './types.ts'
 
-const PROTOCOLS: readonly RelayProtocol[] = [
+export const RELAY_PROTOCOLS = [
   'openai-completions',
   'openai-responses',
   'anthropic-messages',
-]
-
-export function relayProtocols(): readonly RelayProtocol[] {
-  return PROTOCOLS
-}
+] as const satisfies readonly RelayProtocol[]
 
 export function isRelayProtocol(value: unknown): value is RelayProtocol {
-  return PROTOCOLS.some(protocol => protocol === value)
+  return RELAY_PROTOCOLS.includes(value as RelayProtocol)
 }
 
 export function normalizeBaseURL(raw: string): string {
@@ -95,7 +90,7 @@ function sourceRank(model: OfficialModelSummary): number {
   return 10
 }
 
-export function catalogIndex(catalog: readonly OfficialModelSummary[]): Map<string, OfficialModelSummary> {
+function catalogIndex(catalog: readonly OfficialModelSummary[]): Map<string, OfficialModelSummary> {
   const byId = new Map<string, OfficialModelSummary>()
   for (const candidate of catalog) {
     const current = byId.get(candidate.id)
@@ -195,8 +190,4 @@ export function updateExcludedModels(current: readonly string[], ids: readonly s
   const values = new Set(current)
   for (const id of ids) excluded ? values.add(id) : values.delete(id)
   return [...values].sort()
-}
-
-export function officialRefKey(reference: OfficialModelRef): string {
-  return `${reference.provider}/${reference.id}`
 }

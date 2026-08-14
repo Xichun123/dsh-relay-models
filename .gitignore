@@ -1,5 +1,4 @@
 node_modules/
-lib/*.map
 coverage/
 *.tgz
 .DS_Store

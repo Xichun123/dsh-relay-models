@@ -6,7 +6,7 @@ export interface RelayPageSnapshot {
   config: RelayConfig
   revision: number
   writable: boolean
-  credentials: Record<string, { configured: boolean; writable: boolean; source?: string }>
+  credentials: Record<string, boolean>
 }
 
 interface ApiResult<T> {
@@ -28,36 +28,34 @@ async function request<T>(body?: object): Promise<T> {
   return result.value as T
 }
 
-export class RelayPageApi {
-  load(): Promise<RelayPageSnapshot> {
-    return request<RelayPageSnapshot>()
-  }
+export const relayPageApi = {
+  load: (): Promise<RelayPageSnapshot> => request<RelayPageSnapshot>(),
 
-  setProvider(
+  setProvider: (
     route: string,
     provider: RelayProviderConfig,
     expectedRevision: number,
     apiKey?: string,
-  ): Promise<RelayPageSnapshot> {
-    return request<RelayPageSnapshot>({
-      action: 'set-provider',
-      route,
-      provider,
-      expectedRevision,
-      ...apiKey ? { apiKey } : {},
-    })
-  }
+  ): Promise<void> => request<void>({
+    action: 'set-provider',
+    route,
+    provider,
+    expectedRevision,
+    ...apiKey ? { apiKey } : {},
+  }),
 
-  removeProvider(route: string, expectedRevision: number): Promise<RelayPageSnapshot> {
-    return request<RelayPageSnapshot>({ action: 'remove-provider', route, expectedRevision })
-  }
+  removeProvider: (route: string, expectedRevision: number): Promise<void> => request<void>({
+    action: 'remove-provider',
+    route,
+    expectedRevision,
+  }),
 
-  discover(input: {
+  discover: (input: {
     provider?: string
     baseURL: string
     protocol: RelayProtocol
     apiKey?: string
-  }): Promise<string[]> {
-    return request<string[]>({ action: 'discover', ...input })
-  }
+  }): Promise<string[]> => request<string[]>({ action: 'discover', ...input }),
 }
+
+export type RelayPageApi = typeof relayPageApi
