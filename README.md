@@ -25,6 +25,12 @@
 
 ## 安装
 
+### 从 npm 安装
+
+```bash
+npx @deepseek-ai/dsh@latest plugin --profile web add dsh-relay-models@latest
+```
+
 ### 从 GitHub 安装
 
 ```bash
@@ -53,12 +59,12 @@ npx @deepseek-ai/dsh@latest plugin --profile web add /tmp/dsh-relay-models-*.tgz
 ```bash
 rm -rf /tmp/dsh-relay-models-home
 DSH_HOME=/tmp/dsh-relay-models-home \
-  npx @deepseek-ai/dsh@latest plugin --profile web add /tmp/dsh-relay-models-*.tgz
+  npx @deepseek-ai/dsh@latest plugin --profile web add dsh-relay-models@latest
 DSH_HOME=/tmp/dsh-relay-models-home \
   npx @deepseek-ai/dsh@latest --profile web -- --port 3081
 ```
 
-打开 `http://127.0.0.1:3081/`，确认设置中出现“中转模型”且能添加测试中转站。验证完成后再把同一 `.tgz` 安装到实际 profile，并重启原有 Web 进程。无需开启“创造模式”；它不影响依赖解析、插件加载或服务生命周期。
+打开 `http://127.0.0.1:3081/`，确认设置中出现“中转模型”且能添加测试中转站。验证完成后再把同一版本安装到实际 profile，并重启原有 Web 进程。无需开启“创造模式”；它不影响依赖解析、插件加载或服务生命周期。
 
 ## 使用
 
