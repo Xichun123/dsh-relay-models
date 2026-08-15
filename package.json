@@ -1,6 +1,6 @@
 {
   "name": "dsh-relay-models",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Mixed-protocol relay model discovery, metadata matching, and Web configuration for DeepSeek Harness",
   "type": "module",
   "license": "MIT",

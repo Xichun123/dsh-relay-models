@@ -16,6 +16,8 @@ interface ApiResult<T> {
   error?: string
 }
 
+let cachedPage: RelayPageSnapshot | undefined
+
 async function request<T>(body?: object): Promise<T> {
   const response = await fetch(ENDPOINT, body === undefined ? {
     headers: { accept: 'application/json' },
@@ -29,9 +31,22 @@ async function request<T>(body?: object): Promise<T> {
   return result.value as T
 }
 
+export function peekRelayPage(): RelayPageSnapshot | undefined {
+  return cachedPage
+}
+
+export function rememberRelayPage(next: RelayPageSnapshot): RelayPageSnapshot {
+  cachedPage = next
+  return next
+}
+
 export const relayPageApi = {
-  load: (): Promise<RelayPageSnapshot> => request<RelayPageSnapshot>(),
-  catalog: (): Promise<OfficialCatalogSnapshot> => request<OfficialCatalogSnapshot>({ action: 'catalog' }),
+  load: async (): Promise<RelayPageSnapshot> => rememberRelayPage(await request<RelayPageSnapshot>()),
+  catalog: async (): Promise<OfficialCatalogSnapshot> => {
+    const catalog = await request<OfficialCatalogSnapshot>({ action: 'catalog' })
+    if (cachedPage) cachedPage = { ...cachedPage, catalog }
+    return catalog
+  },
 
   setProvider: (
     route: string,

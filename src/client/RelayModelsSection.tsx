@@ -18,7 +18,7 @@ import type {
   RelayProtocol,
   RelayProviderConfig,
 } from '../shared/types.ts'
-import type { RelayPageApi, RelayPageSnapshot } from './api.ts'
+import { peekRelayPage, type RelayPageApi, type RelayPageSnapshot } from './api.ts'
 
 interface Props {
   api: RelayPageApi
@@ -503,8 +503,8 @@ function ProviderCard({
 }
 
 export function RelayModelsSection({ api }: Props): ReactNode {
-  const [snapshot, setSnapshot] = useState<RelayPageSnapshot>()
-  const [catalog, setCatalog] = useState<OfficialCatalogSnapshot>()
+  const [snapshot, setSnapshot] = useState(() => peekRelayPage())
+  const [catalog, setCatalog] = useState(() => peekRelayPage()?.catalog)
   const [error, setError] = useState<string>()
   const applySnapshot = (next: RelayPageSnapshot): void => {
     setSnapshot(next)
@@ -529,7 +529,6 @@ export function RelayModelsSection({ api }: Props): ReactNode {
   }, [api])
   useEffect(() => { void initialize() }, [initialize])
 
-  if (!snapshot && !error) return <section className="drm-section"><p className="drm-muted">正在加载中转模型配置…</p></section>
   return (
     <section className="drm-section">
       <div className="drm-head"><h2 className="drm-title">中转模型</h2>{snapshot ? <AddProvider api={api} snapshot={snapshot} onDone={reload} /> : null}</div>
