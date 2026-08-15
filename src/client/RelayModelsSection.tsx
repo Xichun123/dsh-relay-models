@@ -506,9 +506,13 @@ export function RelayModelsSection({ api }: Props): ReactNode {
   const [snapshot, setSnapshot] = useState<RelayPageSnapshot>()
   const [catalog, setCatalog] = useState<OfficialCatalogSnapshot>()
   const [error, setError] = useState<string>()
+  const applySnapshot = (next: RelayPageSnapshot): void => {
+    setSnapshot(next)
+    setCatalog(next.catalog)
+  }
   const reload = useCallback(async () => {
     try {
-      setSnapshot(await api.load())
+      applySnapshot(await api.load())
       setError(undefined)
     } catch (cause) {
       setError(messageOf(cause))
@@ -516,17 +520,16 @@ export function RelayModelsSection({ api }: Props): ReactNode {
   }, [api])
   const initialize = useCallback(async () => {
     try {
-      const [nextSnapshot, nextCatalog] = await Promise.all([api.load(), api.catalog()])
-      setSnapshot(nextSnapshot)
-      setCatalog(nextCatalog)
+      applySnapshot(await api.load())
       setError(undefined)
+      void api.catalog().then(setCatalog).catch(() => undefined)
     } catch (cause) {
       setError(messageOf(cause))
     }
   }, [api])
   useEffect(() => { void initialize() }, [initialize])
 
-  if ((!snapshot || !catalog) && !error) return <section className="drm-section"><p className="drm-muted">正在加载中转模型配置…</p></section>
+  if (!snapshot && !error) return <section className="drm-section"><p className="drm-muted">正在加载中转模型配置…</p></section>
   return (
     <section className="drm-section">
       <div className="drm-head"><h2 className="drm-title">中转模型</h2>{snapshot ? <AddProvider api={api} snapshot={snapshot} onDone={reload} /> : null}</div>

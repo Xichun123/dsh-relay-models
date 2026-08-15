@@ -7,6 +7,7 @@ export interface RelayPageSnapshot {
   revision: number
   writable: boolean
   credentials: Record<string, boolean>
+  catalog: OfficialCatalogSnapshot
 }
 
 interface ApiResult<T> {

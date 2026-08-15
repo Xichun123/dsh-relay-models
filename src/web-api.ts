@@ -108,6 +108,7 @@ export function installWebApi(
       revision: descriptor.revision,
       writable: ctx.settings.writable,
       credentials,
+      catalog: currentOfficialCatalog(),
     }
   }
 
