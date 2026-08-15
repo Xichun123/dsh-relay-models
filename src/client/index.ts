@@ -7,7 +7,7 @@ import { installStyles } from './styles.ts'
 export const inject = ['slots']
 
 export function apply(ctx: ClientContext): void {
-  installStyles()
+  ctx.effect(() => installStyles(), 'relay-models: settings styles')
   ctx.slots.inject('settings.section', () => ctx.slots.register({
     name: 'settings.section',
     id: 'relay-models',

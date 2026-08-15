@@ -11,6 +11,9 @@ const models = getBuiltinProviders().flatMap(provider =>
     maxTokens: model.maxTokens,
     reasoning: model.reasoning,
     input: model.input,
+    ...model.thinkingLevelMap ? { thinkingLevelMap: model.thinkingLevelMap } : {},
+    ...model.compat ? { compat: model.compat } : {},
+    ...model.cost ? { cost: model.cost } : {},
   })),
 )
 

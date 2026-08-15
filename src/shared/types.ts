@@ -36,6 +36,17 @@ export interface OfficialCatalogSnapshot {
   minimumVersion?: string
 }
 
+export interface RelayRetryPolicy {
+  mode: 'normal' | 'always'
+  maxRetries?: number
+  retryableCodes?: string[]
+  backoff?: {
+    initialDelayMs?: number
+    maxDelayMs?: number
+    jitterRatio?: number
+  }
+}
+
 export interface RelayProviderConfig {
   displayName: string
   baseURL: string
@@ -45,6 +56,9 @@ export interface RelayProviderConfig {
   modelMappings: Record<string, OfficialModelRef>
   protocolOverrides: Record<string, RelayProtocol>
   excludedModels: string[]
+  headers: Record<string, string>
+  streamIdleTimeoutMs: number
+  retryPolicy?: RelayRetryPolicy
   syncedAt?: number
 }
 

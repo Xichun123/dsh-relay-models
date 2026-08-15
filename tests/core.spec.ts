@@ -1,8 +1,11 @@
 import { describe, expect, it } from 'vitest'
 import {
+  assertSafeHeaders,
+  assertUnreservedProviderId,
   baseURLForProtocol,
   inferProtocol,
   modelsEndpoints,
+  parseHeaderLines,
   parseModelIds,
   relayCredentialRef,
   relayModelStatuses,
@@ -29,6 +32,8 @@ function config(overrides: Partial<RelayProviderConfig> = {}): RelayProviderConf
     modelMappings: { 'claude-alias': { provider: 'anthropic', id: 'claude-sonnet-4-6' } },
     protocolOverrides: {},
     excludedModels: [],
+    headers: {},
+    streamIdleTimeoutMs: 300_000,
     ...overrides,
   }
 }
@@ -38,8 +43,15 @@ describe('relay core', () => {
     expect(validateProviderId('relay-example')).toBe('relay-example')
     expect(relayCredentialRef('relay-example')).toBe('RELAY_EXAMPLE_API_KEY')
     expect(() => validateProviderId('Relay Example')).toThrow(/Provider ID/)
+    expect(() => assertUnreservedProviderId('openai')).toThrow(/reserved/)
+    expect(assertUnreservedProviderId('relay-example')).toBe('relay-example')
     expect(baseURLForProtocol('https://relay.test/v1/', 'anthropic-messages')).toBe('https://relay.test')
     expect(baseURLForProtocol('https://relay.test/v1/', 'openai-responses')).toBe('https://relay.test/v1')
+  })
+
+  it('rejects credential-bearing extra headers', () => {
+    expect(() => assertSafeHeaders({ Authorization: 'Bearer secret' })).toThrow(/credentials/)
+    expect(parseHeaderLines('X-Custom: yes\nX-Trace=abc')).toEqual({ 'X-Custom': 'yes', 'X-Trace': 'abc' })
   })
 
   it('discovers common model-list shapes and endpoint fallbacks', () => {

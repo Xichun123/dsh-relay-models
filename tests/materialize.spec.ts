@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { DEFAULT_CONTEXT_WINDOW, DEFAULT_MAX_TOKENS } from '../src/shared/core.ts'
 import { buildRelayProvider, materializeModels } from '../src/materialize.ts'
 import { OFFICIAL_MODELS } from '../src/shared/catalog.generated.ts'
 import type { OfficialModelSummary, RelayProviderConfig } from '../src/shared/types.ts'
@@ -15,6 +16,8 @@ function config(): RelayProviderConfig {
     modelMappings: { 'claude-alias': { provider: anthropic.provider, id: anthropic.id } },
     protocolOverrides: {},
     excludedModels: [],
+    headers: {},
+    streamIdleTimeoutMs: 300_000,
   }
 }
 
@@ -24,7 +27,9 @@ describe('relay provider materialization', () => {
     expect(models.map(model => model.api)).toEqual(['openai-responses', 'anthropic-messages', 'openai-completions'])
     expect(models[1]?.baseUrl).toBe('https://relay.test')
     expect(models[2]?.baseUrl).toBe('https://relay.test/v1')
+    expect(models[2]).toMatchObject({ contextWindow: DEFAULT_CONTEXT_WINDOW, maxTokens: DEFAULT_MAX_TOKENS })
     expect(models.every(model => model.provider === 'relay-test')).toBe(true)
+    expect(models.every(model => model.headers === undefined)).toBe(true)
 
     const provider = buildRelayProvider('relay-test', config(), OFFICIAL_MODELS)
     expect(provider.getModels().map(model => model.id)).toEqual(models.map(model => model.id))

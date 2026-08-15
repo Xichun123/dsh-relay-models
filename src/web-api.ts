@@ -5,11 +5,56 @@ import type { SettingsNamespace } from '@deepseek-ai/dsh-settings'
 import { currentOfficialCatalog, refreshOfficialCatalog } from './catalog.ts'
 import { discoverRelayModels } from './discovery.ts'
 import { isRelayProtocol } from './shared/core.ts'
-import type { Config } from './index.ts'
-import type { RelayProviderConfig } from './shared/types.ts'
+import type { RelayConfig, RelayProtocol, RelayProviderConfig } from './shared/types.ts'
 
 const PATH = '/relay-models/api'
 const MAX_BODY_BYTES = 1024 * 1024
+
+export class RelayHttpError extends Error {
+  constructor(readonly status: number, message: string) {
+    super(message)
+    this.name = 'RelayHttpError'
+  }
+}
+
+export function assertRequestOrigin(req: IncomingMessage, method: string): void {
+  const origin = req.headers.origin
+  const host = req.headers.host
+  if (!host) throw new RelayHttpError(403, 'Relay configuration requests must include Host')
+  if (!origin) {
+    if (method === 'GET') return
+    throw new RelayHttpError(403, 'Relay configuration requests must include Origin')
+  }
+  if (origin !== `http://${host}` && origin !== `https://${host}`) {
+    throw new RelayHttpError(403, 'Cross-origin relay configuration requests are refused')
+  }
+}
+
+export function resolveDiscoveryTarget(
+  input: Record<string, unknown>,
+  config: RelayConfig,
+): { providerId?: string; baseURL: string; protocol: RelayProtocol; apiKey?: string; useStoredKey: boolean } {
+  const protocol = requiredString(input.protocol, 'protocol')
+  if (!isRelayProtocol(protocol)) throw new Error('Invalid relay protocol')
+  const providerId = typeof input.provider === 'string' ? input.provider.trim() : ''
+  if (providerId) {
+    const provider = config.providers[providerId]
+    if (!provider) throw new Error(`Unknown provider: ${providerId}`)
+    return {
+      providerId,
+      baseURL: provider.baseURL,
+      protocol,
+      ...typeof input.apiKey === 'string' && input.apiKey.trim() ? { apiKey: input.apiKey.trim() } : {},
+      useStoredKey: true,
+    }
+  }
+  return {
+    baseURL: requiredString(input.baseURL, 'baseURL'),
+    protocol,
+    ...typeof input.apiKey === 'string' ? { apiKey: input.apiKey } : {},
+    useStoredKey: false,
+  }
+}
 
 function reply(res: ServerResponse, status: number, value: unknown): void {
   const body = JSON.stringify(value)
@@ -17,13 +62,6 @@ function reply(res: ServerResponse, status: number, value: unknown): void {
   res.setHeader('content-type', 'application/json; charset=utf-8')
   res.setHeader('cache-control', 'no-store')
   res.end(body)
-}
-
-function sameOrigin(req: IncomingMessage): boolean {
-  const origin = req.headers.origin
-  const host = req.headers.host
-  if (!origin || !host) return true
-  return origin === `http://${host}` || origin === `https://${host}`
 }
 
 async function readBody(req: IncomingMessage): Promise<unknown> {
@@ -52,7 +90,7 @@ function requiredString(value: unknown, field: string): string {
 export function installWebApi(
   ctx: Context,
   ns: SettingsNamespace,
-  current: () => Config,
+  current: () => RelayConfig,
   onCatalogRefresh: () => void,
 ): void {
   const state = async (): Promise<unknown> => {
@@ -74,11 +112,8 @@ export function installWebApi(
   }
 
   const handler = async (req: IncomingMessage, res: ServerResponse): Promise<void> => {
-    if (!sameOrigin(req)) {
-      reply(res, 403, { ok: false, error: 'Cross-origin relay configuration requests are refused' })
-      return
-    }
     try {
+      assertRequestOrigin(req, req.method ?? 'GET')
       if (req.method === 'GET') {
         reply(res, 200, { ok: true, value: await state() })
         return
@@ -98,16 +133,15 @@ export function installWebApi(
         return
       }
       if (action === 'discover') {
-        const protocol = requiredString(input.protocol, 'protocol')
-        if (!isRelayProtocol(protocol)) throw new Error('Invalid relay protocol')
-        const provider = typeof input.provider === 'string' ? current().providers[input.provider] : undefined
-        const storedApiKey = provider
-          ? (await ctx.credentials.resolve(credentialRef(provider.apiKeyEnv)))?.value
+        const target = resolveDiscoveryTarget(input, current())
+        const stored = target.providerId ? current().providers[target.providerId] : undefined
+        const storedApiKey = target.useStoredKey && !target.apiKey && stored
+          ? (await ctx.credentials.resolve(credentialRef(stored.apiKeyEnv)))?.value
           : undefined
         const models = await discoverRelayModels({
-          baseURL: requiredString(input.baseURL, 'baseURL'),
-          api: protocol,
-          apiKey: typeof input.apiKey === 'string' ? input.apiKey : storedApiKey,
+          baseURL: target.baseURL,
+          api: target.protocol,
+          apiKey: target.apiKey ?? storedApiKey,
         })
         reply(res, 200, { ok: true, value: models.map(model => model.id) })
         return
@@ -132,7 +166,8 @@ export function installWebApi(
       }
       throw new Error(`Unknown action: ${action}`)
     } catch (error) {
-      reply(res, 400, { ok: false, error: error instanceof Error ? error.message : String(error) })
+      const status = error instanceof RelayHttpError ? error.status : 400
+      reply(res, status, { ok: false, error: error instanceof Error ? error.message : String(error) })
     }
   }
 

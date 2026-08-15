@@ -35,12 +35,96 @@ export function baseURLForProtocol(raw: string, protocol: RelayProtocol): string
   return parsed.toString().replace(/\/$/u, '')
 }
 
+export const DEFAULT_STREAM_IDLE_TIMEOUT_MS = 300_000
+export const DEFAULT_CONTEXT_WINDOW = 262_144
+export const DEFAULT_MAX_TOKENS = 32_768
+
+/** Official pi-ai / DSH routes this plugin must not claim. */
+export const RESERVED_PROVIDER_IDS: ReadonlySet<string> = new Set([
+  'amazon-bedrock',
+  'ant-ling',
+  'anthropic',
+  'azure-openai-responses',
+  'cerebras',
+  'cloudflare-ai-gateway',
+  'cloudflare-workers-ai',
+  'deepseek',
+  'deepseek-official',
+  'fireworks',
+  'github-copilot',
+  'google',
+  'google-vertex',
+  'groq',
+  'huggingface',
+  'kimi-coding',
+  'minimax',
+  'minimax-cn',
+  'mistral',
+  'moonshotai',
+  'moonshotai-cn',
+  'nvidia',
+  'openai',
+  'openai-codex',
+  'opencode',
+  'opencode-go',
+  'openrouter',
+  'qwen-token-plan',
+  'qwen-token-plan-cn',
+  'radius',
+  'together',
+  'vercel-ai-gateway',
+  'xai',
+  'xiaomi',
+  'xiaomi-token-plan-ams',
+  'xiaomi-token-plan-cn',
+  'xiaomi-token-plan-sgp',
+  'zai',
+  'zai-coding-cn',
+])
+
+const SECRET_HEADER = /^(authorization|api-key|x-api-key|proxy-authorization)$/iu
+
 export function validateProviderId(raw: string): string {
   const id = raw.trim().toLowerCase()
   if (!/^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/u.test(id)) {
     throw new Error('Provider ID must start with a letter and contain lowercase letters, numbers, or hyphens')
   }
   return id
+}
+
+export function assertUnreservedProviderId(raw: string, extraReserved: ReadonlySet<string> = RESERVED_PROVIDER_IDS): string {
+  const id = validateProviderId(raw)
+  if (RESERVED_PROVIDER_IDS.has(id) || extraReserved.has(id)) {
+    throw new Error(`Provider ID "${id}" is reserved by DeepSeek Harness; use a relay-* name`)
+  }
+  return id
+}
+
+export function assertSafeHeaders(headers: Readonly<Record<string, string>>): void {
+  for (const name of Object.keys(headers)) {
+    if (SECRET_HEADER.test(name)) {
+      throw new Error(`Header "${name}" cannot carry credentials; store the API key in the credentials field`)
+    }
+  }
+}
+
+export function parseHeaderLines(raw: string): Record<string, string> {
+  const headers: Record<string, string> = {}
+  for (const line of raw.split('\n')) {
+    const trimmed = line.trim()
+    if (!trimmed) continue
+    const match = trimmed.match(/^([^:=]+)[:=](.*)$/u)
+    if (!match) throw new Error(`Invalid header line: ${trimmed}`)
+    const name = match[1]!.trim()
+    if (!name) throw new Error('Header name cannot be empty')
+    headers[name] = match[2]!.trim()
+  }
+  assertSafeHeaders(headers)
+  return headers
+}
+
+export function formatHeaderLines(headers: Readonly<Record<string, string>>): string {
+  return Object.entries(headers).map(([name, value]) => `${name}: ${value}`).join('\n')
 }
 
 export function relayCredentialRef(route: string): string {

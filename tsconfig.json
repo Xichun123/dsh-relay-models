@@ -9,7 +9,7 @@
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
     "skipLibCheck": true,
-    "types": ["node", "react"]
+    "types": ["node", "react", "react-dom"]
   },
   "include": ["src", "tests"]
 }

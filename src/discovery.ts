@@ -1,4 +1,4 @@
-import { LlmError } from '@deepseek-ai/dsh-llm'
+import { attributionHeaders, LlmError } from '@deepseek-ai/dsh-llm'
 import type { LlmDiscoveredModel, LlmModelDiscoveryRequest } from '@deepseek-ai/dsh-llm'
 import { readBoundedText } from './bounded-response.ts'
 import { isRelayProtocol, modelsEndpoints, parseModelIds } from './shared/core.ts'
@@ -35,7 +35,7 @@ export async function discoverRelayModels(
     let response: Response
     try {
       response = await fetch(url, {
-        headers: authHeaders(protocol, apiKey),
+        headers: { ...authHeaders(protocol, apiKey), ...attributionHeaders() },
         ...request.signal ? { signal: request.signal } : {},
       })
     } catch (error) {

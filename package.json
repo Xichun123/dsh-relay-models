@@ -1,6 +1,6 @@
 {
   "name": "dsh-relay-models",
-  "version": "0.1.5",
+  "version": "0.1.7",
   "description": "Mixed-protocol relay model discovery, metadata matching, and Web configuration for DeepSeek Harness",
   "type": "module",
   "license": "MIT",
@@ -16,7 +16,9 @@
   "main": "lib/index.js",
   "exports": {
     ".": "./lib/index.js",
-    "./client": "./lib/client.js",
+    "./client": {
+      "default": "./lib/client.js"
+    },
     "./package.json": "./package.json"
   },
   "files": [
@@ -46,7 +48,6 @@
     "validate": "npm run test && npm run typecheck && npm run build"
   },
   "dependencies": {
-    "@earendil-works/pi-ai": "^0.82.1",
     "@deepseek-ai/cordis": "^4.0.1",
     "@deepseek-ai/dsh-attachment": "^0.1.0-rc.6",
     "@deepseek-ai/dsh-brand": "^0.1.0-rc.6",
@@ -58,7 +59,8 @@
     "@deepseek-ai/dsh-llm-pi-ai": "^0.1.0-rc.6",
     "@deepseek-ai/dsh-settings": "^0.1.0-rc.6",
     "@deepseek-ai/dsh-timeout": "^0.1.0-rc.6",
-    "@deepseek-ai/schemastery": "^3.18.1"
+    "@deepseek-ai/schemastery": "^3.18.1",
+    "@earendil-works/pi-ai": "^0.82.1"
   },
   "peerDependencies": {
     "@deepseek-ai/dsh-client-runtime": "*",
@@ -66,15 +68,22 @@
     "react": "^18.2.0"
   },
   "peerDependenciesMeta": {
-    "@deepseek-ai/dsh-client-runtime": { "optional": true },
-    "@deepseek-ai/dsh-client-ui-settings": { "optional": true },
-    "react": { "optional": true }
+    "@deepseek-ai/dsh-client-runtime": {
+      "optional": true
+    },
+    "@deepseek-ai/dsh-client-ui-settings": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@deepseek-ai/dsh-client-runtime": "^0.1.0-rc.6",
     "@deepseek-ai/dsh-client-ui-settings": "^0.1.0-rc.6",
     "@types/node": "^24.0.0",
     "@types/react": "~18.3.1",
+    "@types/react-dom": "~18.3.7",
     "react": "^18.2.0",
     "tsdown": "^0.15.11",
     "typescript": "^5.9.2",

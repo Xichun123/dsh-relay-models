@@ -1,7 +1,7 @@
 import type { UserConfig } from 'tsdown'
 
 const ID = 'dsh-relay-models'
-const CLIENT_EXTERNALS = ['react', 'react/jsx-runtime']
+const CLIENT_EXTERNALS = ['react', 'react/jsx-runtime', 'react-dom']
 
 const node: UserConfig = {
   name: ID,

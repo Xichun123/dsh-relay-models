@@ -13,7 +13,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.33,
+      "output": 2.75,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -26,7 +32,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.06,
+      "output": 0.24,
+      "cacheRead": 0.015,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -38,7 +50,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.035,
+      "output": 0.14,
+      "cacheRead": 0.00875,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -51,7 +69,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.8,
+      "output": 3.2,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -64,7 +88,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "cost": {
+      "input": 10,
+      "output": 50,
+      "cacheRead": 1,
+      "cacheWrite": 12.5
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -77,7 +112,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 1,
+      "output": 5,
+      "cacheRead": 0.1,
+      "cacheWrite": 1.25
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -90,7 +134,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 15,
+      "output": 75,
+      "cacheRead": 1.5,
+      "cacheWrite": 18.75
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -103,7 +153,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -116,7 +175,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "max": "max"
+    },
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -129,7 +200,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -142,7 +223,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -155,7 +246,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 3,
+      "output": 15,
+      "cacheRead": 0.3,
+      "cacheWrite": 3.75
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -168,7 +268,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "max": "max"
+    },
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 3,
+      "output": 15,
+      "cacheRead": 0.3,
+      "cacheWrite": 3.75
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -181,7 +293,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 2,
+      "output": 10,
+      "cacheRead": 0.2,
+      "cacheWrite": 2.5
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -194,7 +319,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 1,
+      "output": 5,
+      "cacheRead": 0.1,
+      "cacheWrite": 1.25
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -207,7 +341,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "max": "max"
+    },
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 16.5,
+      "output": 82.5,
+      "cacheRead": 1.65,
+      "cacheWrite": 20.625
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -220,7 +366,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -233,7 +389,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -246,7 +412,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 3,
+      "output": 15,
+      "cacheRead": 0.3,
+      "cacheWrite": 3.75
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -259,7 +434,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "max": "max"
+    },
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 3.3,
+      "output": 16.5,
+      "cacheRead": 0.33,
+      "cacheWrite": 4.125
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -272,7 +459,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 2,
+      "output": 10,
+      "cacheRead": 0.2,
+      "cacheWrite": 2.5
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -284,7 +484,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 1.35,
+      "output": 5.4,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -296,7 +502,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 0.58,
+      "output": 1.68,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -308,7 +523,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 0.62,
+      "output": 1.85,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -321,7 +545,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "cost": {
+      "input": 11,
+      "output": 55,
+      "cacheRead": 1.1,
+      "cacheWrite": 13.75
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -334,7 +569,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 1.1,
+      "output": 5.5,
+      "cacheRead": 0.11,
+      "cacheWrite": 1.375
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -347,7 +591,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 5.5,
+      "output": 27.5,
+      "cacheRead": 0.55,
+      "cacheWrite": 6.875
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -360,7 +613,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "max": "max"
+    },
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 5.5,
+      "output": 27.5,
+      "cacheRead": 0.55,
+      "cacheWrite": 6.875
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -373,7 +638,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "cost": {
+      "input": 5.5,
+      "output": 27.5,
+      "cacheRead": 0.55,
+      "cacheWrite": 6.875
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -386,7 +661,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "cost": {
+      "input": 5.5,
+      "output": 27.5,
+      "cacheRead": 0.55,
+      "cacheWrite": 6.875
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -399,7 +684,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "cost": {
+      "input": 5.5,
+      "output": 27.5,
+      "cacheRead": 0.55,
+      "cacheWrite": 6.875
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -412,7 +707,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 3.3,
+      "output": 16.5,
+      "cacheRead": 0.33,
+      "cacheWrite": 4.125
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -425,7 +729,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "max": "max"
+    },
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 3.3,
+      "output": 16.5,
+      "cacheRead": 0.33,
+      "cacheWrite": 4.125
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -438,7 +754,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 2.2,
+      "output": 11,
+      "cacheRead": 0.22,
+      "cacheWrite": 2.75
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -451,7 +780,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "cost": {
+      "input": 10,
+      "output": 50,
+      "cacheRead": 1,
+      "cacheWrite": 12.5
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -464,7 +804,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 1,
+      "output": 5,
+      "cacheRead": 0.1,
+      "cacheWrite": 1.25
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -477,7 +826,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -490,7 +848,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "max": "max"
+    },
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -503,7 +873,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -516,7 +896,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -529,7 +919,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -542,7 +942,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 3,
+      "output": 15,
+      "cacheRead": 0.3,
+      "cacheWrite": 3.75
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -555,7 +964,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "max": "max"
+    },
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 3,
+      "output": 15,
+      "cacheRead": 0.3,
+      "cacheWrite": 3.75
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -568,7 +989,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 2,
+      "output": 10,
+      "cacheRead": 0.2,
+      "cacheWrite": 2.5
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -581,7 +1015,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 0.12,
+      "output": 0.2,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -594,7 +1037,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.04,
+      "output": 0.08,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -607,7 +1056,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 1,
+      "output": 5,
+      "cacheRead": 0.1,
+      "cacheWrite": 1.25
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -620,7 +1078,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -633,7 +1101,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -646,7 +1124,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -659,7 +1147,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 3,
+      "output": 15,
+      "cacheRead": 0.3,
+      "cacheWrite": 3.75
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -672,7 +1169,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "max": "max"
+    },
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 3,
+      "output": 15,
+      "cacheRead": 0.3,
+      "cacheWrite": 3.75
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -685,7 +1194,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 2,
+      "output": 10,
+      "cacheRead": 0.2,
+      "cacheWrite": 2.5
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -697,7 +1219,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.72,
+      "output": 0.72,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -709,7 +1237,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.22,
+      "output": 0.22,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -721,7 +1255,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.72,
+      "output": 0.72,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -734,7 +1274,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.24,
+      "output": 0.97,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -747,7 +1293,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.17,
+      "output": 0.66,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -759,7 +1311,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.3,
+      "output": 1.2,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -771,7 +1329,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.3,
+      "output": 1.2,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -783,7 +1347,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.3,
+      "output": 1.2,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -795,7 +1365,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 0.4,
+      "output": 2,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -808,7 +1387,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 0.5,
+      "output": 1.5,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -820,7 +1408,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 0.2,
+      "output": 0.2,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -833,7 +1430,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 0.1,
+      "output": 0.1,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -845,7 +1451,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 0.15,
+      "output": 0.15,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -858,7 +1473,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 0.5,
+      "output": 1.5,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -871,7 +1495,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 2,
+      "output": 6,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -883,7 +1513,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 0.04,
+      "output": 0.04,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -895,7 +1534,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 0.15,
+      "output": 0.35,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -907,7 +1555,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 0.6,
+      "output": 2.5,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -920,7 +1577,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 0.6,
+      "output": 3,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -933,7 +1599,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 0.2,
+      "output": 0.6,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -945,7 +1620,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 0.06,
+      "output": 0.24,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -957,7 +1641,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 0.06,
+      "output": 0.23,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -969,7 +1662,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 0.15,
+      "output": 0.65,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -982,7 +1684,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh"
+    },
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 2.75,
+      "output": 16.5,
+      "cacheRead": 0.275,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -995,7 +1709,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh"
+    },
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 5.5,
+      "output": 33,
+      "cacheRead": 0.55,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -1008,7 +1734,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh"
+    },
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 1,
+      "output": 6,
+      "cacheRead": 0.1,
+      "cacheWrite": 1.25
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -1021,7 +1759,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh"
+    },
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 5,
+      "output": 30,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -1034,7 +1784,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh"
+    },
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 2.5,
+      "output": 15,
+      "cacheRead": 0.25,
+      "cacheWrite": 3.125
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -1046,7 +1808,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 0.15,
+      "output": 0.6,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -1058,7 +1829,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 0.15,
+      "output": 0.6,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -1070,7 +1850,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 0.07,
+      "output": 0.3,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -1082,7 +1871,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 0.07,
+      "output": 0.3,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -1094,7 +1892,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 0.15,
+      "output": 0.6,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -1106,7 +1913,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 0.07,
+      "output": 0.2,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -1118,7 +1934,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 0.22,
+      "output": 0.88,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -1130,7 +1955,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 0.15,
+      "output": 0.6,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -1142,7 +1976,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 0.15,
+      "output": 0.6,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -1154,7 +1997,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 0.22,
+      "output": 1.8,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -1166,7 +2018,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 0.22,
+      "output": 1.8,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -1178,7 +2039,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 0.14,
+      "output": 1.4,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -1191,7 +2061,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 0.3,
+      "output": 1.5,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -1204,7 +2083,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "cost": {
+      "input": 10,
+      "output": 50,
+      "cacheRead": 1,
+      "cacheWrite": 12.5
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -1217,7 +2107,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 1,
+      "output": 5,
+      "cacheRead": 0.1,
+      "cacheWrite": 1.25
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -1230,7 +2129,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 15,
+      "output": 75,
+      "cacheRead": 1.5,
+      "cacheWrite": 18.75
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -1243,7 +2148,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -1256,7 +2170,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "max": "max"
+    },
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -1269,7 +2195,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -1282,7 +2218,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -1295,7 +2241,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -1308,7 +2264,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 3,
+      "output": 15,
+      "cacheRead": 0.3,
+      "cacheWrite": 3.75
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -1321,7 +2286,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "max": "max"
+    },
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 3,
+      "output": 15,
+      "cacheRead": 0.3,
+      "cacheWrite": 3.75
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -1334,7 +2311,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 2,
+      "output": 10,
+      "cacheRead": 0.2,
+      "cacheWrite": 2.5
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -1346,7 +2336,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 1.35,
+      "output": 5.4,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -1359,7 +2355,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.24,
+      "output": 0.97,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -1372,7 +2374,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.17,
+      "output": 0.66,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -1384,7 +2392,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 2.5,
+      "output": 10,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -1396,7 +2410,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.6,
+      "output": 6,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -1409,7 +2429,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 1.25,
+      "output": 2.5,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -1421,7 +2450,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 0.6,
+      "output": 2.2,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -1433,7 +2471,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 0.07,
+      "output": 0.4,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "amazon-bedrock",
@@ -1445,7 +2492,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 1,
+      "output": 3.2,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "ant-ling",
@@ -1457,7 +2513,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "thinkingFormat": "ant-ling",
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0.06,
+      "output": 0.25,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "ant-ling",
@@ -1469,7 +2539,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "thinkingFormat": "ant-ling",
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0.01,
+      "output": 0.02,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "ant-ling",
@@ -1481,7 +2565,29 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": null,
+      "medium": null,
+      "high": "high",
+      "xhigh": "xhigh"
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "thinkingFormat": "ant-ling",
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0.06,
+      "output": 0.25,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "anthropic",
@@ -1494,7 +2600,22 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "forceAdaptiveThinking": true,
+      "supportsStrictTools": true
+    },
+    "cost": {
+      "input": 10,
+      "output": 50,
+      "cacheRead": 1,
+      "cacheWrite": 12.5
+    }
   },
   {
     "provider": "anthropic",
@@ -1507,7 +2628,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictTools": true
+    },
+    "cost": {
+      "input": 1,
+      "output": 5,
+      "cacheRead": 0.1,
+      "cacheWrite": 1.25
+    }
   },
   {
     "provider": "anthropic",
@@ -1520,7 +2650,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictTools": true
+    },
+    "cost": {
+      "input": 1,
+      "output": 5,
+      "cacheRead": 0.1,
+      "cacheWrite": 1.25
+    }
   },
   {
     "provider": "anthropic",
@@ -1533,7 +2672,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictTools": true
+    },
+    "cost": {
+      "input": 15,
+      "output": 75,
+      "cacheRead": 1.5,
+      "cacheWrite": 18.75
+    }
   },
   {
     "provider": "anthropic",
@@ -1546,7 +2694,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictTools": true
+    },
+    "cost": {
+      "input": 15,
+      "output": 75,
+      "cacheRead": 1.5,
+      "cacheWrite": 18.75
+    }
   },
   {
     "provider": "anthropic",
@@ -1559,7 +2716,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictTools": true
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "anthropic",
@@ -1572,7 +2738,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictTools": true
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "anthropic",
@@ -1585,7 +2760,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "max": "max"
+    },
+    "compat": {
+      "forceAdaptiveThinking": true,
+      "supportsStrictTools": true
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "anthropic",
@@ -1598,7 +2786,22 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "forceAdaptiveThinking": true,
+      "supportsTemperature": false,
+      "supportsStrictTools": true
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "anthropic",
@@ -1611,7 +2814,22 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "forceAdaptiveThinking": true,
+      "supportsTemperature": false,
+      "supportsStrictTools": true
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "anthropic",
@@ -1624,7 +2842,22 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "forceAdaptiveThinking": true,
+      "supportsTemperature": false,
+      "supportsStrictTools": true
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "anthropic",
@@ -1637,7 +2870,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictTools": true
+    },
+    "cost": {
+      "input": 3,
+      "output": 15,
+      "cacheRead": 0.3,
+      "cacheWrite": 3.75
+    }
   },
   {
     "provider": "anthropic",
@@ -1650,7 +2892,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictTools": true
+    },
+    "cost": {
+      "input": 3,
+      "output": 15,
+      "cacheRead": 0.3,
+      "cacheWrite": 3.75
+    }
   },
   {
     "provider": "anthropic",
@@ -1663,7 +2914,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "max": "max"
+    },
+    "compat": {
+      "forceAdaptiveThinking": true,
+      "supportsStrictTools": true
+    },
+    "cost": {
+      "input": 3,
+      "output": 15,
+      "cacheRead": 0.3,
+      "cacheWrite": 3.75
+    }
   },
   {
     "provider": "anthropic",
@@ -1676,7 +2940,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "forceAdaptiveThinking": true,
+      "supportsStrictTools": true
+    },
+    "cost": {
+      "input": 2,
+      "output": 10,
+      "cacheRead": 0.2,
+      "cacheWrite": 2.5
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -1688,7 +2966,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 30,
+      "output": 60,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -1701,7 +2985,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 10,
+      "output": 30,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -1714,7 +3004,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 2,
+      "output": 8,
+      "cacheRead": 0.5,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -1727,7 +3023,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.4,
+      "output": 1.6,
+      "cacheRead": 0.1,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -1740,7 +3042,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.1,
+      "output": 0.4,
+      "cacheRead": 0.025,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -1753,7 +3061,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 2.5,
+      "output": 10,
+      "cacheRead": 1.25,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -1766,7 +3080,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 5,
+      "output": 15,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -1779,7 +3099,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 2.5,
+      "output": 10,
+      "cacheRead": 1.25,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -1792,7 +3118,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 2.5,
+      "output": 10,
+      "cacheRead": 1.25,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -1805,7 +3137,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.15,
+      "output": 0.6,
+      "cacheRead": 0.075,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -1818,7 +3156,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1.25,
+      "output": 10,
+      "cacheRead": 0.125,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -1831,7 +3181,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1.25,
+      "output": 10,
+      "cacheRead": 0.125,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -1844,7 +3206,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 0.25,
+      "output": 2,
+      "cacheRead": 0.025,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -1857,7 +3231,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 0.05,
+      "output": 0.4,
+      "cacheRead": 0.005,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -1870,7 +3256,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 15,
+      "output": 120,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -1883,7 +3281,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1.25,
+      "output": 10,
+      "cacheRead": 0.125,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -1896,7 +3306,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "xhigh": "xhigh"
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1.75,
+      "output": 14,
+      "cacheRead": 0.175,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -1909,7 +3332,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "xhigh": "xhigh"
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1.75,
+      "output": 14,
+      "cacheRead": 0.175,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -1922,7 +3358,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "xhigh": "xhigh"
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 21,
+      "output": 168,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -1935,7 +3384,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "xhigh": "xhigh"
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1.75,
+      "output": 14,
+      "cacheRead": 0.175,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -1948,7 +3410,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "xhigh": "xhigh"
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1.75,
+      "output": 14,
+      "cacheRead": 0.175,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -1961,7 +3436,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "xhigh": "xhigh"
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1.75,
+      "output": 14,
+      "cacheRead": 0.175,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -1974,7 +3462,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "xhigh": "xhigh"
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 2.5,
+      "output": 15,
+      "cacheRead": 0.25,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -1987,7 +3488,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "xhigh": "xhigh"
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 0.75,
+      "output": 4.5,
+      "cacheRead": 0.075,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -2000,7 +3514,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "xhigh": "xhigh"
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 0.2,
+      "output": 1.25,
+      "cacheRead": 0.02,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -2013,7 +3540,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "xhigh": "xhigh"
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 30,
+      "output": 180,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -2026,7 +3566,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "xhigh": "xhigh"
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 5,
+      "output": 30,
+      "cacheRead": 0.5,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -2039,7 +3592,22 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "xhigh": "xhigh",
+      "minimal": null,
+      "low": null
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 30,
+      "output": 180,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -2052,7 +3620,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1,
+      "output": 6,
+      "cacheRead": 0.1,
+      "cacheWrite": 1.25
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -2065,7 +3647,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 5,
+      "output": 30,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -2078,7 +3674,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 2.5,
+      "output": 15,
+      "cacheRead": 0.25,
+      "cacheWrite": 3.125
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -2091,7 +3701,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 4,
+      "output": 24,
+      "cacheRead": 0.4,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -2104,7 +3720,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 15,
+      "output": 60,
+      "cacheRead": 7.5,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -2117,7 +3739,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 150,
+      "output": 600,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -2130,7 +3758,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 2,
+      "output": 8,
+      "cacheRead": 0.5,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -2142,7 +3776,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 1.1,
+      "output": 4.4,
+      "cacheRead": 0.55,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -2155,7 +3795,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 20,
+      "output": 80,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "azure-openai-responses",
@@ -2168,7 +3814,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 1.1,
+      "output": 4.4,
+      "cacheRead": 0.275,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cerebras",
@@ -2181,7 +3833,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": "none",
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.99,
+      "output": 1.49,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cerebras",
@@ -2193,7 +3864,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.35,
+      "output": 0.75,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cerebras",
@@ -2205,7 +3895,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": "none",
+      "minimal": null,
+      "low": null,
+      "medium": null,
+      "high": null,
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 2.25,
+      "output": 2.75,
+      "cacheRead": 2.25,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2218,7 +3927,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "sendSessionAffinityHeaders": true
+    },
+    "cost": {
+      "input": 0.8,
+      "output": 4,
+      "cacheRead": 0.08,
+      "cacheWrite": 1
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2231,7 +3949,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "sendSessionAffinityHeaders": true
+    },
+    "cost": {
+      "input": 0.25,
+      "output": 1.25,
+      "cacheRead": 0.03,
+      "cacheWrite": 0.3
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2244,7 +3971,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "sendSessionAffinityHeaders": true
+    },
+    "cost": {
+      "input": 15,
+      "output": 75,
+      "cacheRead": 1.5,
+      "cacheWrite": 18.75
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2257,7 +3993,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "sendSessionAffinityHeaders": true
+    },
+    "cost": {
+      "input": 3,
+      "output": 15,
+      "cacheRead": 0.3,
+      "cacheWrite": 0.3
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2270,7 +4015,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "sendSessionAffinityHeaders": true
+    },
+    "cost": {
+      "input": 0.8,
+      "output": 4,
+      "cacheRead": 0.08,
+      "cacheWrite": 1
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2283,7 +4037,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "sendSessionAffinityHeaders": true
+    },
+    "cost": {
+      "input": 3,
+      "output": 15,
+      "cacheRead": 0.3,
+      "cacheWrite": 3.75
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2296,7 +4059,22 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "sendSessionAffinityHeaders": true,
+      "forceAdaptiveThinking": true
+    },
+    "cost": {
+      "input": 10,
+      "output": 50,
+      "cacheRead": 1,
+      "cacheWrite": 12.5
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2309,7 +4087,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "sendSessionAffinityHeaders": true
+    },
+    "cost": {
+      "input": 1,
+      "output": 5,
+      "cacheRead": 0.1,
+      "cacheWrite": 1.25
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2322,7 +4109,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "sendSessionAffinityHeaders": true
+    },
+    "cost": {
+      "input": 15,
+      "output": 75,
+      "cacheRead": 1.5,
+      "cacheWrite": 18.75
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2335,7 +4131,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "sendSessionAffinityHeaders": true
+    },
+    "cost": {
+      "input": 15,
+      "output": 75,
+      "cacheRead": 1.5,
+      "cacheWrite": 18.75
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2348,7 +4153,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "sendSessionAffinityHeaders": true
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2361,7 +4175,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "max": "max"
+    },
+    "compat": {
+      "sendSessionAffinityHeaders": true,
+      "forceAdaptiveThinking": true
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2374,7 +4201,22 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "sendSessionAffinityHeaders": true,
+      "forceAdaptiveThinking": true,
+      "supportsTemperature": false
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2387,7 +4229,22 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "sendSessionAffinityHeaders": true,
+      "forceAdaptiveThinking": true,
+      "supportsTemperature": false
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2400,7 +4257,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "sendSessionAffinityHeaders": true
+    },
+    "cost": {
+      "input": 3,
+      "output": 15,
+      "cacheRead": 0.3,
+      "cacheWrite": 3.75
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2413,7 +4279,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "sendSessionAffinityHeaders": true
+    },
+    "cost": {
+      "input": 3,
+      "output": 15,
+      "cacheRead": 0.3,
+      "cacheWrite": 3.75
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2426,7 +4301,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "max": "max"
+    },
+    "compat": {
+      "sendSessionAffinityHeaders": true,
+      "forceAdaptiveThinking": true
+    },
+    "cost": {
+      "input": 3,
+      "output": 15,
+      "cacheRead": 0.3,
+      "cacheWrite": 3.75
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2439,7 +4327,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "sendSessionAffinityHeaders": true,
+      "forceAdaptiveThinking": true
+    },
+    "cost": {
+      "input": 2,
+      "output": 10,
+      "cacheRead": 0.2,
+      "cacheWrite": 2.5
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2452,7 +4354,22 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false,
+      "sendSessionAffinityHeaders": true
+    },
+    "cost": {
+      "input": 0.6,
+      "output": 3,
+      "cacheRead": 0.1,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2465,7 +4382,22 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false,
+      "sendSessionAffinityHeaders": true
+    },
+    "cost": {
+      "input": 0.95,
+      "output": 4,
+      "cacheRead": 0.16,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2477,7 +4409,22 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false,
+      "sendSessionAffinityHeaders": true
+    },
+    "cost": {
+      "input": 0.5,
+      "output": 1.5,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2489,7 +4436,22 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false,
+      "sendSessionAffinityHeaders": true
+    },
+    "cost": {
+      "input": 0.06,
+      "output": 0.4,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2501,7 +4463,22 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false,
+      "sendSessionAffinityHeaders": true
+    },
+    "cost": {
+      "input": 1.4,
+      "output": 4.4,
+      "cacheRead": 0.26,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2513,7 +4490,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 30,
+      "output": 60,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2526,7 +4509,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 10,
+      "output": 30,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2539,7 +4528,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 2.5,
+      "output": 10,
+      "cacheRead": 1.25,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2552,7 +4547,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.15,
+      "output": 0.6,
+      "cacheRead": 0.08,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2565,7 +4566,25 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1.25,
+      "output": 10,
+      "cacheRead": 0.13,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2578,7 +4597,25 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1.25,
+      "output": 10,
+      "cacheRead": 0.125,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2591,7 +4628,25 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": null
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1.75,
+      "output": 14,
+      "cacheRead": 0.175,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2604,7 +4659,25 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": null
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1.75,
+      "output": 14,
+      "cacheRead": 0.175,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2617,7 +4690,25 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": null
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1.75,
+      "output": 14,
+      "cacheRead": 0.175,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2630,7 +4721,25 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": null
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 2.5,
+      "output": 15,
+      "cacheRead": 0.25,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2643,7 +4752,25 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": null
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 5,
+      "output": 30,
+      "cacheRead": 0.5,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2656,7 +4783,25 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1,
+      "output": 6,
+      "cacheRead": 0.1,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2669,7 +4814,25 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 5,
+      "output": 30,
+      "cacheRead": 0.5,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2682,7 +4845,25 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 2.5,
+      "output": 15,
+      "cacheRead": 0.25,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2695,7 +4876,22 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "cost": {
+      "input": 15,
+      "output": 60,
+      "cacheRead": 7.5,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2708,7 +4904,22 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "cost": {
+      "input": 2,
+      "output": 8,
+      "cacheRead": 0.5,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2720,7 +4931,22 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "cost": {
+      "input": 1.1,
+      "output": 4.4,
+      "cacheRead": 0.55,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2733,7 +4959,22 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "cost": {
+      "input": 20,
+      "output": 80,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-ai-gateway",
@@ -2746,7 +4987,22 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "cost": {
+      "input": 1.1,
+      "output": 4.4,
+      "cacheRead": 0.28,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-workers-ai",
@@ -2759,7 +5015,28 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsLongCacheRetention": false,
+      "sendSessionAffinityHeaders": true
+    },
+    "cost": {
+      "input": 0.1,
+      "output": 0.3,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-workers-ai",
@@ -2771,7 +5048,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsLongCacheRetention": false,
+      "sendSessionAffinityHeaders": true
+    },
+    "cost": {
+      "input": 0.017,
+      "output": 0.112,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-workers-ai",
@@ -2783,7 +5072,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsLongCacheRetention": false,
+      "sendSessionAffinityHeaders": true
+    },
+    "cost": {
+      "input": 0.293,
+      "output": 2.253,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-workers-ai",
@@ -2796,7 +5097,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsLongCacheRetention": false,
+      "sendSessionAffinityHeaders": true
+    },
+    "cost": {
+      "input": 0.27,
+      "output": 0.85,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-workers-ai",
@@ -2808,7 +5121,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsLongCacheRetention": false,
+      "sendSessionAffinityHeaders": true
+    },
+    "cost": {
+      "input": 0.351,
+      "output": 0.555,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-workers-ai",
@@ -2821,7 +5146,28 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsLongCacheRetention": false,
+      "sendSessionAffinityHeaders": true
+    },
+    "cost": {
+      "input": 0.95,
+      "output": 4,
+      "cacheRead": 0.16,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-workers-ai",
@@ -2834,7 +5180,28 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsLongCacheRetention": false,
+      "sendSessionAffinityHeaders": true
+    },
+    "cost": {
+      "input": 0.95,
+      "output": 4,
+      "cacheRead": 0.19,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-workers-ai",
@@ -2846,7 +5213,28 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsLongCacheRetention": false,
+      "sendSessionAffinityHeaders": true
+    },
+    "cost": {
+      "input": 0.5,
+      "output": 1.5,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-workers-ai",
@@ -2858,7 +5246,28 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsLongCacheRetention": false,
+      "sendSessionAffinityHeaders": true
+    },
+    "cost": {
+      "input": 0.35,
+      "output": 0.75,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-workers-ai",
@@ -2870,7 +5279,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsLongCacheRetention": false,
+      "sendSessionAffinityHeaders": true
+    },
+    "cost": {
+      "input": 0.2,
+      "output": 0.3,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-workers-ai",
@@ -2882,7 +5303,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsLongCacheRetention": false,
+      "sendSessionAffinityHeaders": true
+    },
+    "cost": {
+      "input": 0.0509,
+      "output": 0.335,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-workers-ai",
@@ -2894,7 +5327,28 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsLongCacheRetention": false,
+      "sendSessionAffinityHeaders": true
+    },
+    "cost": {
+      "input": 0.0605,
+      "output": 0.4,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "cloudflare-workers-ai",
@@ -2906,7 +5360,28 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsLongCacheRetention": false,
+      "sendSessionAffinityHeaders": true
+    },
+    "cost": {
+      "input": 1.4,
+      "output": 4.4,
+      "cacheRead": 0.26,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "deepseek",
@@ -2918,7 +5393,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "minimal": null,
+      "low": null,
+      "medium": null,
+      "high": "high",
+      "max": "max"
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "requiresReasoningContentOnAssistantMessages": true,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 0.14,
+      "output": 0.28,
+      "cacheRead": 0.0028,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "deepseek",
@@ -2930,7 +5424,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "minimal": null,
+      "low": null,
+      "medium": null,
+      "high": "high",
+      "max": "max"
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "requiresReasoningContentOnAssistantMessages": true,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 0.435,
+      "output": 0.87,
+      "cacheRead": 0.003625,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "fireworks",
@@ -2942,7 +5455,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "sendSessionAffinityHeaders": true,
+      "supportsEagerToolInputStreaming": false,
+      "supportsCacheControlOnTools": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0.14,
+      "output": 0.28,
+      "cacheRead": 0.028,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "fireworks",
@@ -2954,7 +5479,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "sendSessionAffinityHeaders": true,
+      "supportsEagerToolInputStreaming": false,
+      "supportsCacheControlOnTools": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 1.74,
+      "output": 3.48,
+      "cacheRead": 0.145,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "fireworks",
@@ -2966,7 +5503,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "sendSessionAffinityHeaders": true,
+      "supportsEagerToolInputStreaming": false,
+      "supportsCacheControlOnTools": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 1.4,
+      "output": 4.4,
+      "cacheRead": 0.26,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "fireworks",
@@ -2978,7 +5527,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "sendSessionAffinityHeaders": true,
+      "supportsEagerToolInputStreaming": false,
+      "supportsCacheControlOnTools": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0.15,
+      "output": 0.6,
+      "cacheRead": 0.015,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "fireworks",
@@ -2990,7 +5551,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "sendSessionAffinityHeaders": true,
+      "supportsEagerToolInputStreaming": false,
+      "supportsCacheControlOnTools": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0.07,
+      "output": 0.3,
+      "cacheRead": 0.035,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "fireworks",
@@ -3003,7 +5576,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "sendSessionAffinityHeaders": true,
+      "supportsEagerToolInputStreaming": false,
+      "supportsCacheControlOnTools": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0.95,
+      "output": 4,
+      "cacheRead": 0.16,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "fireworks",
@@ -3016,7 +5601,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "sendSessionAffinityHeaders": true,
+      "supportsEagerToolInputStreaming": false,
+      "supportsCacheControlOnTools": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0.95,
+      "output": 4,
+      "cacheRead": 0.19,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "fireworks",
@@ -3028,7 +5625,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "sendSessionAffinityHeaders": true,
+      "supportsEagerToolInputStreaming": false,
+      "supportsCacheControlOnTools": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0.3,
+      "output": 1.2,
+      "cacheRead": 0.06,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "fireworks",
@@ -3041,7 +5650,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "sendSessionAffinityHeaders": true,
+      "supportsEagerToolInputStreaming": false,
+      "supportsCacheControlOnTools": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0.3,
+      "output": 1.2,
+      "cacheRead": 0.06,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "fireworks",
@@ -3054,7 +5675,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "sendSessionAffinityHeaders": true,
+      "supportsEagerToolInputStreaming": false,
+      "supportsCacheControlOnTools": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0.4,
+      "output": 1.6,
+      "cacheRead": 0.08,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "fireworks",
@@ -3066,7 +5699,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "sendSessionAffinityHeaders": true,
+      "supportsEagerToolInputStreaming": false,
+      "supportsCacheControlOnTools": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 2.8,
+      "output": 8.8,
+      "cacheRead": 0.52,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "fireworks",
@@ -3079,7 +5724,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "sendSessionAffinityHeaders": true,
+      "supportsEagerToolInputStreaming": false,
+      "supportsCacheControlOnTools": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 2,
+      "output": 8,
+      "cacheRead": 0.3,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "fireworks",
@@ -3092,7 +5749,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "sendSessionAffinityHeaders": true,
+      "supportsEagerToolInputStreaming": false,
+      "supportsCacheControlOnTools": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 2,
+      "output": 8,
+      "cacheRead": 0.3,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "fireworks",
@@ -3105,7 +5774,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "sendSessionAffinityHeaders": true,
+      "supportsEagerToolInputStreaming": false,
+      "supportsCacheControlOnTools": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 1.9,
+      "output": 8,
+      "cacheRead": 0.38,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "fireworks",
@@ -3117,7 +5798,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": "none",
+      "minimal": null,
+      "low": "high",
+      "medium": "high",
+      "high": "high",
+      "xhigh": null,
+      "max": "max"
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 1.4,
+      "output": 4.4,
+      "cacheRead": 0.14,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "fireworks",
@@ -3129,7 +5829,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": "none",
+      "minimal": null,
+      "low": "high",
+      "medium": "high",
+      "high": "high",
+      "xhigh": null,
+      "max": "max"
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 2.1,
+      "output": 6.6,
+      "cacheRead": 0.21,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "github-copilot",
@@ -3142,7 +5861,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsEagerToolInputStreaming": false
+    },
+    "cost": {
+      "input": 1,
+      "output": 5,
+      "cacheRead": 0.1,
+      "cacheWrite": 1.25
+    }
   },
   {
     "provider": "github-copilot",
@@ -3155,7 +5883,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "github-copilot",
@@ -3168,7 +5902,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "max": "max"
+    },
+    "compat": {
+      "forceAdaptiveThinking": true
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "github-copilot",
@@ -3181,7 +5927,22 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max",
+      "minimal": "low"
+    },
+    "compat": {
+      "forceAdaptiveThinking": true,
+      "supportsTemperature": false
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "github-copilot",
@@ -3194,7 +5955,22 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max",
+      "minimal": "low"
+    },
+    "compat": {
+      "forceAdaptiveThinking": true,
+      "supportsTemperature": false
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "github-copilot",
@@ -3207,7 +5983,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "forceAdaptiveThinking": true,
+      "supportsTemperature": false
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "github-copilot",
@@ -3220,7 +6010,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsEagerToolInputStreaming": false
+    },
+    "cost": {
+      "input": 3,
+      "output": 15,
+      "cacheRead": 0.3,
+      "cacheWrite": 3.75
+    }
   },
   {
     "provider": "github-copilot",
@@ -3233,7 +6032,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsEagerToolInputStreaming": false
+    },
+    "cost": {
+      "input": 3,
+      "output": 15,
+      "cacheRead": 0.3,
+      "cacheWrite": 3.75
+    }
   },
   {
     "provider": "github-copilot",
@@ -3246,7 +6054,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "max": "max",
+      "minimal": "low"
+    },
+    "compat": {
+      "forceAdaptiveThinking": true
+    },
+    "cost": {
+      "input": 3,
+      "output": 15,
+      "cacheRead": 0.3,
+      "cacheWrite": 3.75
+    }
   },
   {
     "provider": "github-copilot",
@@ -3259,7 +6080,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "forceAdaptiveThinking": true
+    },
+    "cost": {
+      "input": 2,
+      "output": 10,
+      "cacheRead": 0.2,
+      "cacheWrite": 2.5
+    }
   },
   {
     "provider": "github-copilot",
@@ -3272,7 +6106,23 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false
+    },
+    "cost": {
+      "input": 10,
+      "output": 50,
+      "cacheRead": 1,
+      "cacheWrite": 12.5
+    }
   },
   {
     "provider": "github-copilot",
@@ -3285,7 +6135,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false
+    },
+    "cost": {
+      "input": 1.25,
+      "output": 10,
+      "cacheRead": 0.125,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "github-copilot",
@@ -3298,7 +6159,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false
+    },
+    "cost": {
+      "input": 0.5,
+      "output": 3,
+      "cacheRead": 0.05,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "github-copilot",
@@ -3311,7 +6183,27 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false
+    },
+    "cost": {
+      "input": 2,
+      "output": 12,
+      "cacheRead": 0.2,
+      "cacheWrite": 0,
+      "tiers": [
+        {
+          "inputTokensAbove": 200000,
+          "input": 4,
+          "output": 18,
+          "cacheRead": 0.4,
+          "cacheWrite": 0
+        }
+      ]
+    }
   },
   {
     "provider": "github-copilot",
@@ -3324,7 +6216,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false
+    },
+    "cost": {
+      "input": 1.5,
+      "output": 9,
+      "cacheRead": 0.15,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "github-copilot",
@@ -3337,7 +6240,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false
+    },
+    "cost": {
+      "input": 2,
+      "output": 8,
+      "cacheRead": 0.5,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "github-copilot",
@@ -3350,7 +6264,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false
+    },
+    "cost": {
+      "input": 0.95,
+      "output": 4,
+      "cacheRead": 0.19,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "github-copilot",
@@ -3363,7 +6288,25 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": "low",
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 0.25,
+      "output": 2,
+      "cacheRead": 0.025,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "github-copilot",
@@ -3376,7 +6319,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": "low",
+      "xhigh": "xhigh"
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1.75,
+      "output": 14,
+      "cacheRead": 0.175,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "github-copilot",
@@ -3389,7 +6346,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": "low",
+      "xhigh": "xhigh"
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1.75,
+      "output": 14,
+      "cacheRead": 0.175,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "github-copilot",
@@ -3402,7 +6373,25 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": "low",
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": null
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1.75,
+      "output": 14,
+      "cacheRead": 0.175,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "github-copilot",
@@ -3415,7 +6404,34 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": "low",
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": null
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 2.5,
+      "output": 15,
+      "cacheRead": 0.25,
+      "cacheWrite": 0,
+      "tiers": [
+        {
+          "inputTokensAbove": 272000,
+          "input": 5,
+          "output": 22.5,
+          "cacheRead": 0.5,
+          "cacheWrite": 0
+        }
+      ]
+    }
   },
   {
     "provider": "github-copilot",
@@ -3428,7 +6444,25 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": "low",
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": null
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 0.75,
+      "output": 4.5,
+      "cacheRead": 0.075,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "github-copilot",
@@ -3441,7 +6475,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": "low",
+      "xhigh": "xhigh"
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 0.2,
+      "output": 1.25,
+      "cacheRead": 0.02,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "github-copilot",
@@ -3454,7 +6502,34 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": "low",
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": null
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 5,
+      "output": 30,
+      "cacheRead": 0.5,
+      "cacheWrite": 0,
+      "tiers": [
+        {
+          "inputTokensAbove": 272000,
+          "input": 10,
+          "output": 45,
+          "cacheRead": 1,
+          "cacheWrite": 0
+        }
+      ]
+    }
   },
   {
     "provider": "github-copilot",
@@ -3467,7 +6542,34 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": "low",
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1,
+      "output": 6,
+      "cacheRead": 0.1,
+      "cacheWrite": 1.25,
+      "tiers": [
+        {
+          "inputTokensAbove": 200000,
+          "input": 2,
+          "output": 9,
+          "cacheRead": 0.2,
+          "cacheWrite": 2.5
+        }
+      ]
+    }
   },
   {
     "provider": "github-copilot",
@@ -3480,7 +6582,34 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": "low",
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 5,
+      "output": 30,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25,
+      "tiers": [
+        {
+          "inputTokensAbove": 272000,
+          "input": 10,
+          "output": 45,
+          "cacheRead": 1,
+          "cacheWrite": 12.5
+        }
+      ]
+    }
   },
   {
     "provider": "github-copilot",
@@ -3493,7 +6622,34 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": "low",
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 2.5,
+      "output": 15,
+      "cacheRead": 0.25,
+      "cacheWrite": 3.125,
+      "tiers": [
+        {
+          "inputTokensAbove": 272000,
+          "input": 5,
+          "output": 22.5,
+          "cacheRead": 0.5,
+          "cacheWrite": 6.25
+        }
+      ]
+    }
   },
   {
     "provider": "github-copilot",
@@ -3505,7 +6661,22 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "cost": {
+      "input": 0.75,
+      "output": 4.5,
+      "cacheRead": 0.075,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "google",
@@ -3518,7 +6689,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 2,
+      "output": 12,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "google",
@@ -3531,7 +6708,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 2,
+      "output": 12,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "google",
@@ -3544,7 +6727,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.1,
+      "output": 0.4,
+      "cacheRead": 0.025,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "google",
@@ -3557,7 +6746,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.075,
+      "output": 0.3,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "google",
@@ -3570,7 +6765,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 1.25,
+      "output": 10,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "google",
@@ -3583,7 +6784,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.3,
+      "output": 2.5,
+      "cacheRead": 0.03,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "google",
@@ -3596,7 +6803,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.1,
+      "output": 0.4,
+      "cacheRead": 0.01,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "google",
@@ -3609,7 +6822,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 1.25,
+      "output": 10,
+      "cacheRead": 0.125,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "google",
@@ -3622,7 +6841,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null
+    },
+    "cost": {
+      "input": 0.5,
+      "output": 3,
+      "cacheRead": 0.05,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "google",
@@ -3635,7 +6863,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "LOW",
+      "medium": null,
+      "high": "HIGH"
+    },
+    "cost": {
+      "input": 2,
+      "output": 12,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "google",
@@ -3648,7 +6889,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null
+    },
+    "cost": {
+      "input": 0.25,
+      "output": 1.5,
+      "cacheRead": 0.025,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "google",
@@ -3661,7 +6911,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null
+    },
+    "cost": {
+      "input": 0.25,
+      "output": 30,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "google",
@@ -3674,7 +6933,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null
+    },
+    "cost": {
+      "input": 0.25,
+      "output": 1.5,
+      "cacheRead": 0.025,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "google",
@@ -3687,7 +6955,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null
+    },
+    "cost": {
+      "input": 0.75,
+      "output": 4.5,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "google",
@@ -3700,7 +6977,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "LOW",
+      "medium": null,
+      "high": "HIGH"
+    },
+    "cost": {
+      "input": 2,
+      "output": 12,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "google",
@@ -3713,7 +7003,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "LOW",
+      "medium": null,
+      "high": "HIGH"
+    },
+    "cost": {
+      "input": 2,
+      "output": 12,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "google",
@@ -3726,7 +7029,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null
+    },
+    "cost": {
+      "input": 1.5,
+      "output": 9,
+      "cacheRead": 0.15,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "google",
@@ -3739,7 +7051,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null
+    },
+    "cost": {
+      "input": 0.3,
+      "output": 2.5,
+      "cacheRead": 0.03,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "google",
@@ -3752,7 +7073,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null
+    },
+    "cost": {
+      "input": 1.5,
+      "output": 7.5,
+      "cacheRead": 0.15,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "google",
@@ -3765,7 +7095,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null
+    },
+    "cost": {
+      "input": 1.5,
+      "output": 9,
+      "cacheRead": 0.15,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "google",
@@ -3778,7 +7117,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null
+    },
+    "cost": {
+      "input": 0.25,
+      "output": 1.5,
+      "cacheRead": 0.025,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "google",
@@ -3791,7 +7139,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 1,
+      "output": 5,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "google",
@@ -3804,7 +7158,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": "MINIMAL",
+      "low": null,
+      "medium": null,
+      "high": "HIGH"
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "google",
@@ -3817,7 +7184,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": "MINIMAL",
+      "low": null,
+      "medium": null,
+      "high": "HIGH"
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "google-vertex",
@@ -3830,7 +7210,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.3,
+      "output": 2.5,
+      "cacheRead": 0.03,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "google-vertex",
@@ -3843,7 +7229,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.1,
+      "output": 0.4,
+      "cacheRead": 0.01,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "google-vertex",
@@ -3856,7 +7248,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 1.25,
+      "output": 10,
+      "cacheRead": 0.125,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "google-vertex",
@@ -3869,7 +7267,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null
+    },
+    "cost": {
+      "input": 0.5,
+      "output": 3,
+      "cacheRead": 0.05,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "google-vertex",
@@ -3882,7 +7289,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null
+    },
+    "cost": {
+      "input": 0.25,
+      "output": 1.5,
+      "cacheRead": 0.025,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "google-vertex",
@@ -3895,7 +7311,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "LOW",
+      "medium": null,
+      "high": "HIGH"
+    },
+    "cost": {
+      "input": 2,
+      "output": 12,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "google-vertex",
@@ -3908,7 +7337,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "LOW",
+      "medium": null,
+      "high": "HIGH"
+    },
+    "cost": {
+      "input": 2,
+      "output": 12,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "google-vertex",
@@ -3921,7 +7363,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null
+    },
+    "cost": {
+      "input": 1.5,
+      "output": 9,
+      "cacheRead": 0.15,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "google-vertex",
@@ -3934,7 +7385,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null
+    },
+    "cost": {
+      "input": 0.3,
+      "output": 2.5,
+      "cacheRead": 0.03,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "google-vertex",
@@ -3947,7 +7407,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null
+    },
+    "cost": {
+      "input": 1.5,
+      "output": 7.5,
+      "cacheRead": 0.15,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "google-vertex",
@@ -3960,7 +7429,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null
+    },
+    "cost": {
+      "input": 1.5,
+      "output": 9,
+      "cacheRead": 0.15,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "google-vertex",
@@ -3973,7 +7451,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null
+    },
+    "cost": {
+      "input": 0.25,
+      "output": 1.5,
+      "cacheRead": 0.025,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "groq",
@@ -3985,7 +7472,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.05,
+      "output": 0.08,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "groq",
@@ -3997,7 +7490,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.59,
+      "output": 0.79,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "groq",
@@ -4010,7 +7509,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.11,
+      "output": 0.34,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "groq",
@@ -4022,7 +7527,22 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "cost": {
+      "input": 0.15,
+      "output": 0.6,
+      "cacheRead": 0.075,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "groq",
@@ -4034,7 +7554,22 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "cost": {
+      "input": 0.075,
+      "output": 0.3,
+      "cacheRead": 0.0375,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "groq",
@@ -4046,7 +7581,22 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "cost": {
+      "input": 0.075,
+      "output": 0.3,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "groq",
@@ -4058,7 +7608,22 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": "none",
+      "minimal": null,
+      "low": null,
+      "medium": null,
+      "high": "default",
+      "xhigh": null,
+      "max": null
+    },
+    "cost": {
+      "input": 0.29,
+      "output": 0.59,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4070,7 +7635,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.3,
+      "output": 1.2,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4082,7 +7656,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.3,
+      "output": 1.2,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4094,7 +7677,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.3,
+      "output": 1.2,
+      "cacheRead": 0.03,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4106,7 +7698,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.3,
+      "output": 1.2,
+      "cacheRead": 0.06,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4119,7 +7720,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.3,
+      "output": 1.2,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4131,7 +7741,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.2,
+      "output": 0.8,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4143,7 +7762,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.3,
+      "output": 3,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4155,7 +7783,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.29,
+      "output": 0.59,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4167,7 +7804,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.07,
+      "output": 0.26,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4179,7 +7825,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 2,
+      "output": 2,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4191,7 +7846,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.2,
+      "output": 1.5,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4203,7 +7867,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.25,
+      "output": 1,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4215,7 +7888,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.3,
+      "output": 2,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4228,7 +7910,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.4,
+      "output": 3.2,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4241,7 +7932,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.3,
+      "output": 2.4,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4254,7 +7954,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.25,
+      "output": 2,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4267,7 +7976,25 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": "none",
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.6,
+      "output": 3.6,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4280,7 +8007,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.17,
+      "output": 0.25,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4293,7 +8029,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.47,
+      "output": 3.19,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4306,7 +8051,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.15,
+      "output": 0.95,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4318,7 +8072,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.1,
+      "output": 0.3,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4330,7 +8093,25 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": "none",
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": null
+    },
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.4,
+      "output": 2,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4342,7 +8123,25 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": "none",
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": null
+    },
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 1,
+      "output": 3,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4354,7 +8153,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.7,
+      "output": 2.5,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4366,7 +8174,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 3,
+      "output": 5,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4378,7 +8195,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.28,
+      "output": 0.4,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4390,7 +8216,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.14,
+      "output": 0.28,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4402,7 +8237,25 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": null,
+      "medium": null,
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.435,
+      "output": 0.87,
+      "cacheRead": 0.003625,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4415,7 +8268,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.13,
+      "output": 0.4,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4428,7 +8290,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.14,
+      "output": 0.4,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4440,7 +8311,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.59,
+      "output": 0.79,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4452,7 +8332,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 1,
+      "output": 3,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4464,7 +8353,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 1,
+      "output": 3,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4476,7 +8374,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.6,
+      "output": 2.5,
+      "cacheRead": 0.15,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4489,7 +8396,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.6,
+      "output": 3,
+      "cacheRead": 0.1,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4502,7 +8418,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.95,
+      "output": 4,
+      "cacheRead": 0.16,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4515,7 +8440,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.95,
+      "output": 4,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4527,7 +8461,25 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.25,
+      "output": 0.69,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4539,7 +8491,25 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.1,
+      "output": 0.5,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4551,7 +8521,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.1,
+      "output": 0.3,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4564,7 +8543,25 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.2,
+      "output": 1.15,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4576,7 +8573,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.6,
+      "output": 2.2,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4588,7 +8594,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.13,
+      "output": 0.85,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4601,7 +8616,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.6,
+      "output": 1.8,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4613,7 +8637,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.55,
+      "output": 2.2,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4625,7 +8658,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0.6,
+      "output": 2.2,
+      "cacheRead": 0.11,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4637,7 +8679,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4649,7 +8700,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 1,
+      "output": 3.2,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4661,7 +8721,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 1,
+      "output": 3.2,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "huggingface",
@@ -4673,7 +8742,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false
+    },
+    "cost": {
+      "input": 1.4,
+      "output": 4.4,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "kimi-coding",
@@ -4686,7 +8764,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": null,
+      "high": "high",
+      "xhigh": null,
+      "max": "max"
+    },
+    "compat": {
+      "allowEmptySignature": true,
+      "forceAdaptiveThinking": true
+    },
+    "cost": {
+      "input": 3,
+      "output": 15,
+      "cacheRead": 0.3,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "kimi-coding",
@@ -4699,7 +8796,25 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": null,
+      "high": "high",
+      "xhigh": null,
+      "max": "max"
+    },
+    "compat": {
+      "forceAdaptiveThinking": true
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "kimi-coding",
@@ -4712,7 +8827,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "allowEmptySignature": true,
+      "forceAdaptiveThinking": true
+    },
+    "cost": {
+      "input": 0.95,
+      "output": 4,
+      "cacheRead": 0.19,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "kimi-coding",
@@ -4725,7 +8850,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "forceAdaptiveThinking": true
+    },
+    "cost": {
+      "input": 1.9,
+      "output": 8,
+      "cacheRead": 0.38,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "minimax",
@@ -4737,7 +8871,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.3,
+      "output": 1.2,
+      "cacheRead": 0.06,
+      "cacheWrite": 0.375
+    }
   },
   {
     "provider": "minimax",
@@ -4749,7 +8889,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.6,
+      "output": 2.4,
+      "cacheRead": 0.06,
+      "cacheWrite": 0.375
+    }
   },
   {
     "provider": "minimax",
@@ -4762,7 +8908,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.3,
+      "output": 1.2,
+      "cacheRead": 0.06,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "minimax-cn",
@@ -4774,7 +8926,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.3,
+      "output": 1.2,
+      "cacheRead": 0.06,
+      "cacheWrite": 0.375
+    }
   },
   {
     "provider": "minimax-cn",
@@ -4786,7 +8944,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.6,
+      "output": 2.4,
+      "cacheRead": 0.06,
+      "cacheWrite": 0.375
+    }
   },
   {
     "provider": "minimax-cn",
@@ -4799,7 +8963,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.3,
+      "output": 1.2,
+      "cacheRead": 0.06,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "mistral",
@@ -4811,7 +8981,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.3,
+      "output": 0.9,
+      "cacheRead": 0.03,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "mistral",
@@ -4823,7 +8999,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.4,
+      "output": 2,
+      "cacheRead": 0.04,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "mistral",
@@ -4835,7 +9017,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.4,
+      "output": 2,
+      "cacheRead": 0.04,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "mistral",
@@ -4847,7 +9035,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.4,
+      "output": 2,
+      "cacheRead": 0.04,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "mistral",
@@ -4859,7 +9053,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.4,
+      "output": 2,
+      "cacheRead": 0.04,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "mistral",
@@ -4871,7 +9071,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.1,
+      "output": 0.3,
+      "cacheRead": 0.01,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "mistral",
@@ -4883,7 +9089,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.1,
+      "output": 0.3,
+      "cacheRead": 0.01,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "mistral",
@@ -4896,7 +9108,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "mistral",
@@ -4908,7 +9126,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 2,
+      "output": 5,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "mistral",
@@ -4920,7 +9144,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.5,
+      "output": 1.5,
+      "cacheRead": 0.05,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "mistral",
@@ -4932,7 +9162,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.04,
+      "output": 0.04,
+      "cacheRead": 0.004,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "mistral",
@@ -4944,7 +9180,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.1,
+      "output": 0.1,
+      "cacheRead": 0.01,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "mistral",
@@ -4956,7 +9198,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 2,
+      "output": 6,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "mistral",
@@ -4969,7 +9217,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.5,
+      "output": 1.5,
+      "cacheRead": 0.05,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "mistral",
@@ -4982,7 +9236,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.5,
+      "output": 1.5,
+      "cacheRead": 0.05,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "mistral",
@@ -4995,7 +9255,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.4,
+      "output": 2,
+      "cacheRead": 0.04,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "mistral",
@@ -5008,7 +9274,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.4,
+      "output": 2,
+      "cacheRead": 0.04,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "mistral",
@@ -5021,7 +9293,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 1.5,
+      "output": 7.5,
+      "cacheRead": 0.15,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "mistral",
@@ -5034,7 +9312,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 1.5,
+      "output": 7.5,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "mistral",
@@ -5047,7 +9331,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 1.5,
+      "output": 7.5,
+      "cacheRead": 0.15,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "mistral",
@@ -5059,7 +9349,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.15,
+      "output": 0.15,
+      "cacheRead": 0.015,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "mistral",
@@ -5072,7 +9368,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.1,
+      "output": 0.3,
+      "cacheRead": 0.01,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "mistral",
@@ -5085,7 +9387,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.15,
+      "output": 0.6,
+      "cacheRead": 0.015,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "mistral",
@@ -5098,7 +9406,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.15,
+      "output": 0.6,
+      "cacheRead": 0.015,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "mistral",
@@ -5110,7 +9424,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.25,
+      "output": 0.25,
+      "cacheRead": 0.025,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "mistral",
@@ -5122,7 +9442,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.15,
+      "output": 0.15,
+      "cacheRead": 0.015,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "mistral",
@@ -5134,7 +9460,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 2,
+      "output": 6,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "mistral",
@@ -5146,7 +9478,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.7,
+      "output": 0.7,
+      "cacheRead": 0.07,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "mistral",
@@ -5159,7 +9497,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.15,
+      "output": 0.15,
+      "cacheRead": 0.015,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "mistral",
@@ -5172,7 +9516,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 2,
+      "output": 6,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "moonshotai",
@@ -5184,7 +9534,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 0.6,
+      "output": 2.5,
+      "cacheRead": 0.15,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "moonshotai",
@@ -5196,7 +9560,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 0.6,
+      "output": 2.5,
+      "cacheRead": 0.15,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "moonshotai",
@@ -5208,7 +9586,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 0.6,
+      "output": 2.5,
+      "cacheRead": 0.15,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "moonshotai",
@@ -5220,7 +9612,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 1.15,
+      "output": 8,
+      "cacheRead": 0.15,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "moonshotai",
@@ -5232,7 +9638,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 2.4,
+      "output": 10,
+      "cacheRead": 0.6,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "moonshotai",
@@ -5245,7 +9665,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 0.6,
+      "output": 3,
+      "cacheRead": 0.1,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "moonshotai",
@@ -5258,7 +9692,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 0.95,
+      "output": 4,
+      "cacheRead": 0.16,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "moonshotai",
@@ -5271,7 +9719,24 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 0.95,
+      "output": 4,
+      "cacheRead": 0.19,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "moonshotai",
@@ -5284,7 +9749,24 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 1.9,
+      "output": 8,
+      "cacheRead": 0.38,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "moonshotai",
@@ -5297,7 +9779,32 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": null,
+      "high": "high",
+      "xhigh": null,
+      "max": "max"
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": true,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "thinkingFormat": "openai",
+      "requiresReasoningContentOnAssistantMessages": true,
+      "deferredToolsMode": "kimi"
+    },
+    "cost": {
+      "input": 3,
+      "output": 15,
+      "cacheRead": 0.3,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "moonshotai-cn",
@@ -5309,7 +9816,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 0.6,
+      "output": 2.5,
+      "cacheRead": 0.15,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "moonshotai-cn",
@@ -5321,7 +9842,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 0.6,
+      "output": 2.5,
+      "cacheRead": 0.15,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "moonshotai-cn",
@@ -5333,7 +9868,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 0.6,
+      "output": 2.5,
+      "cacheRead": 0.15,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "moonshotai-cn",
@@ -5345,7 +9894,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 1.15,
+      "output": 8,
+      "cacheRead": 0.15,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "moonshotai-cn",
@@ -5357,7 +9920,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 2.4,
+      "output": 10,
+      "cacheRead": 0.6,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "moonshotai-cn",
@@ -5370,7 +9947,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 0.6,
+      "output": 3,
+      "cacheRead": 0.1,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "moonshotai-cn",
@@ -5383,7 +9974,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 0.95,
+      "output": 4,
+      "cacheRead": 0.16,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "moonshotai-cn",
@@ -5396,7 +10001,24 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 0.95,
+      "output": 4,
+      "cacheRead": 0.19,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "moonshotai-cn",
@@ -5409,7 +10031,24 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 1.9,
+      "output": 8,
+      "cacheRead": 0.38,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "moonshotai-cn",
@@ -5422,7 +10061,32 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": null,
+      "high": "high",
+      "xhigh": null,
+      "max": "max"
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": true,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "thinkingFormat": "openai",
+      "requiresReasoningContentOnAssistantMessages": true,
+      "deferredToolsMode": "kimi"
+    },
+    "cost": {
+      "input": 3,
+      "output": 15,
+      "cacheRead": 0.3,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "nvidia",
@@ -5434,7 +10098,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "nvidia",
@@ -5446,7 +10124,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "nvidia",
@@ -5459,7 +10151,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "nvidia",
@@ -5472,7 +10178,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "nvidia",
@@ -5484,7 +10204,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "nvidia",
@@ -5497,7 +10231,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "nvidia",
@@ -5510,7 +10258,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "nvidia",
@@ -5523,7 +10285,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "nvidia",
@@ -5535,7 +10311,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "nvidia",
@@ -5548,7 +10338,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "nvidia",
@@ -5560,7 +10364,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0.2,
+      "output": 0.8,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "nvidia",
@@ -5572,7 +10390,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0.5,
+      "output": 2.5,
+      "cacheRead": 0.15,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "nvidia",
@@ -5584,7 +10416,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "nvidia",
@@ -5596,7 +10442,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "nvidia",
@@ -5608,7 +10468,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "nvidia",
@@ -5620,7 +10494,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "nvidia",
@@ -5633,7 +10521,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "nvidia",
@@ -5645,7 +10547,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openai",
@@ -5657,7 +10573,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 30,
+      "output": 60,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openai",
@@ -5670,7 +10595,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 10,
+      "output": 30,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openai",
@@ -5683,7 +10617,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 2,
+      "output": 8,
+      "cacheRead": 0.5,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openai",
@@ -5696,7 +10639,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 0.4,
+      "output": 1.6,
+      "cacheRead": 0.1,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openai",
@@ -5709,7 +10661,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 0.1,
+      "output": 0.4,
+      "cacheRead": 0.025,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openai",
@@ -5722,7 +10683,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 2.5,
+      "output": 10,
+      "cacheRead": 1.25,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openai",
@@ -5735,7 +10705,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 5,
+      "output": 15,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openai",
@@ -5748,7 +10727,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 2.5,
+      "output": 10,
+      "cacheRead": 1.25,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openai",
@@ -5761,7 +10749,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 2.5,
+      "output": 10,
+      "cacheRead": 1.25,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openai",
@@ -5774,7 +10771,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 0.15,
+      "output": 0.6,
+      "cacheRead": 0.075,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openai",
@@ -5787,7 +10793,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": "minimal",
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "supportsStrictMode": true,
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1.25,
+      "output": 10,
+      "cacheRead": 0.125,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openai",
@@ -5800,7 +10825,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null
+    },
+    "compat": {
+      "supportsStrictMode": true,
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1.25,
+      "output": 10,
+      "cacheRead": 0.125,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openai",
@@ -5813,7 +10851,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": "minimal",
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "supportsStrictMode": true,
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 0.25,
+      "output": 2,
+      "cacheRead": 0.025,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openai",
@@ -5826,7 +10883,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": "minimal",
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "supportsStrictMode": true,
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 0.05,
+      "output": 0.4,
+      "cacheRead": 0.005,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openai",
@@ -5839,7 +10915,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": null,
+      "medium": null,
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "supportsStrictMode": true,
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 15,
+      "output": 120,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openai",
@@ -5852,7 +10947,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": "none",
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "supportsStrictMode": true,
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1.25,
+      "output": 10,
+      "cacheRead": 0.125,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openai",
@@ -5865,7 +10979,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": "none",
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": null
+    },
+    "compat": {
+      "supportsStrictMode": true,
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1.75,
+      "output": 14,
+      "cacheRead": 0.175,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openai",
@@ -5878,7 +11011,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": null,
+      "medium": "medium",
+      "high": null,
+      "xhigh": "xhigh",
+      "max": null
+    },
+    "compat": {
+      "supportsStrictMode": true,
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1.75,
+      "output": 14,
+      "cacheRead": 0.175,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openai",
@@ -5891,7 +11043,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": null,
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": null
+    },
+    "compat": {
+      "supportsStrictMode": true,
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 21,
+      "output": 168,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openai",
@@ -5904,7 +11075,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "xhigh": "xhigh"
+    },
+    "compat": {
+      "supportsStrictMode": true,
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1.75,
+      "output": 14,
+      "cacheRead": 0.175,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openai",
@@ -5917,7 +11102,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": "none",
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": null
+    },
+    "compat": {
+      "supportsStrictMode": true,
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1.75,
+      "output": 14,
+      "cacheRead": 0.175,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openai",
@@ -5930,7 +11134,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": null
+    },
+    "compat": {
+      "supportsStrictMode": true,
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1.75,
+      "output": 14,
+      "cacheRead": 0.175,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openai",
@@ -5943,7 +11166,36 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": "none",
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": null
+    },
+    "compat": {
+      "supportsStrictMode": true,
+      "supportsOpenAIGrammarTools": true,
+      "supportsToolSearch": true
+    },
+    "cost": {
+      "input": 2.5,
+      "output": 15,
+      "cacheRead": 0.25,
+      "cacheWrite": 0,
+      "tiers": [
+        {
+          "inputTokensAbove": 272000,
+          "input": 5,
+          "output": 22.5,
+          "cacheRead": 0.5,
+          "cacheWrite": 0
+        }
+      ]
+    }
   },
   {
     "provider": "openai",
@@ -5956,7 +11208,27 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": "none",
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": null
+    },
+    "compat": {
+      "supportsStrictMode": true,
+      "supportsOpenAIGrammarTools": true,
+      "supportsToolSearch": true
+    },
+    "cost": {
+      "input": 0.75,
+      "output": 4.5,
+      "cacheRead": 0.075,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openai",
@@ -5969,7 +11241,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": "none",
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": null
+    },
+    "compat": {
+      "supportsStrictMode": true,
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 0.2,
+      "output": 1.25,
+      "cacheRead": 0.02,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openai",
@@ -5982,7 +11273,36 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": null,
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": null
+    },
+    "compat": {
+      "supportsStrictMode": true,
+      "supportsOpenAIGrammarTools": true,
+      "supportsToolSearch": true
+    },
+    "cost": {
+      "input": 30,
+      "output": 180,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "tiers": [
+        {
+          "inputTokensAbove": 272000,
+          "input": 60,
+          "output": 270,
+          "cacheRead": 0,
+          "cacheWrite": 0
+        }
+      ]
+    }
   },
   {
     "provider": "openai",
@@ -5995,7 +11315,36 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": "none",
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": null
+    },
+    "compat": {
+      "supportsStrictMode": true,
+      "supportsOpenAIGrammarTools": true,
+      "supportsToolSearch": true
+    },
+    "cost": {
+      "input": 5,
+      "output": 30,
+      "cacheRead": 0.5,
+      "cacheWrite": 0,
+      "tiers": [
+        {
+          "inputTokensAbove": 272000,
+          "input": 10,
+          "output": 45,
+          "cacheRead": 1,
+          "cacheWrite": 0
+        }
+      ]
+    }
   },
   {
     "provider": "openai",
@@ -6008,7 +11357,35 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": null,
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": null
+    },
+    "compat": {
+      "supportsStrictMode": true,
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 30,
+      "output": 180,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "tiers": [
+        {
+          "inputTokensAbove": 272000,
+          "input": 60,
+          "output": 270,
+          "cacheRead": 0,
+          "cacheWrite": 0
+        }
+      ]
+    }
   },
   {
     "provider": "openai",
@@ -6021,7 +11398,37 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": "none",
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "supportsStrictMode": true,
+      "supportsOpenAIGrammarTools": true,
+      "supportsToolSearch": true,
+      "supportsExplicitPromptCacheMode": true
+    },
+    "cost": {
+      "input": 1,
+      "output": 6,
+      "cacheRead": 0.1,
+      "cacheWrite": 1.25,
+      "tiers": [
+        {
+          "inputTokensAbove": 272000,
+          "input": 2,
+          "output": 9,
+          "cacheRead": 0.2,
+          "cacheWrite": 2.5
+        }
+      ]
+    }
   },
   {
     "provider": "openai",
@@ -6034,7 +11441,37 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": "none",
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "supportsStrictMode": true,
+      "supportsOpenAIGrammarTools": true,
+      "supportsToolSearch": true,
+      "supportsExplicitPromptCacheMode": true
+    },
+    "cost": {
+      "input": 5,
+      "output": 30,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25,
+      "tiers": [
+        {
+          "inputTokensAbove": 272000,
+          "input": 10,
+          "output": 45,
+          "cacheRead": 1,
+          "cacheWrite": 12.5
+        }
+      ]
+    }
   },
   {
     "provider": "openai",
@@ -6047,7 +11484,37 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": "none",
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "supportsStrictMode": true,
+      "supportsOpenAIGrammarTools": true,
+      "supportsToolSearch": true,
+      "supportsExplicitPromptCacheMode": true
+    },
+    "cost": {
+      "input": 2.5,
+      "output": 15,
+      "cacheRead": 0.25,
+      "cacheWrite": 3.125,
+      "tiers": [
+        {
+          "inputTokensAbove": 272000,
+          "input": 5,
+          "output": 22.5,
+          "cacheRead": 0.5,
+          "cacheWrite": 6.25
+        }
+      ]
+    }
   },
   {
     "provider": "openai",
@@ -6060,7 +11527,25 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": "minimal",
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": null
+    },
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 4,
+      "output": 24,
+      "cacheRead": 0.4,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openai",
@@ -6073,7 +11558,25 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 15,
+      "output": 60,
+      "cacheRead": 7.5,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openai",
@@ -6086,7 +11589,25 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 150,
+      "output": 600,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openai",
@@ -6099,7 +11620,25 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 2,
+      "output": 8,
+      "cacheRead": 0.5,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openai",
@@ -6111,7 +11650,25 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 1.1,
+      "output": 4.4,
+      "cacheRead": 0.55,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openai",
@@ -6124,7 +11681,25 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 20,
+      "output": 80,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openai",
@@ -6137,7 +11712,25 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "cost": {
+      "input": 1.1,
+      "output": 4.4,
+      "cacheRead": 0.275,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openai-codex",
@@ -6149,7 +11742,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "minimal": "low"
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1.75,
+      "output": 14,
+      "cacheRead": 0.175,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openai-codex",
@@ -6162,7 +11768,30 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "minimal": "low"
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true,
+      "supportsToolSearch": true
+    },
+    "cost": {
+      "input": 2.5,
+      "output": 15,
+      "cacheRead": 0.25,
+      "cacheWrite": 0,
+      "tiers": [
+        {
+          "inputTokensAbove": 272000,
+          "input": 5,
+          "output": 22.5,
+          "cacheRead": 0.5,
+          "cacheWrite": 0
+        }
+      ]
+    }
   },
   {
     "provider": "openai-codex",
@@ -6175,7 +11804,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "minimal": "low"
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true,
+      "supportsToolSearch": true
+    },
+    "cost": {
+      "input": 0.75,
+      "output": 4.5,
+      "cacheRead": 0.075,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openai-codex",
@@ -6188,7 +11831,30 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "minimal": "low"
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true,
+      "supportsToolSearch": true
+    },
+    "cost": {
+      "input": 5,
+      "output": 30,
+      "cacheRead": 0.5,
+      "cacheWrite": 0,
+      "tiers": [
+        {
+          "inputTokensAbove": 272000,
+          "input": 10,
+          "output": 45,
+          "cacheRead": 1,
+          "cacheWrite": 0
+        }
+      ]
+    }
   },
   {
     "provider": "openai-codex",
@@ -6201,7 +11867,31 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max",
+      "minimal": "low"
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true,
+      "supportsToolSearch": true
+    },
+    "cost": {
+      "input": 1,
+      "output": 6,
+      "cacheRead": 0.1,
+      "cacheWrite": 1.25,
+      "tiers": [
+        {
+          "inputTokensAbove": 272000,
+          "input": 2,
+          "output": 9,
+          "cacheRead": 0.2,
+          "cacheWrite": 2.5
+        }
+      ]
+    }
   },
   {
     "provider": "openai-codex",
@@ -6214,7 +11904,31 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max",
+      "minimal": "low"
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true,
+      "supportsToolSearch": true
+    },
+    "cost": {
+      "input": 5,
+      "output": 30,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25,
+      "tiers": [
+        {
+          "inputTokensAbove": 272000,
+          "input": 10,
+          "output": 45,
+          "cacheRead": 1,
+          "cacheWrite": 12.5
+        }
+      ]
+    }
   },
   {
     "provider": "openai-codex",
@@ -6227,7 +11941,31 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max",
+      "minimal": "low"
+    },
+    "compat": {
+      "supportsOpenAIGrammarTools": true,
+      "supportsToolSearch": true
+    },
+    "cost": {
+      "input": 2.5,
+      "output": 15,
+      "cacheRead": 0.25,
+      "cacheWrite": 3.125,
+      "tiers": [
+        {
+          "inputTokensAbove": 272000,
+          "input": 5,
+          "output": 22.5,
+          "cacheRead": 0.5,
+          "cacheWrite": 6.25
+        }
+      ]
+    }
   },
   {
     "provider": "opencode",
@@ -6240,7 +11978,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "forceAdaptiveThinking": true
+    },
+    "cost": {
+      "input": 10,
+      "output": 50,
+      "cacheRead": 1,
+      "cacheWrite": 12.5
+    }
   },
   {
     "provider": "opencode",
@@ -6253,7 +12005,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 1,
+      "output": 5,
+      "cacheRead": 0.1,
+      "cacheWrite": 1.25
+    }
   },
   {
     "provider": "opencode",
@@ -6266,7 +12024,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 15,
+      "output": 75,
+      "cacheRead": 1.5,
+      "cacheWrite": 18.75
+    }
   },
   {
     "provider": "opencode",
@@ -6279,7 +12043,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "opencode",
@@ -6292,7 +12062,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "max": "max"
+    },
+    "compat": {
+      "forceAdaptiveThinking": true
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "opencode",
@@ -6305,7 +12087,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "forceAdaptiveThinking": true,
+      "supportsTemperature": false
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "opencode",
@@ -6318,7 +12114,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "forceAdaptiveThinking": true,
+      "supportsTemperature": false
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "opencode",
@@ -6331,7 +12141,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "forceAdaptiveThinking": true,
+      "supportsTemperature": false
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "opencode",
@@ -6344,7 +12168,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 3,
+      "output": 15,
+      "cacheRead": 0.3,
+      "cacheWrite": 3.75
+    }
   },
   {
     "provider": "opencode",
@@ -6357,7 +12187,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 3,
+      "output": 15,
+      "cacheRead": 0.3,
+      "cacheWrite": 3.75
+    }
   },
   {
     "provider": "opencode",
@@ -6370,7 +12206,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "max": "max"
+    },
+    "compat": {
+      "forceAdaptiveThinking": true
+    },
+    "cost": {
+      "input": 3,
+      "output": 15,
+      "cacheRead": 0.3,
+      "cacheWrite": 3.75
+    }
   },
   {
     "provider": "opencode",
@@ -6383,7 +12231,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "forceAdaptiveThinking": true
+    },
+    "cost": {
+      "input": 2,
+      "output": 10,
+      "cacheRead": 0.2,
+      "cacheWrite": 2.5
+    }
   },
   {
     "provider": "opencode",
@@ -6396,7 +12257,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.2,
+      "output": 1.2,
+      "cacheRead": 0.02,
+      "cacheWrite": 0.25
+    }
   },
   {
     "provider": "opencode",
@@ -6409,7 +12276,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.5,
+      "output": 3,
+      "cacheRead": 0.05,
+      "cacheWrite": 0.625
+    }
   },
   {
     "provider": "opencode",
@@ -6422,7 +12295,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null
+    },
+    "cost": {
+      "input": 0.5,
+      "output": 3,
+      "cacheRead": 0.05,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6435,7 +12317,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "LOW",
+      "medium": null,
+      "high": "HIGH"
+    },
+    "cost": {
+      "input": 2,
+      "output": 12,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6448,7 +12343,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null
+    },
+    "cost": {
+      "input": 1.5,
+      "output": 9,
+      "cacheRead": 0.15,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6461,7 +12365,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null
+    },
+    "cost": {
+      "input": 0.3,
+      "output": 2.5,
+      "cacheRead": 0.03,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6474,7 +12387,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null
+    },
+    "cost": {
+      "input": 1.5,
+      "output": 7.5,
+      "cacheRead": 0.15,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6486,7 +12408,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "maxTokensField": "max_tokens"
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6498,7 +12431,29 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": null,
+      "medium": null,
+      "high": "high",
+      "xhigh": null,
+      "max": "max"
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "maxTokensField": "max_tokens",
+      "supportsLongCacheRetention": false,
+      "requiresReasoningContentOnAssistantMessages": true
+    },
+    "cost": {
+      "input": 0.14,
+      "output": 0.28,
+      "cacheRead": 0.028,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6510,7 +12465,28 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": null,
+      "medium": null,
+      "high": "high",
+      "xhigh": null,
+      "max": "max"
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "maxTokensField": "max_tokens",
+      "requiresReasoningContentOnAssistantMessages": true
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6522,7 +12498,29 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": null,
+      "medium": null,
+      "high": "high",
+      "xhigh": null,
+      "max": "max"
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "maxTokensField": "max_tokens",
+      "supportsLongCacheRetention": false,
+      "requiresReasoningContentOnAssistantMessages": true
+    },
+    "cost": {
+      "input": 1.74,
+      "output": 3.84,
+      "cacheRead": 0.145,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6534,7 +12532,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "maxTokensField": "max_tokens"
+    },
+    "cost": {
+      "input": 1,
+      "output": 3.2,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6546,7 +12555,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "maxTokensField": "max_tokens"
+    },
+    "cost": {
+      "input": 1.4,
+      "output": 4.4,
+      "cacheRead": 0.26,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6558,7 +12578,27 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": null,
+      "medium": null,
+      "high": "high",
+      "xhigh": null,
+      "max": "max"
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "maxTokensField": "max_tokens"
+    },
+    "cost": {
+      "input": 1.4,
+      "output": 4.4,
+      "cacheRead": 0.26,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6571,7 +12611,25 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": null,
+      "medium": null
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens"
+    },
+    "cost": {
+      "input": 1,
+      "output": 2,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6584,7 +12642,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "maxTokensField": "max_tokens",
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0.6,
+      "output": 3,
+      "cacheRead": 0.08,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6597,7 +12667,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "deepseek",
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0.95,
+      "output": 4,
+      "cacheRead": 0.16,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6610,7 +12694,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "maxTokensField": "max_tokens"
+    },
+    "cost": {
+      "input": 0.95,
+      "output": 4,
+      "cacheRead": 0.19,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6622,7 +12717,27 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "maxTokensField": "max_tokens"
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6634,7 +12749,27 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "maxTokensField": "max_tokens"
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6647,7 +12782,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "maxTokensField": "max_tokens"
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6659,7 +12805,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "maxTokensField": "max_tokens"
+    },
+    "cost": {
+      "input": 0.3,
+      "output": 1.2,
+      "cacheRead": 0.06,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6671,7 +12828,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "maxTokensField": "max_tokens",
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0.3,
+      "output": 1.2,
+      "cacheRead": 0.06,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6684,7 +12853,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "maxTokensField": "max_tokens"
+    },
+    "cost": {
+      "input": 0.3,
+      "output": 1.2,
+      "cacheRead": 0.06,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6696,7 +12876,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "maxTokensField": "max_tokens"
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6708,7 +12899,27 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": "none",
+      "minimal": null,
+      "low": null,
+      "medium": null,
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "maxTokensField": "max_tokens"
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6721,7 +12932,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": "minimal",
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "sessionAffinityFormat": "openai-nosession",
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1.07,
+      "output": 8.5,
+      "cacheRead": 0.107,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6734,7 +12964,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "sessionAffinityFormat": "openai-nosession",
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1.07,
+      "output": 8.5,
+      "cacheRead": 0.107,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6747,7 +12996,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": "minimal",
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "sessionAffinityFormat": "openai-nosession",
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 0.05,
+      "output": 0.4,
+      "cacheRead": 0.005,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6760,7 +13028,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "sessionAffinityFormat": "openai-nosession",
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1.07,
+      "output": 8.5,
+      "cacheRead": 0.107,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6773,7 +13060,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "sessionAffinityFormat": "openai-nosession",
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1.07,
+      "output": 8.5,
+      "cacheRead": 0.107,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6786,7 +13092,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": null
+    },
+    "compat": {
+      "sessionAffinityFormat": "openai-nosession",
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1.25,
+      "output": 10,
+      "cacheRead": 0.125,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6799,7 +13124,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "sessionAffinityFormat": "openai-nosession",
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 0.25,
+      "output": 2,
+      "cacheRead": 0.025,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6812,7 +13156,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": null
+    },
+    "compat": {
+      "sessionAffinityFormat": "openai-nosession",
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1.75,
+      "output": 14,
+      "cacheRead": 0.175,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6825,7 +13188,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": null
+    },
+    "compat": {
+      "sessionAffinityFormat": "openai-nosession",
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1.75,
+      "output": 14,
+      "cacheRead": 0.175,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6838,7 +13220,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": null
+    },
+    "compat": {
+      "sessionAffinityFormat": "openai-nosession",
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1.75,
+      "output": 14,
+      "cacheRead": 0.175,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6851,7 +13252,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": null
+    },
+    "compat": {
+      "sessionAffinityFormat": "openai-nosession",
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 2.5,
+      "output": 15,
+      "cacheRead": 0.25,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6864,7 +13284,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": null
+    },
+    "compat": {
+      "sessionAffinityFormat": "openai-nosession",
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 0.75,
+      "output": 4.5,
+      "cacheRead": 0.075,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6877,7 +13316,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": null
+    },
+    "compat": {
+      "sessionAffinityFormat": "openai-nosession",
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 0.2,
+      "output": 1.25,
+      "cacheRead": 0.02,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6890,7 +13348,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": null,
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": null
+    },
+    "compat": {
+      "sessionAffinityFormat": "openai-nosession",
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 30,
+      "output": 180,
+      "cacheRead": 30,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6903,7 +13380,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": null
+    },
+    "compat": {
+      "sessionAffinityFormat": "openai-nosession",
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 5,
+      "output": 30,
+      "cacheRead": 0.5,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6916,7 +13412,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": null,
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": null
+    },
+    "compat": {
+      "sessionAffinityFormat": "openai-nosession",
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 30,
+      "output": 180,
+      "cacheRead": 30,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode",
@@ -6929,7 +13444,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "sessionAffinityFormat": "openai-nosession",
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 1,
+      "output": 6,
+      "cacheRead": 0.1,
+      "cacheWrite": 1.25
+    }
   },
   {
     "provider": "opencode",
@@ -6942,7 +13476,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "sessionAffinityFormat": "openai-nosession",
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 5,
+      "output": 30,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "opencode",
@@ -6955,7 +13508,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "sessionAffinityFormat": "openai-nosession",
+      "supportsOpenAIGrammarTools": true
+    },
+    "cost": {
+      "input": 2.5,
+      "output": 15,
+      "cacheRead": 0.25,
+      "cacheWrite": 3.125
+    }
   },
   {
     "provider": "opencode",
@@ -6968,7 +13540,25 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "sessionAffinityFormat": "openai-nosession"
+    },
+    "cost": {
+      "input": 2,
+      "output": 6,
+      "cacheRead": 0.5,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode-go",
@@ -6981,7 +13571,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.3,
+      "output": 1.2,
+      "cacheRead": 0.06,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode-go",
@@ -6993,7 +13589,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 2.5,
+      "output": 7.5,
+      "cacheRead": 0.5,
+      "cacheWrite": 3.125
+    }
   },
   {
     "provider": "opencode-go",
@@ -7006,7 +13608,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.4,
+      "output": 1.6,
+      "cacheRead": 0.04,
+      "cacheWrite": 0.5
+    }
   },
   {
     "provider": "opencode-go",
@@ -7018,7 +13626,27 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "minimal": null,
+      "low": null,
+      "medium": null,
+      "high": "high",
+      "max": "max"
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "maxTokensField": "max_tokens",
+      "requiresReasoningContentOnAssistantMessages": true,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 0.14,
+      "output": 0.28,
+      "cacheRead": 0.0028,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode-go",
@@ -7030,7 +13658,27 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "minimal": null,
+      "low": null,
+      "medium": null,
+      "high": "high",
+      "max": "max"
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "maxTokensField": "max_tokens",
+      "requiresReasoningContentOnAssistantMessages": true,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 0.435,
+      "output": 0.87,
+      "cacheRead": 0.003625,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode-go",
@@ -7042,7 +13690,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "maxTokensField": "max_tokens"
+    },
+    "cost": {
+      "input": 1.4,
+      "output": 4.4,
+      "cacheRead": 0.26,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode-go",
@@ -7054,7 +13713,27 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": null,
+      "medium": null,
+      "high": "high",
+      "xhigh": null,
+      "max": "max"
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "maxTokensField": "max_tokens"
+    },
+    "cost": {
+      "input": 1.4,
+      "output": 4.4,
+      "cacheRead": 0.26,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode-go",
@@ -7066,7 +13745,27 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": "none",
+      "minimal": null,
+      "low": "low",
+      "medium": null,
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "maxTokensField": "max_tokens"
+    },
+    "cost": {
+      "input": 0.14,
+      "output": 0.58,
+      "cacheRead": 0.035,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode-go",
@@ -7079,7 +13778,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "minimal": null,
+      "low": null,
+      "medium": null
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "deepseek",
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0.95,
+      "output": 4,
+      "cacheRead": 0.16,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode-go",
@@ -7092,7 +13810,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "maxTokensField": "max_tokens"
+    },
+    "cost": {
+      "input": 0.95,
+      "output": 4,
+      "cacheRead": 0.19,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode-go",
@@ -7105,7 +13834,27 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": null,
+      "medium": null,
+      "high": null,
+      "xhigh": null,
+      "max": "max"
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "maxTokensField": "max_tokens"
+    },
+    "cost": {
+      "input": 3,
+      "output": 15,
+      "cacheRead": 0.3,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode-go",
@@ -7118,7 +13867,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "maxTokensField": "max_tokens"
+    },
+    "cost": {
+      "input": 0.14,
+      "output": 0.28,
+      "cacheRead": 0.0028,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode-go",
@@ -7130,7 +13890,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "maxTokensField": "max_tokens"
+    },
+    "cost": {
+      "input": 0.435,
+      "output": 0.87,
+      "cacheRead": 0.003625,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode-go",
@@ -7142,7 +13913,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "maxTokensField": "max_tokens"
+    },
+    "cost": {
+      "input": 0.3,
+      "output": 1.2,
+      "cacheRead": 0.06,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "opencode-go",
@@ -7155,7 +13937,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "qwen",
+      "maxTokensField": "max_tokens"
+    },
+    "cost": {
+      "input": 0.5,
+      "output": 3,
+      "cacheRead": 0.05,
+      "cacheWrite": 0.625
+    }
   },
   {
     "provider": "opencode-go",
@@ -7168,7 +13962,25 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "sessionAffinityFormat": "openai-nosession"
+    },
+    "cost": {
+      "input": 2,
+      "output": 6,
+      "cacheRead": 0.5,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -7180,7 +13992,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 2,
+      "output": 8,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -7192,7 +14014,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.8,
+      "output": 1.6,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -7204,7 +14036,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 3,
+      "output": 6,
+      "cacheRead": 0.75,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -7216,7 +14058,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.7,
+      "output": 1.4,
+      "cacheRead": 0.18,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -7229,7 +14081,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.3,
+      "output": 2.5,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -7242,7 +14104,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.06,
+      "output": 0.24,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -7254,7 +14126,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.035,
+      "output": 0.14,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -7267,7 +14149,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 2.5,
+      "output": 12.5,
+      "cacheRead": 0.625,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -7280,7 +14172,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.8,
+      "output": 3.2,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -7293,7 +14195,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter",
+      "cacheControlFormat": "anthropic"
+    },
+    "cost": {
+      "input": 0.25,
+      "output": 1.25,
+      "cacheRead": 0.03,
+      "cacheWrite": 0.3
+    }
   },
   {
     "provider": "openrouter",
@@ -7306,7 +14218,22 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "thinkingFormat": "openrouter",
+      "cacheControlFormat": "anthropic"
+    },
+    "cost": {
+      "input": 10,
+      "output": 50,
+      "cacheRead": 1,
+      "cacheWrite": 12.5
+    }
   },
   {
     "provider": "openrouter",
@@ -7319,7 +14246,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter",
+      "cacheControlFormat": "anthropic"
+    },
+    "cost": {
+      "input": 1,
+      "output": 5,
+      "cacheRead": 0.1,
+      "cacheWrite": 1.25
+    }
   },
   {
     "provider": "openrouter",
@@ -7332,7 +14269,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter",
+      "cacheControlFormat": "anthropic"
+    },
+    "cost": {
+      "input": 15,
+      "output": 75,
+      "cacheRead": 1.5,
+      "cacheWrite": 18.75
+    }
   },
   {
     "provider": "openrouter",
@@ -7345,7 +14292,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter",
+      "cacheControlFormat": "anthropic"
+    },
+    "cost": {
+      "input": 15,
+      "output": 75,
+      "cacheRead": 1.5,
+      "cacheWrite": 18.75
+    }
   },
   {
     "provider": "openrouter",
@@ -7358,7 +14315,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter",
+      "cacheControlFormat": "anthropic"
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "openrouter",
@@ -7371,7 +14338,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "max": "max"
+    },
+    "compat": {
+      "thinkingFormat": "openrouter",
+      "cacheControlFormat": "anthropic"
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "openrouter",
@@ -7384,7 +14364,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "thinkingFormat": "openrouter",
+      "cacheControlFormat": "anthropic"
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "openrouter",
@@ -7397,7 +14391,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "thinkingFormat": "openrouter",
+      "cacheControlFormat": "anthropic"
+    },
+    "cost": {
+      "input": 30,
+      "output": 150,
+      "cacheRead": 3,
+      "cacheWrite": 37.5
+    }
   },
   {
     "provider": "openrouter",
@@ -7410,7 +14418,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "thinkingFormat": "openrouter",
+      "cacheControlFormat": "anthropic"
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "openrouter",
@@ -7423,7 +14445,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "thinkingFormat": "openrouter",
+      "cacheControlFormat": "anthropic"
+    },
+    "cost": {
+      "input": 10,
+      "output": 50,
+      "cacheRead": 1,
+      "cacheWrite": 12.5
+    }
   },
   {
     "provider": "openrouter",
@@ -7436,7 +14472,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "thinkingFormat": "openrouter",
+      "cacheControlFormat": "anthropic"
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "openrouter",
@@ -7449,7 +14499,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "thinkingFormat": "openrouter",
+      "cacheControlFormat": "anthropic"
+    },
+    "cost": {
+      "input": 10,
+      "output": 50,
+      "cacheRead": 1,
+      "cacheWrite": 12.5
+    }
   },
   {
     "provider": "openrouter",
@@ -7462,7 +14526,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter",
+      "cacheControlFormat": "anthropic"
+    },
+    "cost": {
+      "input": 3,
+      "output": 15,
+      "cacheRead": 0.3,
+      "cacheWrite": 3.75
+    }
   },
   {
     "provider": "openrouter",
@@ -7475,7 +14549,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter",
+      "cacheControlFormat": "anthropic"
+    },
+    "cost": {
+      "input": 3,
+      "output": 15,
+      "cacheRead": 0.3,
+      "cacheWrite": 3.75
+    }
   },
   {
     "provider": "openrouter",
@@ -7488,7 +14572,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "max": "max"
+    },
+    "compat": {
+      "thinkingFormat": "openrouter",
+      "cacheControlFormat": "anthropic"
+    },
+    "cost": {
+      "input": 3,
+      "output": 15,
+      "cacheRead": 0.3,
+      "cacheWrite": 3.75
+    }
   },
   {
     "provider": "openrouter",
@@ -7501,7 +14598,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "thinkingFormat": "openrouter",
+      "cacheControlFormat": "anthropic"
+    },
+    "cost": {
+      "input": 2,
+      "output": 10,
+      "cacheRead": 0.2,
+      "cacheWrite": 2.5
+    }
   },
   {
     "provider": "openrouter",
@@ -7513,7 +14624,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.22,
+      "output": 0.85,
+      "cacheRead": 0.06,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -7525,7 +14646,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.75,
+      "output": 1.2,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -7538,7 +14669,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -7551,7 +14692,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.25,
+      "output": 2,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -7564,7 +14715,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.075,
+      "output": 0.3,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -7577,7 +14738,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.25,
+      "output": 2,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -7590,7 +14761,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.1,
+      "output": 0.4,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -7602,7 +14783,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.15,
+      "output": 0.6,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -7614,7 +14805,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 2.5,
+      "output": 10,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -7626,7 +14827,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -7638,7 +14849,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.2002,
+      "output": 0.8001,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -7650,7 +14871,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.27,
+      "output": 1.12,
+      "cacheRead": 0.135,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -7662,7 +14893,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.25,
+      "output": 0.95,
+      "cacheRead": 0.13,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -7674,7 +14915,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.7,
+      "output": 2.5,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -7686,7 +14937,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.5,
+      "output": 2.15,
+      "cacheRead": 0.35,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -7698,7 +14959,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.27,
+      "output": 1,
+      "cacheRead": 0.135,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -7710,7 +14981,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.269,
+      "output": 0.4,
+      "cacheRead": 0.1345,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -7722,7 +15003,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.27,
+      "output": 0.41,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -7734,7 +15025,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "minimal": null,
+      "low": null,
+      "medium": null,
+      "high": "high",
+      "max": null,
+      "xhigh": "xhigh"
+    },
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter",
+      "requiresReasoningContentOnAssistantMessages": true
+    },
+    "cost": {
+      "input": 0.0938,
+      "output": 0.1876,
+      "cacheRead": 0.01876,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -7746,7 +15056,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "minimal": null,
+      "low": null,
+      "medium": null,
+      "high": "high",
+      "max": null,
+      "xhigh": "xhigh"
+    },
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter",
+      "requiresReasoningContentOnAssistantMessages": true
+    },
+    "cost": {
+      "input": 0.435,
+      "output": 0.87,
+      "cacheRead": 0.003625,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -7759,7 +15088,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.3,
+      "output": 2.5,
+      "cacheRead": 0.03,
+      "cacheWrite": 0.083333
+    }
   },
   {
     "provider": "openrouter",
@@ -7772,7 +15111,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.1,
+      "output": 0.4,
+      "cacheRead": 0.01,
+      "cacheWrite": 0.083333
+    }
   },
   {
     "provider": "openrouter",
@@ -7785,7 +15134,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 1.25,
+      "output": 10,
+      "cacheRead": 0.125,
+      "cacheWrite": 0.375
+    }
   },
   {
     "provider": "openrouter",
@@ -7798,7 +15157,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 1.25,
+      "output": 10,
+      "cacheRead": 0.125,
+      "cacheWrite": 0.375
+    }
   },
   {
     "provider": "openrouter",
@@ -7811,7 +15180,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 1.25,
+      "output": 10,
+      "cacheRead": 0.125,
+      "cacheWrite": 0.375
+    }
   },
   {
     "provider": "openrouter",
@@ -7824,7 +15203,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.5,
+      "output": 3,
+      "cacheRead": 0.05,
+      "cacheWrite": 0.083333
+    }
   },
   {
     "provider": "openrouter",
@@ -7837,7 +15226,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 2,
+      "output": 12,
+      "cacheRead": 0.2,
+      "cacheWrite": 0.375
+    }
   },
   {
     "provider": "openrouter",
@@ -7850,7 +15249,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.25,
+      "output": 1.5,
+      "cacheRead": 0.025,
+      "cacheWrite": 0.083333
+    }
   },
   {
     "provider": "openrouter",
@@ -7863,7 +15272,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.25,
+      "output": 1.5,
+      "cacheRead": 0.025,
+      "cacheWrite": 0.083333
+    }
   },
   {
     "provider": "openrouter",
@@ -7876,7 +15295,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 2,
+      "output": 12,
+      "cacheRead": 0.2,
+      "cacheWrite": 0.375
+    }
   },
   {
     "provider": "openrouter",
@@ -7889,7 +15318,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 2,
+      "output": 12,
+      "cacheRead": 0.2,
+      "cacheWrite": 0.375
+    }
   },
   {
     "provider": "openrouter",
@@ -7902,7 +15341,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 1.5,
+      "output": 9,
+      "cacheRead": 0.15,
+      "cacheWrite": 0.083333
+    }
   },
   {
     "provider": "openrouter",
@@ -7915,7 +15364,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.3,
+      "output": 2.5,
+      "cacheRead": 0.03,
+      "cacheWrite": 0.083333
+    }
   },
   {
     "provider": "openrouter",
@@ -7928,7 +15387,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 1.5,
+      "output": 7.5,
+      "cacheRead": 0.15,
+      "cacheWrite": 0.083333
+    }
   },
   {
     "provider": "openrouter",
@@ -7941,7 +15410,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.05,
+      "output": 0.15,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -7954,7 +15433,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.08,
+      "output": 0.45,
+      "cacheRead": 0.04,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -7967,7 +15456,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.12,
+      "output": 0.35,
+      "cacheRead": 0.05,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -7980,7 +15479,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -7993,7 +15502,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.14,
+      "output": 0.4,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8006,7 +15525,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8018,7 +15547,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.05,
+      "output": 0.1,
+      "cacheRead": 0.05,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8030,7 +15569,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null
+    },
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.25,
+      "output": 0.75,
+      "cacheRead": 0.025,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8042,7 +15594,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.075,
+      "output": 0.625,
+      "cacheRead": 0.015,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8054,7 +15616,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.01,
+      "output": 0.03,
+      "cacheRead": 0.002,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8066,7 +15638,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8078,7 +15660,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.075,
+      "output": 0.625,
+      "cacheRead": 0.015,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8090,7 +15682,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.15,
+      "output": 0.6,
+      "cacheRead": 0.03,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8102,7 +15704,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.3,
+      "output": 1.2,
+      "cacheRead": 0.06,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8114,7 +15726,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.74,
+      "output": 2.96,
+      "cacheRead": 0.15,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8126,7 +15748,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.3,
+      "output": 1.2,
+      "cacheRead": 0.006,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8138,7 +15770,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.4,
+      "output": 0.4,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8150,7 +15792,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.05,
+      "output": 0.08,
+      "cacheRead": 0.025,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8162,7 +15814,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.13,
+      "output": 0.4,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8175,7 +15837,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.2,
+      "output": 0.8,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8188,7 +15860,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.1,
+      "output": 0.3,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8201,7 +15883,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 1.25,
+      "output": 4.25,
+      "cacheRead": 0.15,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8213,7 +15905,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.55,
+      "output": 2.2,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8225,7 +15927,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.255,
+      "output": 1.02,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8237,7 +15949,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.3,
+      "output": 1.2,
+      "cacheRead": 0.03,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8249,7 +15971,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.15,
+      "output": 0.9,
+      "cacheRead": 0.05,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8261,7 +15993,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.25,
+      "output": 1,
+      "cacheRead": 0.05,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8274,7 +16016,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.3,
+      "output": 1.2,
+      "cacheRead": 0.06,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8286,7 +16038,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.3,
+      "output": 0.9,
+      "cacheRead": 0.03,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8298,7 +16060,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.4,
+      "output": 2,
+      "cacheRead": 0.04,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8311,7 +16083,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.2,
+      "output": 0.2,
+      "cacheRead": 0.02,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8324,7 +16106,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.1,
+      "output": 0.1,
+      "cacheRead": 0.01,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8337,7 +16129,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.15,
+      "output": 0.15,
+      "cacheRead": 0.015,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8349,7 +16151,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 2,
+      "output": 6,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8361,7 +16173,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 2,
+      "output": 6,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8374,7 +16196,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.5,
+      "output": 1.5,
+      "cacheRead": 0.05,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8387,7 +16219,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.4,
+      "output": 2,
+      "cacheRead": 0.04,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8400,7 +16242,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 1.5,
+      "output": 7.5,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8413,7 +16265,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.4,
+      "output": 2,
+      "cacheRead": 0.04,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8425,7 +16287,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.019,
+      "output": 0.03,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8437,7 +16309,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.2,
+      "output": 0.6,
+      "cacheRead": 0.02,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8450,7 +16332,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.15,
+      "output": 0.6,
+      "cacheRead": 0.015,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8463,7 +16355,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.1,
+      "output": 0.3,
+      "cacheRead": 0.01,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8475,7 +16377,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 2,
+      "output": 6,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8487,7 +16399,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.1,
+      "output": 0.3,
+      "cacheRead": 0.01,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8499,7 +16421,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.57,
+      "output": 2.3,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8511,7 +16443,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.6,
+      "output": 2.5,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8523,7 +16465,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.6,
+      "output": 2.5,
+      "cacheRead": 0.15,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8536,7 +16488,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.41,
+      "output": 2.06,
+      "cacheRead": 0.07,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8549,7 +16511,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter",
+      "requiresReasoningContentOnAssistantMessages": true
+    },
+    "cost": {
+      "input": 0.646,
+      "output": 2.72,
+      "cacheRead": 0.1088,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8562,7 +16535,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.78,
+      "output": 3.5,
+      "cacheRead": 0.15,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8575,7 +16558,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 3,
+      "output": 15,
+      "cacheRead": 0.3,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8588,7 +16581,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.025,
+      "output": 0.1,
+      "cacheRead": 0.0025,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8601,7 +16604,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.25,
+      "output": 1,
+      "cacheRead": 0.025,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8613,7 +16626,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.05,
+      "output": 0.2,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8625,7 +16648,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8638,7 +16671,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8650,7 +16693,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.085,
+      "output": 0.4,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8662,7 +16715,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8674,7 +16737,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.6,
+      "output": 3.6,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8686,7 +16759,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8699,7 +16782,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8711,7 +16804,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8723,7 +16826,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.5,
+      "output": 1.5,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8735,7 +16847,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 1,
+      "output": 2,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8747,7 +16868,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 3,
+      "output": 4,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8759,7 +16889,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 30,
+      "output": 60,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8772,7 +16911,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 10,
+      "output": 30,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8784,7 +16932,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 10,
+      "output": 30,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8797,7 +16954,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 2,
+      "output": 8,
+      "cacheRead": 0.5,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8810,7 +16976,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.4,
+      "output": 1.6,
+      "cacheRead": 0.1,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8823,7 +16998,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.1,
+      "output": 0.4,
+      "cacheRead": 0.025,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8836,7 +17020,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 2.5,
+      "output": 10,
+      "cacheRead": 1.25,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8849,7 +17042,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 5,
+      "output": 15,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8862,7 +17064,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 2.5,
+      "output": 10,
+      "cacheRead": 1.25,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8875,7 +17086,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 2.5,
+      "output": 10,
+      "cacheRead": 1.25,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8888,7 +17108,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.15,
+      "output": 0.6,
+      "cacheRead": 0.075,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8901,7 +17130,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.15,
+      "output": 0.6,
+      "cacheRead": 0.075,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8914,7 +17152,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 1.25,
+      "output": 10,
+      "cacheRead": 0.125,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8927,7 +17174,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 1.25,
+      "output": 10,
+      "cacheRead": 0.125,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8940,7 +17196,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.25,
+      "output": 2,
+      "cacheRead": 0.025,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8953,7 +17218,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.05,
+      "output": 0.4,
+      "cacheRead": 0.005,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8966,7 +17240,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 15,
+      "output": 120,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8979,7 +17262,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 1.25,
+      "output": 10,
+      "cacheRead": 0.125,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -8992,7 +17284,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 1.25,
+      "output": 10,
+      "cacheRead": 0.125,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9005,7 +17306,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 1.25,
+      "output": 10,
+      "cacheRead": 0.125,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9018,7 +17328,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 1.25,
+      "output": 10,
+      "cacheRead": 0.125,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9031,7 +17350,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.25,
+      "output": 2,
+      "cacheRead": 0.025,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9044,7 +17372,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh"
+    },
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 1.75,
+      "output": 14,
+      "cacheRead": 0.175,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9057,7 +17397,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh"
+    },
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 1.75,
+      "output": 14,
+      "cacheRead": 0.175,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9070,7 +17422,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh"
+    },
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 1.75,
+      "output": 14,
+      "cacheRead": 0.175,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9083,7 +17447,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh"
+    },
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 21,
+      "output": 168,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9096,7 +17472,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh"
+    },
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 1.75,
+      "output": 14,
+      "cacheRead": 0.175,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9109,7 +17497,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh"
+    },
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 1.75,
+      "output": 14,
+      "cacheRead": 0.175,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9122,7 +17522,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh"
+    },
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 2.5,
+      "output": 15,
+      "cacheRead": 0.25,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9135,7 +17547,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh"
+    },
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.75,
+      "output": 4.5,
+      "cacheRead": 0.075,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9148,7 +17572,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh"
+    },
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.2,
+      "output": 1.25,
+      "cacheRead": 0.02,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9161,7 +17597,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh"
+    },
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 30,
+      "output": 180,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9174,7 +17622,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh"
+    },
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 5,
+      "output": 30,
+      "cacheRead": 0.5,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9187,7 +17647,22 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "off": null,
+      "minimal": null,
+      "low": null
+    },
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 30,
+      "output": 180,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9200,7 +17675,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 1,
+      "output": 6,
+      "cacheRead": 0.1,
+      "cacheWrite": 1.25
+    }
   },
   {
     "provider": "openrouter",
@@ -9213,7 +17701,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 1,
+      "output": 6,
+      "cacheRead": 0.1,
+      "cacheWrite": 1.25
+    }
   },
   {
     "provider": "openrouter",
@@ -9226,7 +17727,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 5,
+      "output": 30,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "openrouter",
@@ -9239,7 +17753,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 5,
+      "output": 30,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "openrouter",
@@ -9252,7 +17779,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 2.5,
+      "output": 15,
+      "cacheRead": 0.25,
+      "cacheWrite": 3.125
+    }
   },
   {
     "provider": "openrouter",
@@ -9265,7 +17805,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 2.5,
+      "output": 15,
+      "cacheRead": 0.25,
+      "cacheWrite": 3.125
+    }
   },
   {
     "provider": "openrouter",
@@ -9277,7 +17830,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 2.5,
+      "output": 10,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9289,7 +17851,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.6,
+      "output": 2.4,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9302,7 +17873,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 5,
+      "output": 30,
+      "cacheRead": 0.5,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9314,7 +17894,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.037,
+      "output": 0.17,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9326,7 +17915,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.03,
+      "output": 0.13,
+      "cacheRead": 0.03,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9338,7 +17936,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9350,7 +17957,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.075,
+      "output": 0.3,
+      "cacheRead": 0.0375,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9363,7 +17979,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 15,
+      "output": 60,
+      "cacheRead": 7.5,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9376,7 +18001,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 2,
+      "output": 8,
+      "cacheRead": 0.5,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9389,7 +18023,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 10,
+      "output": 40,
+      "cacheRead": 2.5,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9401,7 +18044,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 1.1,
+      "output": 4.4,
+      "cacheRead": 0.55,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9413,7 +18065,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 1.1,
+      "output": 4.4,
+      "cacheRead": 0.55,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9426,7 +18087,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 20,
+      "output": 80,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9439,7 +18109,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 1.1,
+      "output": 4.4,
+      "cacheRead": 0.275,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9452,7 +18131,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 2,
+      "output": 8,
+      "cacheRead": 0.5,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9465,7 +18153,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 1.1,
+      "output": 4.4,
+      "cacheRead": 0.275,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9478,7 +18175,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": -1000000,
+      "output": -1000000,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9491,7 +18198,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": -1000000,
+      "output": -1000000,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9504,7 +18221,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9516,7 +18243,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9528,7 +18265,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.2,
+      "output": 0.4,
+      "cacheRead": 0.1,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9540,7 +18287,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9552,7 +18309,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.1,
+      "output": 0.2,
+      "cacheRead": 0.01,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9564,7 +18331,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9576,7 +18353,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.06,
+      "output": 0.12,
+      "cacheRead": 0.03,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9588,7 +18375,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9600,7 +18397,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.36,
+      "output": 0.4,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9612,7 +18419,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.04,
+      "output": 0.1,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9624,7 +18441,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.26,
+      "output": 0.78,
+      "cacheRead": 0.052,
+      "cacheWrite": 0.325
+    }
   },
   {
     "provider": "openrouter",
@@ -9636,7 +18463,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.26,
+      "output": 0.78,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9648,7 +18485,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.26,
+      "output": 0.78,
+      "cacheRead": 0,
+      "cacheWrite": 0.325
+    }
   },
   {
     "provider": "openrouter",
@@ -9660,7 +18507,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.2275,
+      "output": 0.91,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9672,7 +18529,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.455,
+      "output": 1.82,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9684,7 +18551,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.09,
+      "output": 0.55,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9696,7 +18573,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.3,
+      "output": 3,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9708,7 +18595,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.13,
+      "output": 0.52,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9720,7 +18617,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.1,
+      "output": 0.3,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9732,7 +18639,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.13,
+      "output": 1.56,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9744,7 +18661,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.08,
+      "output": 0.28,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9756,7 +18683,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.117,
+      "output": 0.455,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9768,7 +18705,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.3,
+      "output": 1,
+      "cacheRead": 0.1,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9780,7 +18727,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.07,
+      "output": 0.27,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9792,7 +18749,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.195,
+      "output": 0.975,
+      "cacheRead": 0.039,
+      "cacheWrite": 0.24375
+    }
   },
   {
     "provider": "openrouter",
@@ -9804,7 +18771,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.11,
+      "output": 0.8,
+      "cacheRead": 0.07,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9816,7 +18793,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.65,
+      "output": 3.25,
+      "cacheRead": 0.13,
+      "cacheWrite": 0.8125
+    }
   },
   {
     "provider": "openrouter",
@@ -9828,7 +18815,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.78,
+      "output": 3.9,
+      "cacheRead": 0.156,
+      "cacheWrite": 0.975
+    }
   },
   {
     "provider": "openrouter",
@@ -9840,7 +18837,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.78,
+      "output": 3.9,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9852,7 +18859,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.1,
+      "output": 1.1,
+      "cacheRead": 0.07,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9864,7 +18881,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.0975,
+      "output": 0.78,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9877,7 +18904,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.21,
+      "output": 1.9,
+      "cacheRead": 0.1,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9890,7 +18927,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.26,
+      "output": 2.6,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9903,7 +18950,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.15,
+      "output": 0.6,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9916,7 +18973,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.13,
+      "output": 1.56,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9929,7 +18996,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.104,
+      "output": 0.416,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9942,7 +19019,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.117,
+      "output": 0.455,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9955,7 +19042,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.117,
+      "output": 1.365,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9968,7 +19065,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.26,
+      "output": 2.08,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9981,7 +19088,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.195,
+      "output": 1.56,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -9994,7 +19111,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.14,
+      "output": 1,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10007,7 +19134,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.39,
+      "output": 2.34,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10020,7 +19157,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.1,
+      "output": 0.15,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10033,7 +19180,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.065,
+      "output": 0.26,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10046,7 +19203,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.26,
+      "output": 1.56,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10059,7 +19226,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.3,
+      "output": 1.8,
+      "cacheRead": 0,
+      "cacheWrite": 0.375
+    }
   },
   {
     "provider": "openrouter",
@@ -10072,7 +19249,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.289,
+      "output": 2.4,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10085,7 +19272,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.14,
+      "output": 1,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10098,7 +19295,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.1875,
+      "output": 1.125,
+      "cacheRead": 0,
+      "cacheWrite": 0.234375
+    }
   },
   {
     "provider": "openrouter",
@@ -10110,7 +19317,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 1.04,
+      "output": 6.24,
+      "cacheRead": 0,
+      "cacheWrite": 1.3
+    }
   },
   {
     "provider": "openrouter",
@@ -10123,7 +19340,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.325,
+      "output": 1.95,
+      "cacheRead": 0,
+      "cacheWrite": 0.40625
+    }
   },
   {
     "provider": "openrouter",
@@ -10135,7 +19362,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 1.475,
+      "output": 4.425,
+      "cacheRead": 0.295,
+      "cacheWrite": 1.84375
+    }
   },
   {
     "provider": "openrouter",
@@ -10148,7 +19385,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.32,
+      "output": 1.28,
+      "cacheRead": 0.064,
+      "cacheWrite": 0.4
+    }
   },
   {
     "provider": "openrouter",
@@ -10161,7 +19408,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.1,
+      "output": 0.1,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10173,7 +19430,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 1,
+      "output": 3,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10186,7 +19453,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 5,
+      "output": 30,
+      "cacheRead": 0.5,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10198,7 +19475,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.85,
+      "output": 0.85,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10210,7 +19497,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.1,
+      "output": 0.3,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10223,7 +19520,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.2,
+      "output": 1.15,
+      "cacheRead": 0.04,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10235,7 +19542,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.132,
+      "output": 0.528,
+      "cacheRead": 0.033,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10247,7 +19564,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.063,
+      "output": 0.21,
+      "cacheRead": 0.021,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10259,7 +19586,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.4,
+      "output": 0.4,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10272,7 +19609,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 1,
+      "output": 4.05,
+      "cacheRead": 0.17,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10284,7 +19631,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.15,
+      "output": 0.6,
+      "cacheRead": 0.015,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10297,7 +19654,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 1.25,
+      "output": 2.5,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10310,7 +19677,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 1.25,
+      "output": 2.5,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10323,7 +19700,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 2,
+      "output": 6,
+      "cacheRead": 0.3,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10336,7 +19723,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 1,
+      "output": 2,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10349,7 +19746,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.14,
+      "output": 0.28,
+      "cacheRead": 0.0028,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10361,7 +19768,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.435,
+      "output": 0.87,
+      "cacheRead": 0.0036,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10373,7 +19790,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.6,
+      "output": 2.2,
+      "cacheRead": 0.11,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10385,7 +19812,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.13,
+      "output": 0.85,
+      "cacheRead": 0.025,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10398,7 +19835,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.6,
+      "output": 1.8,
+      "cacheRead": 0.11,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10410,7 +19857,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.5,
+      "output": 2,
+      "cacheRead": 0.1,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10423,7 +19880,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.3,
+      "output": 0.9,
+      "cacheRead": 0.055,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10435,7 +19902,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.4,
+      "output": 1.75,
+      "cacheRead": 0.08,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10447,7 +19924,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.06,
+      "output": 0.4,
+      "cacheRead": 0.01,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10459,7 +19946,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.6,
+      "output": 1.9,
+      "cacheRead": 0.119,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10471,7 +19968,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 1.2,
+      "output": 4,
+      "cacheRead": 0.24,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10483,7 +19990,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.966,
+      "output": 3.036,
+      "cacheRead": 0.1794,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10495,7 +20012,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh"
+    },
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.721,
+      "output": 2.266,
+      "cacheRead": 0.1339,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10508,7 +20038,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 1.2,
+      "output": 4,
+      "cacheRead": 0.24,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10521,7 +20061,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter",
+      "cacheControlFormat": "anthropic"
+    },
+    "cost": {
+      "input": 10,
+      "output": 50,
+      "cacheRead": 1,
+      "cacheWrite": 12.5
+    }
   },
   {
     "provider": "openrouter",
@@ -10534,7 +20085,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter",
+      "cacheControlFormat": "anthropic"
+    },
+    "cost": {
+      "input": 1,
+      "output": 5,
+      "cacheRead": 0.1,
+      "cacheWrite": 1.25
+    }
   },
   {
     "provider": "openrouter",
@@ -10547,7 +20109,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter",
+      "cacheControlFormat": "anthropic"
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "openrouter",
@@ -10560,7 +20133,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter",
+      "cacheControlFormat": "anthropic"
+    },
+    "cost": {
+      "input": 2,
+      "output": 10,
+      "cacheRead": 0.2,
+      "cacheWrite": 2.5
+    }
   },
   {
     "provider": "openrouter",
@@ -10573,7 +20157,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 1.5,
+      "output": 7.5,
+      "cacheRead": 0.15,
+      "cacheWrite": 0.083333
+    }
   },
   {
     "provider": "openrouter",
@@ -10586,7 +20180,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 2,
+      "output": 12,
+      "cacheRead": 0.2,
+      "cacheWrite": 0.375
+    }
   },
   {
     "provider": "openrouter",
@@ -10599,7 +20203,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 3,
+      "output": 15,
+      "cacheRead": 0.3,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10612,7 +20226,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 5,
+      "output": 30,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "openrouter",
@@ -10625,7 +20249,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 0.75,
+      "output": 4.5,
+      "cacheRead": 0.075,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "openrouter",
@@ -10638,7 +20272,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsDeveloperRole": false,
+      "thinkingFormat": "openrouter"
+    },
+    "cost": {
+      "input": 2,
+      "output": 6,
+      "cacheRead": 0.3,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "qwen-token-plan",
@@ -10650,7 +20294,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "qwen",
+      "supportsDeveloperRole": false,
+      "supportsStore": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "qwen-token-plan",
@@ -10662,7 +20317,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "qwen",
+      "supportsDeveloperRole": false,
+      "supportsStore": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "qwen-token-plan",
@@ -10674,7 +20340,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "minimal": null,
+      "low": null,
+      "medium": null,
+      "high": "high",
+      "max": "max"
+    },
+    "compat": {
+      "thinkingFormat": "deepseek",
+      "supportsDeveloperRole": false,
+      "supportsStore": false,
+      "requiresReasoningContentOnAssistantMessages": true
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "qwen-token-plan",
@@ -10686,7 +20371,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "minimal": null,
+      "low": null,
+      "medium": null,
+      "high": "high",
+      "max": "max"
+    },
+    "compat": {
+      "thinkingFormat": "deepseek",
+      "supportsDeveloperRole": false,
+      "supportsStore": false,
+      "requiresReasoningContentOnAssistantMessages": true
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "qwen-token-plan",
@@ -10698,7 +20402,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "qwen",
+      "supportsDeveloperRole": false,
+      "supportsStore": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "qwen-token-plan",
@@ -10710,7 +20425,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "qwen",
+      "supportsDeveloperRole": false,
+      "supportsStore": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "qwen-token-plan",
@@ -10722,7 +20448,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "qwen",
+      "supportsDeveloperRole": false,
+      "supportsStore": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "qwen-token-plan",
@@ -10735,7 +20472,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "qwen",
+      "supportsDeveloperRole": false,
+      "supportsStore": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "qwen-token-plan",
@@ -10748,7 +20496,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "qwen",
+      "supportsDeveloperRole": false,
+      "supportsStore": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "qwen-token-plan",
@@ -10761,7 +20520,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "qwen",
+      "supportsDeveloperRole": false,
+      "supportsStore": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "qwen-token-plan",
@@ -10774,7 +20544,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "qwen",
+      "supportsDeveloperRole": false,
+      "supportsStore": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "qwen-token-plan",
@@ -10787,7 +20568,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "qwen",
+      "supportsDeveloperRole": false,
+      "supportsStore": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "qwen-token-plan",
@@ -10799,7 +20591,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "qwen",
+      "supportsDeveloperRole": false,
+      "supportsStore": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "qwen-token-plan",
@@ -10812,7 +20615,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "qwen",
+      "supportsDeveloperRole": false,
+      "supportsStore": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "qwen-token-plan",
@@ -10825,7 +20639,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "qwen",
+      "supportsDeveloperRole": false,
+      "supportsStore": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "qwen-token-plan-cn",
@@ -10837,7 +20662,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "qwen",
+      "supportsDeveloperRole": false,
+      "supportsStore": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "qwen-token-plan-cn",
@@ -10849,7 +20685,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "qwen",
+      "supportsDeveloperRole": false,
+      "supportsStore": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "qwen-token-plan-cn",
@@ -10861,7 +20708,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "minimal": null,
+      "low": null,
+      "medium": null,
+      "high": "high",
+      "max": "max"
+    },
+    "compat": {
+      "thinkingFormat": "deepseek",
+      "supportsDeveloperRole": false,
+      "supportsStore": false,
+      "requiresReasoningContentOnAssistantMessages": true
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "qwen-token-plan-cn",
@@ -10873,7 +20739,26 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "minimal": null,
+      "low": null,
+      "medium": null,
+      "high": "high",
+      "max": "max"
+    },
+    "compat": {
+      "thinkingFormat": "deepseek",
+      "supportsDeveloperRole": false,
+      "supportsStore": false,
+      "requiresReasoningContentOnAssistantMessages": true
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "qwen-token-plan-cn",
@@ -10885,7 +20770,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "qwen",
+      "supportsDeveloperRole": false,
+      "supportsStore": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "qwen-token-plan-cn",
@@ -10897,7 +20793,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "qwen",
+      "supportsDeveloperRole": false,
+      "supportsStore": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "qwen-token-plan-cn",
@@ -10909,7 +20816,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "qwen",
+      "supportsDeveloperRole": false,
+      "supportsStore": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "qwen-token-plan-cn",
@@ -10922,7 +20840,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "qwen",
+      "supportsDeveloperRole": false,
+      "supportsStore": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "qwen-token-plan-cn",
@@ -10935,7 +20864,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "qwen",
+      "supportsDeveloperRole": false,
+      "supportsStore": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "qwen-token-plan-cn",
@@ -10948,7 +20888,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "qwen",
+      "supportsDeveloperRole": false,
+      "supportsStore": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "qwen-token-plan-cn",
@@ -10961,7 +20912,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "qwen",
+      "supportsDeveloperRole": false,
+      "supportsStore": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "qwen-token-plan-cn",
@@ -10974,7 +20936,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "qwen",
+      "supportsDeveloperRole": false,
+      "supportsStore": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "qwen-token-plan-cn",
@@ -10986,7 +20959,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "qwen",
+      "supportsDeveloperRole": false,
+      "supportsStore": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "qwen-token-plan-cn",
@@ -10999,7 +20983,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "qwen",
+      "supportsDeveloperRole": false,
+      "supportsStore": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "qwen-token-plan-cn",
@@ -11012,7 +21007,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "thinkingFormat": "qwen",
+      "supportsDeveloperRole": false,
+      "supportsStore": false
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "together",
@@ -11024,7 +21030,27 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": null,
+      "medium": null
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0.3,
+      "output": 1.2,
+      "cacheRead": 0.06,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "together",
@@ -11037,7 +21063,27 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "minimal": null,
+      "low": null,
+      "medium": null
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "thinkingFormat": "together",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0.3,
+      "output": 1.2,
+      "cacheRead": 0.06,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "together",
@@ -11049,7 +21095,22 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "thinkingFormat": "together",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0.3,
+      "output": 0.3,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "together",
@@ -11062,7 +21123,27 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "minimal": null,
+      "low": null,
+      "medium": null
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "thinkingFormat": "together",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0.17,
+      "output": 0.25,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "together",
@@ -11074,7 +21155,27 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "minimal": null,
+      "low": null,
+      "medium": null
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "thinkingFormat": "together",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0.5,
+      "output": 3,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "together",
@@ -11086,7 +21187,22 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "thinkingFormat": "together",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 1.25,
+      "output": 3.75,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "together",
@@ -11098,7 +21214,29 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "minimal": null,
+      "low": null,
+      "medium": null,
+      "high": "high",
+      "xhigh": null
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": true,
+      "maxTokensField": "max_tokens",
+      "thinkingFormat": "together",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 1.74,
+      "output": 3.48,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "together",
@@ -11111,7 +21249,27 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "minimal": null,
+      "low": null,
+      "medium": null
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "thinkingFormat": "together",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0.39,
+      "output": 0.97,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "together",
@@ -11123,7 +21281,22 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "thinkingFormat": "together",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 1.04,
+      "output": 1.04,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "together",
@@ -11136,7 +21309,27 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "minimal": null,
+      "low": null,
+      "medium": null
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "thinkingFormat": "together",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 1.2,
+      "output": 4.5,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "together",
@@ -11148,7 +21341,27 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "minimal": null,
+      "low": null,
+      "medium": null
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "thinkingFormat": "together",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0.95,
+      "output": 4,
+      "cacheRead": 0.19,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "together",
@@ -11160,7 +21373,27 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "minimal": null,
+      "low": null,
+      "medium": null
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "thinkingFormat": "together",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0.6,
+      "output": 3.6,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "together",
@@ -11172,7 +21405,31 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": true,
+      "maxTokensField": "max_tokens",
+      "thinkingFormat": "openai",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0.15,
+      "output": 0.6,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "together",
@@ -11184,7 +21441,31 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": true,
+      "maxTokensField": "max_tokens",
+      "thinkingFormat": "openai",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 0.05,
+      "output": 0.2,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "together",
@@ -11197,7 +21478,27 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "minimal": null,
+      "low": null,
+      "medium": null
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "thinkingFormat": "together",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 1,
+      "output": 4.05,
+      "cacheRead": 0.17,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "together",
@@ -11209,7 +21510,27 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "minimal": null,
+      "low": null,
+      "medium": null
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "maxTokensField": "max_tokens",
+      "thinkingFormat": "together",
+      "supportsStrictMode": false,
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 1.4,
+      "output": 4.4,
+      "cacheRead": 0.26,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11221,7 +21542,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.12,
+      "output": 0.24,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11233,7 +21560,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.22,
+      "output": 0.88,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11245,7 +21578,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.12,
+      "output": 0.5,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11257,7 +21596,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.16,
+      "output": 0.64,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11269,7 +21614,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 1.3,
+      "output": 7.8,
+      "cacheRead": 0.26,
+      "cacheWrite": 1.625
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11282,7 +21633,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.4,
+      "output": 4,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11294,7 +21651,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 1.5,
+      "output": 7.5,
+      "cacheRead": 0.3,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11306,7 +21669,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.15,
+      "output": 0.6,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11318,7 +21687,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.5,
+      "output": 1.2,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11330,7 +21705,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 1,
+      "output": 5,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11342,7 +21723,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 1.2,
+      "output": 6,
+      "cacheRead": 0.24,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11354,7 +21741,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 1.2,
+      "output": 6,
+      "cacheRead": 0.24,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11366,7 +21759,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 1.2,
+      "output": 6,
+      "cacheRead": 0.24,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11378,7 +21777,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.15,
+      "output": 1.2,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11390,7 +21795,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.15,
+      "output": 1.2,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11403,7 +21814,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.4,
+      "output": 1.6,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11416,7 +21833,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.4,
+      "output": 1.6,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11429,7 +21852,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.4,
+      "output": 4,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11442,7 +21871,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.1,
+      "output": 0.4,
+      "cacheRead": 0.001,
+      "cacheWrite": 0.125
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11455,7 +21890,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.4,
+      "output": 2.4,
+      "cacheRead": 0.04,
+      "cacheWrite": 0.5
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11468,7 +21909,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.6,
+      "output": 3.6,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11481,7 +21928,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.5,
+      "output": 3,
+      "cacheRead": 0.1,
+      "cacheWrite": 0.625
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11493,7 +21946,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 2.5,
+      "output": 7.5,
+      "cacheRead": 0.5,
+      "cacheWrite": 3.125
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11506,7 +21965,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.4,
+      "output": 1.6,
+      "cacheRead": 0.08,
+      "cacheWrite": 0.5
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11519,7 +21984,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.3,
+      "output": 2.5,
+      "cacheRead": 0.075,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11532,7 +22003,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.06,
+      "output": 0.24,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11544,7 +22021,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.035,
+      "output": 0.14,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11557,7 +22040,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.8,
+      "output": 3.2,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11570,7 +22059,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.25,
+      "output": 1.25,
+      "cacheRead": 0.03,
+      "cacheWrite": 0.3
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11583,7 +22078,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "forceAdaptiveThinking": true
+    },
+    "cost": {
+      "input": 10,
+      "output": 50,
+      "cacheRead": 1,
+      "cacheWrite": 12.5
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11596,7 +22105,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 1,
+      "output": 5,
+      "cacheRead": 0.1,
+      "cacheWrite": 1.25
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11609,7 +22124,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 15,
+      "output": 75,
+      "cacheRead": 1.5,
+      "cacheWrite": 18.75
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11622,7 +22143,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 15,
+      "output": 75,
+      "cacheRead": 1.5,
+      "cacheWrite": 18.75
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11635,7 +22162,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11648,7 +22181,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "max": "max"
+    },
+    "compat": {
+      "forceAdaptiveThinking": true
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11661,7 +22206,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "forceAdaptiveThinking": true,
+      "supportsTemperature": false
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11674,7 +22233,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "forceAdaptiveThinking": true,
+      "supportsTemperature": false
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11687,7 +22260,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "forceAdaptiveThinking": true,
+      "supportsTemperature": false
+    },
+    "cost": {
+      "input": 10,
+      "output": 50,
+      "cacheRead": 1,
+      "cacheWrite": 12.5
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11700,7 +22287,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "forceAdaptiveThinking": true,
+      "supportsTemperature": false
+    },
+    "cost": {
+      "input": 5,
+      "output": 25,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11713,7 +22314,21 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "forceAdaptiveThinking": true,
+      "supportsTemperature": false
+    },
+    "cost": {
+      "input": 10,
+      "output": 50,
+      "cacheRead": 1,
+      "cacheWrite": 12.5
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11726,7 +22341,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 3,
+      "output": 15,
+      "cacheRead": 0.3,
+      "cacheWrite": 3.75
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11739,7 +22360,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 3,
+      "output": 15,
+      "cacheRead": 0.3,
+      "cacheWrite": 3.75
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11752,7 +22379,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "max": "max"
+    },
+    "compat": {
+      "forceAdaptiveThinking": true
+    },
+    "cost": {
+      "input": 3,
+      "output": 15,
+      "cacheRead": 0.3,
+      "cacheWrite": 3.75
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11765,7 +22404,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "max": "max"
+    },
+    "compat": {
+      "forceAdaptiveThinking": true
+    },
+    "cost": {
+      "input": 2,
+      "output": 10,
+      "cacheRead": 0.2,
+      "cacheWrite": 2.5
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11777,7 +22429,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.25,
+      "output": 0.9,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11789,7 +22447,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.045,
+      "output": 0.15,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11802,7 +22466,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.25,
+      "output": 2,
+      "cacheRead": 0.05,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11815,7 +22485,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.25,
+      "output": 2,
+      "cacheRead": 0.05,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11827,7 +22503,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 2.5,
+      "output": 10,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11839,7 +22521,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 1.35,
+      "output": 5.4,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11851,7 +22539,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.27,
+      "output": 1.12,
+      "cacheRead": 0.135,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11863,7 +22557,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.25,
+      "output": 0.95,
+      "cacheRead": 0.13,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11875,7 +22575,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.27,
+      "output": 1,
+      "cacheRead": 0.135,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11887,7 +22593,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.28,
+      "output": 0.42,
+      "cacheRead": 0.028,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11899,7 +22611,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.62,
+      "output": 1.85,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11911,7 +22629,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.14,
+      "output": 0.28,
+      "cacheRead": 0.028,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11923,7 +22647,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.435,
+      "output": 0.87,
+      "cacheRead": 0.0036,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11936,7 +22666,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.3,
+      "output": 2.5,
+      "cacheRead": 0.03,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11949,7 +22685,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.1,
+      "output": 0.4,
+      "cacheRead": 0.01,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11962,7 +22704,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 1.25,
+      "output": 10,
+      "cacheRead": 0.125,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11975,7 +22723,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.5,
+      "output": 3,
+      "cacheRead": 0.05,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -11988,7 +22742,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 2,
+      "output": 12,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12001,7 +22761,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.25,
+      "output": 1.5,
+      "cacheRead": 0.03,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12014,7 +22780,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 2,
+      "output": 12,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12027,7 +22799,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 1.5,
+      "output": 9,
+      "cacheRead": 0.15,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12040,7 +22818,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.3,
+      "output": 2.5,
+      "cacheRead": 0.03,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12053,7 +22837,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 1.5,
+      "output": 7.5,
+      "cacheRead": 0.15,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12066,7 +22856,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.15,
+      "output": 0.6,
+      "cacheRead": 0.015,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12079,7 +22875,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.14,
+      "output": 0.4,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12091,7 +22893,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.25,
+      "output": 0.75,
+      "cacheRead": 0.025,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12103,7 +22911,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.25,
+      "output": 1,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12115,7 +22929,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12128,7 +22948,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 1.5,
+      "output": 3.5,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12140,7 +22966,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.15,
+      "output": 0.6,
+      "cacheRead": 0.03,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12152,7 +22984,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.3,
+      "output": 1.2,
+      "cacheRead": 0.06,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12164,7 +23002,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.3,
+      "output": 1.2,
+      "cacheRead": 0.06,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12176,7 +23020,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.74,
+      "output": 2.96,
+      "cacheRead": 0.15,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12188,7 +23038,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.72,
+      "output": 0.72,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12200,7 +23056,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.22,
+      "output": 0.22,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12212,7 +23074,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.72,
+      "output": 0.72,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12225,7 +23093,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.24,
+      "output": 0.97,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12238,7 +23112,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.17,
+      "output": 0.66,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12251,7 +23131,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 1.25,
+      "output": 4.25,
+      "cacheRead": 0.15,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12263,7 +23149,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.3,
+      "output": 1.2,
+      "cacheRead": 0.03,
+      "cacheWrite": 0.375
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12275,7 +23167,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.3,
+      "output": 1.2,
+      "cacheRead": 0.03,
+      "cacheWrite": 0.375
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12287,7 +23185,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.3,
+      "output": 2.4,
+      "cacheRead": 0.03,
+      "cacheWrite": 0.375
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12299,7 +23203,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.3,
+      "output": 1.2,
+      "cacheRead": 0.03,
+      "cacheWrite": 0.375
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12311,7 +23221,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.6,
+      "output": 2.4,
+      "cacheRead": 0.03,
+      "cacheWrite": 0.375
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12323,7 +23239,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.3,
+      "output": 1.2,
+      "cacheRead": 0.06,
+      "cacheWrite": 0.375
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12335,7 +23257,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.6,
+      "output": 2.4,
+      "cacheRead": 0.06,
+      "cacheWrite": 0.375
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12348,7 +23276,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.3,
+      "output": 1.2,
+      "cacheRead": 0.06,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12360,7 +23294,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.3,
+      "output": 0.9,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12372,7 +23312,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.4,
+      "output": 2,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12385,7 +23331,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.1,
+      "output": 0.3,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12398,7 +23350,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 2,
+      "output": 5,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12411,7 +23369,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.5,
+      "output": 1.5,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12424,7 +23388,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.2,
+      "output": 0.2,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12436,7 +23406,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.1,
+      "output": 0.1,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12448,7 +23424,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.15,
+      "output": 0.15,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12461,7 +23443,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.5,
+      "output": 1.5,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12474,7 +23462,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.4,
+      "output": 2,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12487,7 +23481,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 1.5,
+      "output": 7.5,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12499,7 +23499,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.15,
+      "output": 0.15,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12512,7 +23518,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.1,
+      "output": 0.3,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12525,7 +23537,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.15,
+      "output": 0.15,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12537,7 +23555,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.57,
+      "output": 2.3,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12549,7 +23573,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.47,
+      "output": 2,
+      "cacheRead": 0.141,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12562,7 +23592,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.6,
+      "output": 3,
+      "cacheRead": 0.1,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12575,7 +23611,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.95,
+      "output": 4,
+      "cacheRead": 0.16,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12588,7 +23630,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.95,
+      "output": 4,
+      "cacheRead": 0.19,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12601,7 +23649,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 1.9,
+      "output": 8,
+      "cacheRead": 0.38,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12614,7 +23668,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 3,
+      "output": 15,
+      "cacheRead": 0.3,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12626,7 +23686,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.05,
+      "output": 0.24,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12638,7 +23704,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.15,
+      "output": 0.65,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12650,7 +23722,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.6,
+      "output": 2.4,
+      "cacheRead": 0.12,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12663,7 +23741,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.2,
+      "output": 0.6,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12675,7 +23759,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.06,
+      "output": 0.23,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12687,7 +23777,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": false,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.5,
+      "output": 1.5,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12700,7 +23796,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 10,
+      "output": 30,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12713,7 +23815,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 2,
+      "output": 8,
+      "cacheRead": 0.5,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12726,7 +23834,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.4,
+      "output": 1.6,
+      "cacheRead": 0.1,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12739,7 +23853,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.1,
+      "output": 0.4,
+      "cacheRead": 0.025,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12752,7 +23872,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 2.5,
+      "output": 10,
+      "cacheRead": 1.25,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12765,7 +23891,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.15,
+      "output": 0.6,
+      "cacheRead": 0.075,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12778,7 +23910,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 1.25,
+      "output": 10,
+      "cacheRead": 0.125,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12791,7 +23929,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 1.25,
+      "output": 10,
+      "cacheRead": 0.125,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12804,7 +23948,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.25,
+      "output": 2,
+      "cacheRead": 0.025,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12817,7 +23967,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.05,
+      "output": 0.4,
+      "cacheRead": 0.005,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12830,7 +23986,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 15,
+      "output": 120,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12843,7 +24005,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 1.25,
+      "output": 10,
+      "cacheRead": 0.125,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12856,7 +24024,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 1.25,
+      "output": 10,
+      "cacheRead": 0.125,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12869,7 +24043,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.25,
+      "output": 2,
+      "cacheRead": 0.025,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12882,7 +24062,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 1.25,
+      "output": 10,
+      "cacheRead": 0.125,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12895,7 +24081,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 1.25,
+      "output": 10,
+      "cacheRead": 0.125,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12908,7 +24100,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh"
+    },
+    "cost": {
+      "input": 1.75,
+      "output": 14,
+      "cacheRead": 0.175,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12921,7 +24122,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh"
+    },
+    "cost": {
+      "input": 1.75,
+      "output": 14,
+      "cacheRead": 0.175,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12934,7 +24144,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh"
+    },
+    "cost": {
+      "input": 21,
+      "output": 168,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12947,7 +24166,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh"
+    },
+    "cost": {
+      "input": 1.75,
+      "output": 14,
+      "cacheRead": 0.175,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12960,7 +24188,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh"
+    },
+    "cost": {
+      "input": 1.75,
+      "output": 14,
+      "cacheRead": 0.175,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12973,7 +24210,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh"
+    },
+    "cost": {
+      "input": 2.5,
+      "output": 15,
+      "cacheRead": 0.25,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12986,7 +24232,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh"
+    },
+    "cost": {
+      "input": 0.75,
+      "output": 4.5,
+      "cacheRead": 0.075,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -12999,7 +24254,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh"
+    },
+    "cost": {
+      "input": 0.2,
+      "output": 1.25,
+      "cacheRead": 0.02,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13012,7 +24276,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh"
+    },
+    "cost": {
+      "input": 30,
+      "output": 180,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13025,7 +24298,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh"
+    },
+    "cost": {
+      "input": 5,
+      "output": 30,
+      "cacheRead": 0.5,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13038,7 +24320,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh",
+      "off": null,
+      "minimal": null,
+      "low": null
+    },
+    "cost": {
+      "input": 30,
+      "output": 180,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13051,7 +24345,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh"
+    },
+    "cost": {
+      "input": 1,
+      "output": 6,
+      "cacheRead": 0.1,
+      "cacheWrite": 1.25
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13064,7 +24367,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh"
+    },
+    "cost": {
+      "input": 5,
+      "output": 30,
+      "cacheRead": 0.5,
+      "cacheWrite": 6.25
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13077,7 +24389,16 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "xhigh": "xhigh"
+    },
+    "cost": {
+      "input": 2.5,
+      "output": 15,
+      "cacheRead": 0.25,
+      "cacheWrite": 3.125
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13089,7 +24410,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.1,
+      "output": 0.5,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13101,7 +24428,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.05,
+      "output": 0.2,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13113,7 +24446,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.075,
+      "output": 0.3,
+      "cacheRead": 0.037,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13126,7 +24465,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 15,
+      "output": 60,
+      "cacheRead": 7.5,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13139,7 +24484,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 2,
+      "output": 8,
+      "cacheRead": 0.5,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13152,7 +24503,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 10,
+      "output": 40,
+      "cacheRead": 2.5,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13164,7 +24521,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 1.1,
+      "output": 4.4,
+      "cacheRead": 0.55,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13177,7 +24540,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 20,
+      "output": 80,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13190,7 +24559,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 1.1,
+      "output": 4.4,
+      "cacheRead": 0.275,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13202,7 +24577,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.1,
+      "output": 0.2,
+      "cacheRead": 0.01,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13214,7 +24595,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13227,7 +24614,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 5,
+      "output": 30,
+      "cacheRead": 0.5,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13239,7 +24632,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.09,
+      "output": 0.3,
+      "cacheRead": 0.02,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13252,7 +24651,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.2,
+      "output": 1.15,
+      "cacheRead": 0.04,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13264,7 +24669,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.14,
+      "output": 0.58,
+      "cacheRead": 0.035,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13277,7 +24688,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 1,
+      "output": 4.05,
+      "cacheRead": 0.17,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13290,7 +24707,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.2,
+      "output": 0.5,
+      "cacheRead": 0.05,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13303,7 +24726,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.2,
+      "output": 0.5,
+      "cacheRead": 0.05,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13316,7 +24745,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 1.25,
+      "output": 2.5,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13329,7 +24764,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 1.25,
+      "output": 2.5,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13342,7 +24783,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 1.25,
+      "output": 2.5,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13355,7 +24802,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 1.25,
+      "output": 2.5,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13368,7 +24821,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 1.25,
+      "output": 2.5,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13381,7 +24840,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 1.25,
+      "output": 2.5,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13394,7 +24859,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 1.25,
+      "output": 2.5,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13407,7 +24878,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 2,
+      "output": 6,
+      "cacheRead": 0.3,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13420,7 +24897,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 1,
+      "output": 2,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13433,7 +24916,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.14,
+      "output": 0.28,
+      "cacheRead": 0.0028,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13445,7 +24934,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.435,
+      "output": 0.87,
+      "cacheRead": 0.0036,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13457,7 +24952,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.6,
+      "output": 2.2,
+      "cacheRead": 0.11,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13469,7 +24970,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.2,
+      "output": 1.1,
+      "cacheRead": 0.03,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13482,7 +24989,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.6,
+      "output": 1.8,
+      "cacheRead": 0.11,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13494,7 +25007,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.6,
+      "output": 2.2,
+      "cacheRead": 0.11,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13507,7 +25026,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0.3,
+      "output": 0.9,
+      "cacheRead": 0.05,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13520,7 +25045,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13532,7 +25063,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.6,
+      "output": 2.2,
+      "cacheRead": 0.12,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13544,7 +25081,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.07,
+      "output": 0.4,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13556,7 +25099,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.06,
+      "output": 0.4,
+      "cacheRead": 0.01,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13568,7 +25117,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 0.95,
+      "output": 3.15,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13580,7 +25135,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 1.2,
+      "output": 4,
+      "cacheRead": 0.24,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13592,7 +25153,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 1.3,
+      "output": 4.3,
+      "cacheRead": 0.26,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13604,7 +25171,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 1.4,
+      "output": 4.4,
+      "cacheRead": 0.26,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13616,7 +25189,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "cost": {
+      "input": 2.1,
+      "output": 6.6,
+      "cacheRead": 0.21,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "vercel-ai-gateway",
@@ -13629,7 +25208,13 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "cost": {
+      "input": 1.2,
+      "output": 4,
+      "cacheRead": 0.24,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "xai",
@@ -13642,7 +25227,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false
+    },
+    "cost": {
+      "input": 1.25,
+      "output": 2.5,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "xai",
@@ -13655,7 +25251,18 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false
+    },
+    "cost": {
+      "input": 1,
+      "output": 2,
+      "cacheRead": 0.2,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "xai",
@@ -13668,7 +25275,25 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "off": null,
+      "minimal": null,
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": null,
+      "max": null
+    },
+    "compat": {
+      "supportsLongCacheRetention": false
+    },
+    "cost": {
+      "input": 2,
+      "output": 6,
+      "cacheRead": 0.3,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "xiaomi",
@@ -13680,7 +25305,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "requiresReasoningContentOnAssistantMessages": true,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 0.14,
+      "output": 0.28,
+      "cacheRead": 0.0028,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "xiaomi",
@@ -13693,7 +25328,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "requiresReasoningContentOnAssistantMessages": true,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 0.14,
+      "output": 0.28,
+      "cacheRead": 0.0028,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "xiaomi",
@@ -13705,7 +25350,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "requiresReasoningContentOnAssistantMessages": true,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 0.435,
+      "output": 0.87,
+      "cacheRead": 0.0036,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "xiaomi",
@@ -13718,7 +25373,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "requiresReasoningContentOnAssistantMessages": true,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 0.14,
+      "output": 0.28,
+      "cacheRead": 0.0028,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "xiaomi",
@@ -13730,7 +25395,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "requiresReasoningContentOnAssistantMessages": true,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 0.435,
+      "output": 0.87,
+      "cacheRead": 0.0036,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "xiaomi",
@@ -13742,7 +25417,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "requiresReasoningContentOnAssistantMessages": true,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 1.305,
+      "output": 2.61,
+      "cacheRead": 0.0108,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "xiaomi-token-plan-ams",
@@ -13754,7 +25439,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "requiresReasoningContentOnAssistantMessages": true,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "xiaomi-token-plan-ams",
@@ -13767,7 +25462,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "requiresReasoningContentOnAssistantMessages": true,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "xiaomi-token-plan-ams",
@@ -13779,7 +25484,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "requiresReasoningContentOnAssistantMessages": true,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "xiaomi-token-plan-cn",
@@ -13791,7 +25506,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "requiresReasoningContentOnAssistantMessages": true,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "xiaomi-token-plan-cn",
@@ -13804,7 +25529,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "requiresReasoningContentOnAssistantMessages": true,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "xiaomi-token-plan-cn",
@@ -13816,7 +25551,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "requiresReasoningContentOnAssistantMessages": true,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "xiaomi-token-plan-sgp",
@@ -13828,7 +25573,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "requiresReasoningContentOnAssistantMessages": true,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "xiaomi-token-plan-sgp",
@@ -13841,7 +25596,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "requiresReasoningContentOnAssistantMessages": true,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "xiaomi-token-plan-sgp",
@@ -13853,7 +25618,17 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "requiresReasoningContentOnAssistantMessages": true,
+      "thinkingFormat": "deepseek"
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "zai",
@@ -13865,7 +25640,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "thinkingFormat": "zai"
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "zai",
@@ -13877,7 +25664,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "thinkingFormat": "zai",
+      "zaiToolStream": true
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "zai",
@@ -13889,7 +25689,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "thinkingFormat": "zai",
+      "zaiToolStream": true
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "zai",
@@ -13901,7 +25714,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "thinkingFormat": "zai",
+      "zaiToolStream": true
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "zai",
@@ -13913,7 +25739,27 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "minimal": null,
+      "low": "high",
+      "medium": "high",
+      "high": "high",
+      "max": "max"
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": true,
+      "thinkingFormat": "zai",
+      "zaiToolStream": true
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "zai",
@@ -13926,7 +25772,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "thinkingFormat": "zai",
+      "zaiToolStream": true
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "zai-coding-cn",
@@ -13938,7 +25797,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "thinkingFormat": "zai"
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "zai-coding-cn",
@@ -13950,7 +25821,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "thinkingFormat": "zai",
+      "zaiToolStream": true
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "zai-coding-cn",
@@ -13962,7 +25846,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "thinkingFormat": "zai",
+      "zaiToolStream": true
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "zai-coding-cn",
@@ -13974,7 +25871,20 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "thinkingFormat": "zai",
+      "zaiToolStream": true
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "zai-coding-cn",
@@ -13986,7 +25896,27 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "reasoning": true,
     "input": [
       "text"
-    ]
+    ],
+    "thinkingLevelMap": {
+      "minimal": null,
+      "low": "high",
+      "medium": "high",
+      "high": "high",
+      "max": "max"
+    },
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": true,
+      "thinkingFormat": "zai",
+      "zaiToolStream": true
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   },
   {
     "provider": "zai-coding-cn",
@@ -13999,6 +25929,19 @@ export const OFFICIAL_MODELS: readonly OfficialModelSummary[] = [
     "input": [
       "text",
       "image"
-    ]
+    ],
+    "compat": {
+      "supportsStore": false,
+      "supportsDeveloperRole": false,
+      "supportsReasoningEffort": false,
+      "thinkingFormat": "zai",
+      "zaiToolStream": true
+    },
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0
+    }
   }
 ]
