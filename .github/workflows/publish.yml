@@ -46,4 +46,6 @@ jobs:
           fi
 
       - name: Publish to npm
+        env:
+          NODE_AUTH_TOKEN: ''
         run: npm publish --access public --provenance
