@@ -43,6 +43,8 @@ npx @deepseek-ai/dsh@latest plugin --profile web add github:Xichun123/dsh-relay-
 
 安装后重启当前 DSH Web 进程，并刷新页面。不要先停止仍在提供服务的实例；先完成安装和下面的隔离验证，再安排一次重启。
 
+DSH 核心包（`dsh-host-webserver`、`dsh-llm` 等）是 **peerDependencies**，由正在运行的 DSH 提供，不会装进 profile 的 `node_modules` 去遮蔽宿主版本。
+
 ### 从本地 tarball 安装
 
 ```bash
