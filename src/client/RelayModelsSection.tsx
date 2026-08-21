@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom'
 import {
   DEFAULT_STREAM_IDLE_TIMEOUT_MS,
   RELAY_PROTOCOLS,
+  RELAY_TRANSPORTS,
   assertUnreservedProviderId,
   formatHeaderLines,
   parseHeaderLines,
@@ -17,6 +18,7 @@ import type {
   RelayModelStatus,
   RelayProtocol,
   RelayProviderConfig,
+  RelayTransport,
 } from '../shared/types.ts'
 import { peekRelayPage, type RelayPageApi, type RelayPageSnapshot } from './api.ts'
 
@@ -30,9 +32,17 @@ function messageOf(error: unknown): string {
 
 function protocolLabel(protocol: RelayProtocol | undefined): string {
   if (protocol === 'anthropic-messages') return 'Anthropic Messages'
+  if (protocol === 'openai-codex-responses') return 'Codex Responses（WS）'
   if (protocol === 'openai-responses') return 'OpenAI Responses'
   if (protocol === 'openai-completions') return 'OpenAI Chat Completions'
   return '不支持（需手动覆盖）'
+}
+
+function transportLabel(transport: RelayTransport): string {
+  if (transport === 'websocket') return 'WebSocket'
+  if (transport === 'websocket-cached') return 'WebSocket 缓存会话'
+  if (transport === 'sse') return 'SSE'
+  return '自动（先 WS，失败回 SSE）'
 }
 
 function officialModel(
@@ -412,11 +422,13 @@ function ProviderCard({
   const [confirmDelete, setConfirmDelete] = useState(false)
   const [baseURL, setBaseURL] = useState(provider.baseURL)
   const [fallback, setFallback] = useState(provider.fallbackProtocol)
+  const [transport, setTransport] = useState<RelayTransport>(provider.transport ?? 'auto')
   const [headersDraft, setHeadersDraft] = useState(formatHeaderLines(provider.headers ?? {}))
   const [keyDraft, setKeyDraft] = useState('')
   useEffect(() => {
     setBaseURL(provider.baseURL)
     setFallback(provider.fallbackProtocol)
+    setTransport(provider.transport ?? 'auto')
     setHeadersDraft(formatHeaderLines(provider.headers ?? {}))
   }, [provider])
 
@@ -457,6 +469,7 @@ function ProviderCard({
       ...provider,
       baseURL: baseURL.trim(),
       fallbackProtocol: fallback,
+      transport,
       headers: parseHeaderLines(headersDraft),
       streamIdleTimeoutMs: provider.streamIdleTimeoutMs ?? DEFAULT_STREAM_IDLE_TIMEOUT_MS,
     }
@@ -489,6 +502,7 @@ function ProviderCard({
           <div className="drm-grid">
             <label className="drm-field wide"><span className="drm-label">Base URL</span><input className="drm-input" value={baseURL} onChange={event => { setBaseURL(event.target.value) }} /></label>
             <label className="drm-field"><span className="drm-label">默认协议</span><select className="drm-select" value={fallback} onChange={event => { setFallback(event.target.value as RelayProtocol) }}>{RELAY_PROTOCOLS.map(value => <option key={value} value={value}>{protocolLabel(value)}</option>)}</select></label>
+            <label className="drm-field"><span className="drm-label">Codex 传输</span><select className="drm-select" value={transport} onChange={event => { setTransport(event.target.value as RelayTransport) }}>{RELAY_TRANSPORTS.map(value => <option key={value} value={value}>{transportLabel(value)}</option>)}</select></label>
             <label className="drm-field"><span className="drm-label">替换 API Key（留空则保留）</span><input className="drm-input" type="password" autoComplete="off" value={keyDraft} onChange={event => { setKeyDraft(event.target.value) }} /></label>
             <label className="drm-field wide"><span className="drm-label">额外请求头（每行 Name: value；不要放密钥。User-Agent 由 DSH 覆盖）</span><textarea className="drm-input" style={{ height: 72, padding: '8px 10px' }} value={headersDraft} placeholder="X-Custom: value" onChange={event => { setHeadersDraft(event.target.value) }} /></label>
           </div>

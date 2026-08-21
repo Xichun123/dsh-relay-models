@@ -9,8 +9,16 @@ import type {
 export const RELAY_PROTOCOLS = [
   'openai-completions',
   'openai-responses',
+  'openai-codex-responses',
   'anthropic-messages',
 ] as const satisfies readonly RelayProtocol[]
+
+export const RELAY_TRANSPORTS = [
+  'auto',
+  'websocket',
+  'websocket-cached',
+  'sse',
+] as const
 
 export function isRelayProtocol(value: unknown): value is RelayProtocol {
   return RELAY_PROTOCOLS.includes(value as RelayProtocol)
@@ -29,9 +37,28 @@ export function normalizeBaseURL(raw: string): string {
 
 export function baseURLForProtocol(raw: string, protocol: RelayProtocol): string {
   const normalized = normalizeBaseURL(raw)
+  if (protocol === 'openai-codex-responses') return codexResponsesBaseURL(normalized)
   if (protocol !== 'anthropic-messages') return normalized
   const parsed = new URL(normalized)
   if (parsed.pathname.endsWith('/v1')) parsed.pathname = parsed.pathname.slice(0, -3) || '/'
+  return parsed.toString().replace(/\/$/u, '')
+}
+
+/**
+ * pi-ai Codex Responses appends `/codex/responses` unless the base already ends
+ * with `/codex` or `/codex/responses`. CLIProxyAPI exposes that path at
+ * `/backend-api/codex/responses`, so a stored `/v1` OpenAI-compatible URL is
+ * rewritten to `/backend-api`.
+ */
+export function codexResponsesBaseURL(normalized: string): string {
+  const parsed = new URL(normalized)
+  const path = parsed.pathname.replace(/\/$/u, '') || '/'
+  if (path.endsWith('/codex/responses') || path.endsWith('/codex') || path.endsWith('/backend-api')) {
+    return parsed.toString().replace(/\/$/u, '')
+  }
+  parsed.pathname = path.endsWith('/v1')
+    ? path.replace(/\/v1$/u, '/backend-api')
+    : path === '/' ? '/backend-api' : `${path}/backend-api`
   return parsed.toString().replace(/\/$/u, '')
 }
 
@@ -237,8 +264,8 @@ export function inferProtocol(source: OfficialModelSummary | undefined, fallback
   if (!source) return fallback
   if (source.api === 'anthropic-messages') return 'anthropic-messages'
   if (source.api === 'openai-completions') return 'openai-completions'
-  if (source.api === 'openai-responses' || source.api === 'openai-codex-responses'
-    || source.api === 'azure-openai-responses') return 'openai-responses'
+  if (source.api === 'openai-codex-responses') return 'openai-codex-responses'
+  if (source.api === 'openai-responses' || source.api === 'azure-openai-responses') return 'openai-responses'
   return undefined
 }
 

@@ -1,4 +1,10 @@
-export type RelayProtocol = 'openai-completions' | 'openai-responses' | 'anthropic-messages'
+export type RelayProtocol =
+  | 'openai-completions'
+  | 'openai-responses'
+  | 'openai-codex-responses'
+  | 'anthropic-messages'
+
+export type RelayTransport = 'sse' | 'websocket' | 'websocket-cached' | 'auto'
 
 export interface OfficialModelRef {
   provider: string
@@ -57,6 +63,7 @@ export interface RelayProviderConfig {
   protocolOverrides: Record<string, RelayProtocol>
   excludedModels: string[]
   headers: Record<string, string>
+  transport?: RelayTransport
   streamIdleTimeoutMs: number
   retryPolicy?: RelayRetryPolicy
   syncedAt?: number

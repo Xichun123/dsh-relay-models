@@ -19,6 +19,7 @@ import {
   isRelayProtocol,
   normalizeBaseURL,
   RELAY_PROTOCOLS,
+  RELAY_TRANSPORTS,
   relayCredentialRef,
   RESERVED_PROVIDER_IDS,
 } from './shared/core.ts'
@@ -47,6 +48,7 @@ const providerConfig = Schema.object({
   protocolOverrides: Schema.dict(Schema.union(RELAY_PROTOCOLS)).default({}),
   excludedModels: Schema.array(Schema.string()).default([]),
   headers: Schema.dict(Schema.string()).default({}),
+  transport: Schema.union(RELAY_TRANSPORTS),
   streamIdleTimeoutMs: Schema.number().min(Number.MIN_VALUE).max(MAX_TIMER_DELAY_MS).default(DEFAULT_STREAM_IDLE_TIMEOUT_MS),
   retryPolicy: RetryPolicySchema,
   syncedAt: Schema.natural(),
@@ -99,6 +101,7 @@ function resolveProfile(
     configuredMaxTokens: new Map(),
   }
   if (source.headers && Object.keys(source.headers).length > 0) profile.headers = { ...source.headers }
+  if (source.transport) profile.transport = source.transport
   return profile
 }
 

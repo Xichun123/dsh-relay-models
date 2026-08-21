@@ -2,7 +2,7 @@
 
 ## 形态决策
 
-- 目标：给中转站做模型发现、官方元数据匹配，并在同一 Provider 内按模型混用 OpenAI Completions / Responses / Anthropic Messages。
+- 目标：给中转站做模型发现、官方元数据匹配，并在同一 Provider 内按模型混用 OpenAI Completions / Responses / Codex Responses（WS） / Anthropic Messages。
 - 做插件：是
 - 树外 / first-party：树外
 - 形态：LLM 适配器 + Client Settings UI
@@ -35,6 +35,7 @@
 | `providers.*.protocolOverrides` | dict | `{}` | 按模型覆盖协议 |
 | `providers.*.excludedModels` | string[] | `[]` | 不注册的模型 |
 | `providers.*.headers` | dict | `{}` | 额外请求头；禁止 Authorization 等密钥头。User-Agent 由 DSH attribution 覆盖 |
+| `providers.*.transport` | enum | 省略=`auto` | 仅 Codex Responses：`auto` / `websocket` / `websocket-cached` / `sse` |
 | `providers.*.streamIdleTimeoutMs` | number | `300000` | 流空闲超时 |
 | `providers.*.retryPolicy` | RetryPolicy | 官方 normal 默认 | 交给 `dsh-llm-retry` |
 | `providers.*.syncedAt` | number | 可选 | 上次发现时间 |

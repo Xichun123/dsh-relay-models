@@ -54,4 +54,21 @@ describe('relay provider materialization', () => {
     next.protocolOverrides = { 'bedrock-only': 'openai-completions' }
     expect(materializeModels('relay-test', next, catalog).map(model => model.id)).toEqual(['future-model', 'bedrock-only'])
   })
+
+  it('keeps Codex catalog matches on openai-codex-responses and rewrites /v1 to /backend-api', () => {
+    const codex = OFFICIAL_MODELS.find(model => model.provider === 'openai-codex' && model.api === 'openai-codex-responses')
+    expect(codex).toBeDefined()
+    const next = {
+      ...config(),
+      modelIds: [codex!.id],
+      modelMappings: { [codex!.id]: { provider: 'openai-codex', id: codex!.id } },
+    }
+    const [model] = materializeModels('relay-test', next, OFFICIAL_MODELS)
+    expect(model).toMatchObject({
+      id: codex!.id,
+      api: 'openai-codex-responses',
+      baseUrl: 'https://relay.test/backend-api',
+    })
+    expect(buildRelayProvider('relay-test', next, OFFICIAL_MODELS).getModels()[0]?.api).toBe('openai-codex-responses')
+  })
 })

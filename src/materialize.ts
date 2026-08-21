@@ -7,6 +7,7 @@ import {
 import { getBuiltinModels, getBuiltinProviders } from '@earendil-works/pi-ai/providers/all'
 import { anthropicMessagesApi } from '@earendil-works/pi-ai/api/anthropic-messages.lazy'
 import { openAICompletionsApi } from '@earendil-works/pi-ai/api/openai-completions.lazy'
+import { openAICodexResponsesApi } from '@earendil-works/pi-ai/api/openai-codex-responses.lazy'
 import { openAIResponsesApi } from '@earendil-works/pi-ai/api/openai-responses.lazy'
 import {
   DEFAULT_CONTEXT_WINDOW,
@@ -99,6 +100,7 @@ export function buildRelayProvider(
     api: {
       'openai-completions': openAICompletionsApi(),
       'openai-responses': openAIResponsesApi(),
+      'openai-codex-responses': openAICodexResponsesApi(),
       'anthropic-messages': anthropicMessagesApi(),
     },
   })

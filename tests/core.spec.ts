@@ -47,6 +47,9 @@ describe('relay core', () => {
     expect(assertUnreservedProviderId('relay-example')).toBe('relay-example')
     expect(baseURLForProtocol('https://relay.test/v1/', 'anthropic-messages')).toBe('https://relay.test')
     expect(baseURLForProtocol('https://relay.test/v1/', 'openai-responses')).toBe('https://relay.test/v1')
+    expect(baseURLForProtocol('https://relay.test/v1/', 'openai-codex-responses')).toBe('https://relay.test/backend-api')
+    expect(baseURLForProtocol('https://relay.test/backend-api', 'openai-codex-responses')).toBe('https://relay.test/backend-api')
+    expect(baseURLForProtocol('https://relay.test/backend-api/codex/responses', 'openai-codex-responses')).toBe('https://relay.test/backend-api/codex/responses')
   })
 
   it('rejects credential-bearing extra headers', () => {
@@ -78,6 +81,10 @@ describe('relay core', () => {
     expect(updateExcludedModels(['a'], ['b'], true)).toEqual(['a', 'b'])
     expect(updateExcludedModels(['a', 'b'], ['a'], false)).toEqual(['b'])
     expect(inferProtocol(undefined, 'openai-completions')).toBe('openai-completions')
+    expect(inferProtocol({
+      provider: 'openai-codex', id: 'gpt-5.6-sol', name: 'GPT-5.6 Sol', api: 'openai-codex-responses',
+      contextWindow: 272_000, maxTokens: 128_000, reasoning: true, input: ['text', 'image'], cost,
+    }, 'openai-completions')).toBe('openai-codex-responses')
     expect(relayModelStatuses(config({ modelIds: ['bedrock-only'] }), catalog)[0]).toMatchObject({
       id: 'bedrock-only', officialApi: 'bedrock-converse-stream', supported: false,
     })

@@ -22,6 +22,7 @@
 - 同一 Provider 混用：
   - OpenAI Chat Completions
   - OpenAI Responses
+  - Codex Responses（WebSocket / SSE）
   - Anthropic Messages
 
 官方目录由 Host 使用 ETag 缓存；Adapter 继续使用 DSH 对齐的 `pi-ai` 运行时。目录中的其他 API 协议会显示为需要人工覆盖，不会在未覆盖时注册为可调用模型。
@@ -80,9 +81,13 @@ DSH_HOME=/tmp/dsh-relay-models-home \
 
 Base URL 可以带或不带 `/v1`。插件会为不同协议生成对应调用地址，并尝试 `/models` 与 `/v1/models` 进行发现。
 
+匹配到官方 `openai-codex` 元数据的模型会自动使用 **Codex Responses**。pi-ai 会把请求打到 `{origin}/backend-api/codex/responses`（CLIProxyAPI 的 Codex 别名，和 `/v1/responses` 同一个 handler）。连接设置里的 **Codex 传输** 默认 `auto`：先 WebSocket，失败再 SSE。需要纯 SSE 时把该模型协议覆盖成 OpenAI Responses，或把传输设为 SSE。
+
+CLIProxyAPI 上游还要在对应 Codex 凭证里打开 `"websockets": true`，否则下游即使是 WS，上游仍走 SSE。
+
 ## 配置和凭据
 
-插件设置使用命名空间 `llm-relay-models`。每个中转站保存 Base URL、模型列表、元数据映射、协议覆盖、排除列表、可选额外请求头、流空闲超时和重试策略。API Key 使用从 Provider ID 生成的 credentials 引用，例如 `relay-example` 对应 `RELAY_EXAMPLE_API_KEY`，由 DSH credentials provider 管理。
+插件设置使用命名空间 `llm-relay-models`。每个中转站保存 Base URL、模型列表、元数据映射、协议覆盖、排除列表、可选额外请求头、Codex 传输、流空闲超时和重试策略。API Key 使用从 Provider ID 生成的 credentials 引用，例如 `relay-example` 对应 `RELAY_EXAMPLE_API_KEY`，由 DSH credentials provider 管理。
 
 不要使用 `openai`、`anthropic`、`deepseek` 等官方路由名作为 Provider ID，应使用 `relay-*`。此插件只在 Web profile 加载（依赖 `webServer`）。
 
