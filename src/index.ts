@@ -91,15 +91,18 @@ function resolveProfile(
   source: RelayProviderConfig,
   catalog: readonly OfficialModelSummary[],
 ): ResolvedPiAiProviderProfile {
-  const profile: ResolvedPiAiProviderProfile = {
+  const profile = {
     provider,
     displayName: source.displayName,
     apiKeyEnv: credentialRef(source.apiKeyEnv),
     streamIdleTimeoutMs: source.streamIdleTimeoutMs ?? DEFAULT_STREAM_IDLE_TIMEOUT_MS,
+    maxRequestImageBytes: 20 * 1024 * 1024,
+    requestImagePixelBudget: 2048 * 2048,
+    requestImageMaxBytes: 1024 * 1024,
     retryPolicy: resolveRetryPolicy(source.retryPolicy, `relay-models: provider "${provider}" retry policy`),
     piProvider: buildRelayProvider(provider, source, catalog),
     configuredMaxTokens: new Map(),
-  }
+  } as ResolvedPiAiProviderProfile
   if (source.headers && Object.keys(source.headers).length > 0) profile.headers = { ...source.headers }
   if (source.transport) profile.transport = source.transport
   return profile
