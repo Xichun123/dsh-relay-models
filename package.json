@@ -1,6 +1,6 @@
 {
   "name": "dsh-relay-models",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Mixed-protocol relay model discovery, metadata matching, and Web configuration for DeepSeek Harness",
   "type": "module",
   "license": "MIT",
@@ -45,6 +45,7 @@
     "build": "npm run generate && tsdown",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
+    "sync:dsh": "pnpm up '@deepseek-ai/dsh-*@next'",
     "validate": "npm run test && npm run typecheck && npm run build"
   },
   "dependencies": {
@@ -76,14 +77,14 @@
   },
   "devDependencies": {
     "@deepseek-ai/cordis": "^4.0.1",
-    "@deepseek-ai/dsh-client-runtime": "^0.1.0-rc.6",
-    "@deepseek-ai/dsh-client-ui-settings": "^0.1.0-rc.6",
-    "@deepseek-ai/dsh-credentials": "^0.1.0-rc.6",
-    "@deepseek-ai/dsh-host-webserver": "^0.1.0-rc.6",
-    "@deepseek-ai/dsh-llm": "^0.1.0-rc.6",
-    "@deepseek-ai/dsh-llm-pi-ai": "^0.1.0-rc.6",
-    "@deepseek-ai/dsh-settings": "^0.1.0-rc.6",
-    "@deepseek-ai/dsh-timeout": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-client-runtime": "next",
+    "@deepseek-ai/dsh-client-ui-settings": "next",
+    "@deepseek-ai/dsh-credentials": "next",
+    "@deepseek-ai/dsh-host-webserver": "next",
+    "@deepseek-ai/dsh-llm": "next",
+    "@deepseek-ai/dsh-llm-pi-ai": "next",
+    "@deepseek-ai/dsh-settings": "next",
+    "@deepseek-ai/dsh-timeout": "next",
     "@types/node": "^24.0.0",
     "@types/react": "~18.3.1",
     "@types/react-dom": "~18.3.7",

@@ -30,10 +30,26 @@ export function assertRequestOrigin(req: IncomingMessage, method: string): void 
   }
 }
 
+/** Where a discovery request may interrogate, resolved from the request and the stored configuration. */
+export interface DiscoveryTarget {
+  /** Stored provider the draft edits, absent for an endpoint that is not saved yet. */
+  providerId?: string
+  /** Endpoint to interrogate: the stored Base URL wins over any address the request names. */
+  baseURL: string
+  /** Wire protocol to interrogate with. */
+  protocol: RelayProtocol
+  /** Key typed into the draft, when the request carries one. */
+  apiKey?: string
+  /** Extra request headers stored for the provider; an unsaved endpoint has none. */
+  headers?: Readonly<Record<string, string>>
+  /** Whether the stored credential may answer for a missing {@link apiKey}. */
+  useStoredKey: boolean
+}
+
 export function resolveDiscoveryTarget(
   input: Record<string, unknown>,
   config: RelayConfig,
-): { providerId?: string; baseURL: string; protocol: RelayProtocol; apiKey?: string; useStoredKey: boolean } {
+): DiscoveryTarget {
   const protocol = requiredString(input.protocol, 'protocol')
   if (!isRelayProtocol(protocol)) throw new Error('Invalid relay protocol')
   const providerId = typeof input.provider === 'string' ? input.provider.trim() : ''
@@ -45,6 +61,7 @@ export function resolveDiscoveryTarget(
       baseURL: provider.baseURL,
       protocol,
       ...typeof input.apiKey === 'string' && input.apiKey.trim() ? { apiKey: input.apiKey.trim() } : {},
+      ...provider.headers && Object.keys(provider.headers).length > 0 ? { headers: provider.headers } : {},
       useStoredKey: true,
     }
   }
@@ -143,6 +160,7 @@ export function installWebApi(
           baseURL: target.baseURL,
           api: target.protocol,
           apiKey: target.apiKey ?? storedApiKey,
+          ...target.headers ? { headers: target.headers } : {},
         })
         reply(res, 200, { ok: true, value: models.map(model => model.id) })
         return

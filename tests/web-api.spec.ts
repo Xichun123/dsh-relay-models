@@ -65,4 +65,19 @@ describe('relay web API guards', () => {
       protocol: 'openai-completions',
     }, config)).toThrow(/Unknown provider/)
   })
+
+  it('carries the stored extra headers into discovery', () => {
+    const headers = { 'X-Custom': 'value' }
+    const stored: RelayConfig = {
+      providers: { 'relay-example': { ...config.providers['relay-example']!, headers } },
+    }
+    expect(resolveDiscoveryTarget({ provider: 'relay-example', protocol: 'openai-completions' }, stored))
+      .toEqual({
+        providerId: 'relay-example',
+        baseURL: 'https://relay.example/v1',
+        protocol: 'openai-completions',
+        headers,
+        useStoredKey: true,
+      })
+  })
 })

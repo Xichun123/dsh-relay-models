@@ -12,6 +12,7 @@ import { getBuiltinProviders } from '@earendil-works/pi-ai/providers/all'
 import { currentOfficialCatalog, refreshOfficialCatalog } from './catalog.ts'
 import { discoverRelayModels } from './discovery.ts'
 import { buildRelayProvider } from './materialize.ts'
+import { relayAuthInjection } from './pi-auth.ts'
 import {
   assertSafeHeaders,
   assertUnreservedProviderId,
@@ -91,7 +92,7 @@ function resolveProfile(
   source: RelayProviderConfig,
   catalog: readonly OfficialModelSummary[],
 ): ResolvedPiAiProviderProfile {
-  const profile = {
+  const profile: ResolvedPiAiProviderProfile = {
     provider,
     displayName: source.displayName,
     apiKeyEnv: credentialRef(source.apiKeyEnv),
@@ -102,7 +103,7 @@ function resolveProfile(
     retryPolicy: resolveRetryPolicy(source.retryPolicy, `relay-models: provider "${provider}" retry policy`),
     piProvider: buildRelayProvider(provider, source, catalog),
     configuredMaxTokens: new Map(),
-  } as ResolvedPiAiProviderProfile
+  }
   if (source.headers && Object.keys(source.headers).length > 0) profile.headers = { ...source.headers }
   if (source.transport) profile.transport = source.transport
   return profile
@@ -139,6 +140,7 @@ export function apply(ctx: Context, config: Config): void {
   const adapter = new PiAiAdapter({
     profiles: () => profiles,
     resolveApiKey,
+    auth: relayAuthInjection(ctx),
     resolveAttachments: () => ctx.get('attachments'),
   })
 
@@ -205,6 +207,7 @@ export function apply(ctx: Context, config: Config): void {
       baseURL,
       api: protocol,
       apiKey: request.apiKey ?? storedKey,
+      ...stored?.headers && Object.keys(stored.headers).length > 0 ? { headers: stored.headers } : {},
       ...request.signal ? { signal: request.signal } : {},
     })
   })

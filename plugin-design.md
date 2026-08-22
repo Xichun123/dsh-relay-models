@@ -34,7 +34,7 @@
 | `providers.*.modelMappings` | dict | `{}` | 人工映射到官方元数据 |
 | `providers.*.protocolOverrides` | dict | `{}` | 按模型覆盖协议 |
 | `providers.*.excludedModels` | string[] | `[]` | 不注册的模型 |
-| `providers.*.headers` | dict | `{}` | 额外请求头；禁止 Authorization 等密钥头。User-Agent 由 DSH attribution 覆盖 |
+| `providers.*.headers` | dict | `{}` | 额外请求头，调用和模型发现同时生效；禁止 Authorization 等密钥头。User-Agent 由 DSH attribution 覆盖 |
 | `providers.*.transport` | enum | 省略=`auto` | 仅 Codex Responses：`auto` / `websocket` / `websocket-cached` / `sse` |
 | `providers.*.streamIdleTimeoutMs` | number | `300000` | 流空闲超时 |
 | `providers.*.retryPolicy` | RetryPolicy | 官方 normal 默认 | 交给 `dsh-llm-retry` |
@@ -45,6 +45,6 @@
 ## 验证计划
 
 - [x] `validate_dsh_plugin.py`
-- [x] 单元测试：保留路由、安全头、Origin、发现 URL 锁定、无默认伪装头
+- [x] 单元测试：保留路由、安全头、Origin、发现 URL 锁定、无默认伪装头、发现错误透传中转站说明、pi-ai auth 注入
 - [ ] `--patch` 冷启动
 - [ ] 设置页添加中转站并成功调用一次模型

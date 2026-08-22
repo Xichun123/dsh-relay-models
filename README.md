@@ -8,8 +8,8 @@
 - 注册 LLM Adapter，使已配置模型可以被 DSH 正常选择和调用。
 - **不注册 Agent 工具。**
 - **不写入 system prompt、会话上下文或其他模型可见内容。**
-- API Key 交给 DSH credentials 服务保存，不写入插件设置。
-- **不默认伪造 Claude Code / Codex 的 User-Agent 或其他客户端头。** 请求带 DSH attribution；如中转站需要额外头，在设置里按需填写（不能放密钥）。
+- API Key 交给 DSH credentials 服务保存，不写入插件设置，也不写入 pi-ai 自己的凭据存储。
+- **不默认伪造 Claude Code / Codex 的 User-Agent 或其他客户端头。** 请求带 DSH attribution；如中转站需要额外头，在设置里按需填写（不能放密钥）。额外头对模型调用和模型发现同时生效，`User-Agent` 始终由 DSH attribution 覆盖。
 
 ## 功能
 
@@ -95,6 +95,8 @@ CLIProxyAPI 上游还要在对应 Codex 凭证里打开 `"websockets": true`，�
 
 浏览器配置请求只发送到当前 DSH 服务的同源 `/relay-models/api`。POST 必须带匹配的 `Origin`；已有中转站的模型发现只使用已保存的 Base URL，不会把托管密钥发到请求里另写的地址。中转站发现响应和 pi.dev 目录响应上限均为 4 MiB，请求体上限为 1 MiB。
 
+模型发现失败时，错误信息原样带上中转站自己的 JSON 说明（`error.message`、`error`、`message` 或 `detail`；单行，最多 300 字符），只有中转站什么都没说时才提示检查 API Key。所以 `unauthorized client detected` 这类“只认特定客户端”的拦截会直接显示出来，不会被误读成 Key 失效。
+
 官方 Models 页可以通过 `registerConfigurableProviders` / `registerModelDiscovery` 看到这些路由；混协议和元数据匹配仍以本插件的“中转模型”页为准。
 
 ## 开发
@@ -105,6 +107,14 @@ pnpm run validate
 ```
 
 `validate` 会运行单元测试并重新生成官方模型目录和 Host/Web bundles。
+
+DSH 包在 `peerDependencies` 里由宿主提供，本地只用 `devDependencies` 跑测试和 typecheck。这些 devDependencies 跟随 DSH 的 **`next`** dist-tag：库包（`dsh-llm` 等）的 `latest` 还停在 `0.0.1-rc.1`，正在发布的那条线在 `next`。同步一次：
+
+```bash
+pnpm run sync:dsh
+```
+
+不要写成 `^0.1.0-rc.6` 这类固定预发布范围：semver 只会在同一 `major.minor.patch` 上匹配预发布号，所以它永远升不到 `0.1.1-rc.2`，本地测到的行为会和宿主实际运行的版本脱节。CI 用 `pnpm install --frozen-lockfile`，可复现性由 `pnpm-lock.yaml` 保证。
 
 源码热加载（把路径换成你的绝对路径）：
 
