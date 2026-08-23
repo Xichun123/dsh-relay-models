@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useId, useMemo, useState, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
+import { Button, Input, Pill } from '@deepseek-ai/dsh-client-ui-primitives'
+import type { Translate } from '@deepseek-ai/dsh-client-ui-slots'
 import {
-  DEFAULT_STREAM_IDLE_TIMEOUT_MS,
   RELAY_PROTOCOLS,
   RELAY_TRANSPORTS,
   assertUnreservedProviderId,
@@ -13,36 +14,45 @@ import {
   updateExcludedModels,
 } from '../shared/core.ts'
 import type {
-  OfficialCatalogSnapshot,
   OfficialModelSummary,
   RelayModelStatus,
   RelayProtocol,
   RelayProviderConfig,
   RelayTransport,
 } from '../shared/types.ts'
-import { peekRelayPage, type RelayPageApi, type RelayPageSnapshot } from './api.ts'
+import { peekRelayPage, RELAY_STALE_CODE, type RelayPageApi, type RelayPageSnapshot } from './api.ts'
+import type { RelayLocaleKey } from './locales.ts'
+
+/** This page's translate seat. */
+type T = Translate<RelayLocaleKey>
 
 interface Props {
   api: RelayPageApi
+  t: T
 }
 
 function messageOf(error: unknown): string {
   return error instanceof Error ? error.message : String(error)
 }
 
-function protocolLabel(protocol: RelayProtocol | undefined): string {
-  if (protocol === 'anthropic-messages') return 'Anthropic Messages'
-  if (protocol === 'openai-codex-responses') return 'Codex Responses（WS）'
-  if (protocol === 'openai-responses') return 'OpenAI Responses'
-  if (protocol === 'openai-completions') return 'OpenAI Chat Completions'
-  return '不支持（需手动覆盖）'
+/** Whether a refusal was the host rejecting a revision the page had already outgrown. */
+function isStale(error: unknown): boolean {
+  return (error as { code?: unknown } | null)?.code === RELAY_STALE_CODE
 }
 
-function transportLabel(transport: RelayTransport): string {
-  if (transport === 'websocket') return 'WebSocket'
-  if (transport === 'websocket-cached') return 'WebSocket 缓存会话'
-  if (transport === 'sse') return 'SSE'
-  return '自动（先 WS，失败回 SSE）'
+function protocolLabel(t: T, protocol: RelayProtocol | undefined): string {
+  if (protocol === 'anthropic-messages') return t('protocolAnthropic')
+  if (protocol === 'openai-codex-responses') return t('protocolCodex')
+  if (protocol === 'openai-responses') return t('protocolResponses')
+  if (protocol === 'openai-completions') return t('protocolCompletions')
+  return t('protocolUnsupported')
+}
+
+function transportLabel(t: T, transport: RelayTransport): string {
+  if (transport === 'websocket') return t('transportWebsocket')
+  if (transport === 'websocket-cached') return t('transportWebsocketCached')
+  if (transport === 'sse') return t('transportSse')
+  return t('transportAuto')
 }
 
 function officialModel(
@@ -55,13 +65,18 @@ function officialModel(
 function AddProvider({
   api,
   snapshot,
+  t,
+  open,
+  onOpen,
   onDone,
 }: {
   api: RelayPageApi
   snapshot: RelayPageSnapshot
+  t: T
+  open: boolean
+  onOpen: (open: boolean) => void
   onDone: () => Promise<void>
 }): ReactNode {
-  const [open, setOpen] = useState(false)
   const [route, setRoute] = useState('')
   const [displayName, setDisplayName] = useState('')
   const [baseURL, setBaseURL] = useState('')
@@ -86,28 +101,29 @@ function AddProvider({
     setError(undefined)
     try {
       const id = assertUnreservedProviderId(route)
-      if (snapshot.config.providers[id]) throw new Error(`Provider ${id} already exists`)
-      if (!displayName.trim()) throw new Error('请输入显示名称')
-      if (!apiKey.trim()) throw new Error('请输入 API Key')
-      const modelIds = await api.discover({ baseURL, protocol, apiKey: apiKey.trim() })
-      if (modelIds.length === 0) throw new Error('端点没有返回模型')
-      const ref = relayCredentialRef(id)
+      if (snapshot.config.providers[id]) throw new Error(t('alreadyExists', { id }))
+      if (!displayName.trim()) throw new Error(t('needDisplayName'))
+      const modelIds = await api.discover({
+        baseURL,
+        protocol,
+        ...apiKey.trim() ? { apiKey: apiKey.trim() } : {},
+      })
+      if (modelIds.length === 0) throw new Error(t('noModels'))
       const provider: RelayProviderConfig = {
         displayName: displayName.trim(),
         baseURL: baseURL.trim(),
-        apiKeyEnv: ref,
+        apiKeyEnv: relayCredentialRef(id),
         fallbackProtocol: protocol,
         modelIds,
         modelMappings: {},
         protocolOverrides: {},
         excludedModels: [],
         headers: {},
-        streamIdleTimeoutMs: DEFAULT_STREAM_IDLE_TIMEOUT_MS,
         syncedAt: Date.now(),
       }
-      await api.setProvider(id, provider, snapshot.revision, apiKey.trim())
+      await api.setProvider(id, provider, snapshot.revision, apiKey.trim() || undefined)
       await onDone()
-      setOpen(false)
+      onOpen(false)
       setRoute('')
       setDisplayName('')
       setBaseURL('')
@@ -121,43 +137,69 @@ function AddProvider({
 
   if (!open) {
     return (
-      <button
-        type="button"
-        className="drm-icon-button"
-        disabled={!snapshot.writable}
-        aria-label="添加中转站"
-        title="添加中转站"
-        onClick={() => { setOpen(true) }}
-      >
-        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-          <path fill="currentColor" d="M8 3a.75.75 0 0 1 .75.75v3.5h3.5a.75.75 0 0 1 0 1.5h-3.5v3.5a.75.75 0 0 1-1.5 0v-3.5h-3.5a.75.75 0 0 1 0-1.5h3.5v-3.5A.75.75 0 0 1 8 3z" />
-        </svg>
-      </button>
+      <Button variant="primary" size="sm" disabled={!snapshot.writable} onClick={() => { onOpen(true) }}>
+        {t('add')}
+      </Button>
     )
   }
   return (
     <div className="drm-add">
       <div className="drm-grid">
-        <label className="drm-field"><span className="drm-label">Provider ID</span><input className="drm-input" value={route} placeholder="relay-example" onChange={event => { setRoute(event.target.value) }} /></label>
-        <label className="drm-field"><span className="drm-label">显示名称</span><input className="drm-input" value={displayName} placeholder="Example Relay" onChange={event => { setDisplayName(event.target.value) }} /></label>
-        <label className="drm-field wide"><span className="drm-label">Base URL</span><div className="drm-actions"><input className="drm-input" value={baseURL} placeholder="https://gateway.example/v1" onChange={event => { setBaseURL(event.target.value) }} /><button className="drm-button" disabled={!baseURL} onClick={suggest}>生成名称</button></div></label>
-        <label className="drm-field"><span className="drm-label">未匹配模型的默认协议</span><select className="drm-select" value={protocol} onChange={event => { setProtocol(event.target.value as RelayProtocol) }}>{RELAY_PROTOCOLS.map(value => <option key={value} value={value}>{protocolLabel(value)}</option>)}</select></label>
-        <label className="drm-field"><span className="drm-label">API Key</span><input className="drm-input" type="password" autoComplete="off" value={apiKey} onChange={event => { setApiKey(event.target.value) }} /></label>
+        <label className="drm-field">
+          <span className="drm-label">{t('providerId')}</span>
+          <Input value={route} placeholder={t('providerIdPlaceholder')} onChange={event => { setRoute(event.target.value) }} />
+        </label>
+        <label className="drm-field">
+          <span className="drm-label">{t('displayName')}</span>
+          <Input value={displayName} placeholder={t('displayNamePlaceholder')} onChange={event => { setDisplayName(event.target.value) }} />
+        </label>
+        <label className="drm-field wide">
+          <span className="drm-label">{t('baseURL')}</span>
+          <div className="drm-actions">
+            <Input className="drm-grow" value={baseURL} placeholder={t('baseURLPlaceholder')} onChange={event => { setBaseURL(event.target.value) }} />
+            <Button size="sm" variant="outline" disabled={!baseURL} onClick={suggest}>{t('suggestName')}</Button>
+          </div>
+        </label>
+        <label className="drm-field">
+          <span className="drm-label">{t('fallbackProtocol')}</span>
+          <select className="drm-select" value={protocol} onChange={event => { setProtocol(event.target.value as RelayProtocol) }}>
+            {RELAY_PROTOCOLS.map(value => <option key={value} value={value}>{protocolLabel(t, value)}</option>)}
+          </select>
+        </label>
+        <label className="drm-field">
+          <span className="drm-label">{t('apiKey')}</span>
+          <Input type="password" autoComplete="off" value={apiKey} onChange={event => { setApiKey(event.target.value) }} />
+        </label>
       </div>
       {error ? <div className="drm-error">{error}</div> : null}
-      <div className="drm-actions"><button className="drm-button primary" disabled={busy} onClick={() => { void add() }}>{busy ? '正在发现模型…' : '发现模型并添加'}</button><button className="drm-button" disabled={busy} onClick={() => { setOpen(false); setError(undefined) }}>取消</button></div>
+      <div className="drm-actions">
+        <Button variant="primary" size="sm" disabled={busy} onClick={() => { void add() }}>
+          {busy ? t('discovering') : t('discoverAndAdd')}
+        </Button>
+        <Button variant="outline" size="sm" disabled={busy} onClick={() => { onOpen(false); setError(undefined) }}>
+          {t('cancel')}
+        </Button>
+      </div>
     </div>
   )
 }
 
+/**
+ * The page's own wide dialog. `Modal` from the primitives is tuned to a 380px
+ * confirmation card with no scrolling body, while the model manager is a wide
+ * scrollable table; this keeps the escape key, the portal, the labelled
+ * `role="dialog"`, and the page scroll lock.
+ */
 function Dialog({
   open,
   title,
+  closeLabel,
   onClose,
   children,
 }: {
   open: boolean
   title: string
+  closeLabel: string
   onClose: () => void
   children: ReactNode
 }): ReactNode {
@@ -182,7 +224,7 @@ function Dialog({
         <div className="drm-dialog-head">
           <h3 className="drm-dialog-title" id={titleId}>{title}</h3>
           <span className="drm-spacer" />
-          <button type="button" className="drm-button" onClick={onClose}>关闭</button>
+          <Button size="sm" variant="outline" onClick={onClose}>{closeLabel}</Button>
         </div>
         <div className="drm-dialog-body">{children}</div>
       </div>
@@ -212,11 +254,13 @@ function matchesQuery(status: RelayModelStatus, query: string): boolean {
 function MappingEditor({
   status,
   catalog,
+  t,
   onMap,
   onClose,
 }: {
   status: RelayModelStatus
   catalog: readonly OfficialModelSummary[]
+  t: T
   onMap: (model: OfficialModelSummary) => Promise<void>
   onClose: () => void
 }): ReactNode {
@@ -234,12 +278,15 @@ function MappingEditor({
   }, [catalog, query, status])
   return (
     <div className="drm-map">
-      <div className="drm-actions"><input className="drm-input" autoFocus value={query} placeholder="搜索官方 Provider、模型 ID 或名称" onChange={event => { setQuery(event.target.value) }} /><button className="drm-button" onClick={onClose}>关闭</button></div>
+      <div className="drm-actions">
+        <Input className="drm-grow" autoFocus value={query} placeholder={t('searchCatalog')} onChange={event => { setQuery(event.target.value) }} />
+        <Button size="sm" variant="outline" onClick={onClose}>{t('close')}</Button>
+      </div>
       <div className="drm-candidates">
-        {results.length === 0 ? <span className="drm-muted">没有候选；输入关键词搜索完整目录。</span> : results.map(model => (
-          <button key={`${model.provider}/${model.id}`} className="drm-candidate" onClick={() => { void onMap(model) }}>
+        {results.length === 0 ? <span className="drm-muted">{t('noCandidates')}</span> : results.map(model => (
+          <button type="button" key={`${model.provider}/${model.id}`} className="drm-candidate" onClick={() => { void onMap(model) }}>
             <span className="drm-candidate-name"><strong>{model.name}</strong><br /><span className="drm-route">{model.provider}/{model.id}</span></span>
-            <span className="drm-pill">{model.api}</span>
+            <Pill>{model.api}</Pill>
           </button>
         ))}
       </div>
@@ -254,6 +301,7 @@ function ModelManager({
   busy,
   error,
   notice,
+  t,
   onSave,
 }: {
   provider: RelayProviderConfig
@@ -262,6 +310,7 @@ function ModelManager({
   busy: boolean
   error?: string
   notice?: string
+  t: T
   onSave: (next: RelayProviderConfig, success?: string) => Promise<void>
 }): ReactNode {
   const [query, setQuery] = useState('')
@@ -305,11 +354,11 @@ function ModelManager({
 
   const selectedIds = selectedVisible
   const filters: { id: ModelFilter; label: string; count: number }[] = [
-    { id: 'all', label: '全部', count: counts.all },
-    { id: 'active', label: '可用', count: counts.active },
-    { id: 'unmatched', label: '未匹配', count: counts.unmatched },
-    { id: 'unsupported', label: '需覆盖', count: counts.unsupported },
-    { id: 'excluded', label: '已排除', count: counts.excluded },
+    { id: 'all', label: t('filterAll'), count: counts.all },
+    { id: 'active', label: t('filterActive'), count: counts.active },
+    { id: 'unmatched', label: t('filterUnmatched'), count: counts.unmatched },
+    { id: 'unsupported', label: t('filterUnsupported'), count: counts.unsupported },
+    { id: 'excluded', label: t('filterExcluded'), count: counts.excluded },
   ]
 
   return (
@@ -317,79 +366,91 @@ function ModelManager({
       {error ? <div className="drm-error">{error}</div> : null}
       {notice ? <div className="drm-success">{notice}</div> : null}
       <div className="drm-toolbar">
-        <input
-          className="drm-input drm-search"
+        <Input
+          className="drm-search"
           value={query}
-          placeholder="筛选模型 ID 或官方来源"
+          placeholder={t('searchModels')}
           onChange={event => { setQuery(event.target.value) }}
         />
         <div className="drm-filters">
           {filters.filter(item => item.id === 'all' || item.count > 0).map(item => (
-            <button
+            <Pill
               key={item.id}
-              type="button"
-              className={`drm-chip${filter === item.id ? ' active' : ''}`}
+              active={filter === item.id}
               onClick={() => { setFilter(item.id) }}
             >
               {item.label} {item.count}
-            </button>
+            </Pill>
           ))}
         </div>
       </div>
       {selectedIds.length > 0 ? (
         <div className="drm-batch">
-          <span>已选 {selectedIds.length} 个</span>
-          <button className="drm-button" disabled={busy} onClick={() => {
-            void onSave({ ...provider, excludedModels: updateExcludedModels(provider.excludedModels, selectedIds, true) }, `已排除 ${selectedIds.length} 个模型`)
+          <span>{t('selectedCount', { count: selectedIds.length })}</span>
+          <Button size="sm" variant="outline" disabled={busy} onClick={() => {
+            void onSave({ ...provider, excludedModels: updateExcludedModels(provider.excludedModels, selectedIds, true) }, t('excluded', { count: selectedIds.length }))
             setSelected(new Set())
-          }}>排除</button>
-          <button className="drm-button" disabled={busy} onClick={() => {
-            void onSave({ ...provider, excludedModels: updateExcludedModels(provider.excludedModels, selectedIds, false) }, `已恢复 ${selectedIds.length} 个模型`)
+          }}>{t('exclude')}</Button>
+          <Button size="sm" variant="outline" disabled={busy} onClick={() => {
+            void onSave({ ...provider, excludedModels: updateExcludedModels(provider.excludedModels, selectedIds, false) }, t('restored', { count: selectedIds.length }))
             setSelected(new Set())
-          }}>恢复</button>
+          }}>{t('restore')}</Button>
           <select className="drm-select drm-batch-select" value={batchProtocol} onChange={event => { setBatchProtocol(event.target.value as RelayProtocol | '') }}>
-            <option value="">恢复自动协议</option>
-            {RELAY_PROTOCOLS.map(value => <option key={value} value={value}>{protocolLabel(value)}</option>)}
+            <option value="">{t('autoProtocol')}</option>
+            {RELAY_PROTOCOLS.map(value => <option key={value} value={value}>{protocolLabel(t, value)}</option>)}
           </select>
-          <button className="drm-button" disabled={busy} onClick={() => {
+          <Button size="sm" variant="outline" disabled={busy} onClick={() => {
             const overrides = { ...provider.protocolOverrides }
             for (const id of selectedIds) {
               if (batchProtocol) overrides[id] = batchProtocol
               else delete overrides[id]
             }
-            void onSave({ ...provider, protocolOverrides: overrides }, batchProtocol ? `已为 ${selectedIds.length} 个模型设置协议` : `已为 ${selectedIds.length} 个模型恢复自动协议`)
+            void onSave(
+              { ...provider, protocolOverrides: overrides },
+              batchProtocol
+                ? t('protocolApplied', { count: selectedIds.length })
+                : t('protocolCleared', { count: selectedIds.length }),
+            )
             setSelected(new Set())
-          }}>应用协议</button>
-          <button className="drm-link" onClick={() => { setSelected(new Set()) }}>取消选择</button>
+          }}>{t('applyProtocol')}</Button>
+          <button type="button" className="drm-link" onClick={() => { setSelected(new Set()) }}>{t('clearSelection')}</button>
         </div>
       ) : null}
-      <div className="drm-muted">{query.trim() || filter !== 'all' ? `显示 ${visible.length} / ${statuses.length}` : `${statuses.length} 个模型`}</div>
+      <div className="drm-muted">
+        {query.trim() || filter !== 'all'
+          ? t('showingCount', { shown: visible.length, total: statuses.length })
+          : t('modelCount', { count: statuses.length })}
+      </div>
       <div className="drm-models"><table className="drm-table"><thead><tr>
-        <th className="drm-check"><input type="checkbox" checked={allVisibleSelected} disabled={visibleIds.length === 0} onChange={event => { toggleVisible(event.target.checked) }} aria-label="选择当前列表" /></th>
-        <th>远端模型</th><th>元数据来源</th><th>实际协议</th><th>操作</th>
+        <th className="drm-check"><input type="checkbox" checked={allVisibleSelected} disabled={visibleIds.length === 0} onChange={event => { toggleVisible(event.target.checked) }} aria-label={t('selectVisible')} /></th>
+        <th>{t('columnModel')}</th><th>{t('columnSource')}</th><th>{t('columnProtocol')}</th><th>{t('columnActions')}</th>
       </tr></thead><tbody>
-        {visible.length === 0 ? <tr><td colSpan={5}><span className="drm-muted">没有符合条件的模型。</span></td></tr> : visible.map(status => {
+        {visible.length === 0 ? <tr><td colSpan={5}><span className="drm-muted">{t('noMatches')}</span></td></tr> : visible.map(status => {
           const mapping = provider.modelMappings[status.id]
           const source = status.metadataSource
           return [
             <tr key={status.id}>
-              <td className="drm-check"><input type="checkbox" checked={selected.has(status.id)} onChange={event => { toggle(status.id, event.target.checked) }} aria-label={`选择 ${status.id}`} /></td>
-              <td><span className="drm-model-id">{status.id}</span>{status.excluded ? <span className="drm-pill warn">已排除</span> : null}</td>
-              <td>{source ? <span>{source.provider}/{source.id}{mapping ? <span className="drm-pill">人工</span> : null}{!status.supported ? <span className="drm-pill warn">{status.officialApi} 需覆盖</span> : null}</span> : <span className="drm-muted">未匹配</span>}</td>
+              <td className="drm-check"><input type="checkbox" checked={selected.has(status.id)} onChange={event => { toggle(status.id, event.target.checked) }} aria-label={t('selectOne', { id: status.id })} /></td>
+              <td><span className="drm-model-id">{status.id}</span>{status.excluded ? <Pill className="drm-warn">{t('excludedTag')}</Pill> : null}</td>
+              <td>{source ? <span>{source.provider}/{source.id}{mapping ? <Pill>{t('manual')}</Pill> : null}{!status.supported ? <Pill className="drm-warn">{t('needsOverride', { api: status.officialApi ?? '' })}</Pill> : null}</span> : <span className="drm-muted">{t('unmatched')}</span>}</td>
               <td><select className="drm-select" value={provider.protocolOverrides[status.id] ?? ''} disabled={busy} onChange={event => {
                 const value = event.target.value as RelayProtocol | ''
                 const overrides = { ...provider.protocolOverrides }
                 if (value) overrides[status.id] = value
                 else delete overrides[status.id]
-                void onSave({ ...provider, protocolOverrides: overrides }, value ? '协议覆盖已保存' : '协议已恢复自动选择')
-              }}><option value="">自动：{status.supported ? protocolLabel(status.protocol) : `不支持 ${status.officialApi ?? ''}`}</option>{RELAY_PROTOCOLS.map(value => <option key={value} value={value}>{protocolLabel(value)}</option>)}</select></td>
-              <td><div className="drm-actions">{mapping ? <button className="drm-link" disabled={busy} onClick={() => {
+                void onSave({ ...provider, protocolOverrides: overrides }, value ? t('protocolSaved') : t('protocolAuto'))
+              }}><option value="">{t('protocolAutoOption', {
+                value: status.supported
+                  ? protocolLabel(t, status.protocol)
+                  : t('protocolUnsupportedApi', { api: status.officialApi ?? '' }),
+              })}</option>{RELAY_PROTOCOLS.map(value => <option key={value} value={value}>{protocolLabel(t, value)}</option>)}</select></td>
+              <td><div className="drm-actions">{mapping ? <button type="button" className="drm-link" disabled={busy} onClick={() => {
                 const mappings = { ...provider.modelMappings }; delete mappings[status.id]
-                void onSave({ ...provider, modelMappings: mappings }, '人工映射已取消')
-              }}>取消映射</button> : <button className="drm-link" onClick={() => { setMappingModel(status.id) }}>人工映射</button>}<button className="drm-link" disabled={busy} onClick={() => { void onSave({ ...provider, excludedModels: updateExcludedModels(provider.excludedModels, [status.id], !status.excluded) }, status.excluded ? '模型已恢复' : '模型已排除') }}>{status.excluded ? '恢复' : '排除'}</button></div></td>
+                void onSave({ ...provider, modelMappings: mappings }, t('unmapped'))
+              }}>{t('unmap')}</button> : <button type="button" className="drm-link" onClick={() => { setMappingModel(status.id) }}>{t('map')}</button>}<button type="button" className="drm-link" disabled={busy} onClick={() => { void onSave({ ...provider, excludedModels: updateExcludedModels(provider.excludedModels, [status.id], !status.excluded) }, status.excluded ? t('restored', { count: 1 }) : t('excluded', { count: 1 })) }}>{status.excluded ? t('restore') : t('exclude')}</button></div></td>
             </tr>,
-            mappingModel === status.id ? <tr key={`${status.id}:mapping`}><td colSpan={5}><MappingEditor status={status} catalog={catalog} onClose={() => { setMappingModel(undefined) }} onMap={async model => {
-              await onSave({ ...provider, modelMappings: { ...provider.modelMappings, [status.id]: { provider: model.provider, id: model.id } } }, '人工映射已保存')
+            mappingModel === status.id ? <tr key={`${status.id}:mapping`}><td colSpan={5}><MappingEditor status={status} catalog={catalog} t={t} onClose={() => { setMappingModel(undefined) }} onMap={async model => {
+              await onSave({ ...provider, modelMappings: { ...provider.modelMappings, [status.id]: { provider: model.provider, id: model.id } } }, t('mapSaved'))
               setMappingModel(undefined)
             }} /></td></tr> : null,
           ]
@@ -405,6 +466,7 @@ function ProviderCard({
   snapshot,
   catalog,
   api,
+  t,
   onReload,
 }: {
   route: string
@@ -412,6 +474,7 @@ function ProviderCard({
   snapshot: RelayPageSnapshot
   catalog: readonly OfficialModelSummary[]
   api: RelayPageApi
+  t: T
   onReload: () => Promise<void>
 }): ReactNode {
   const [connectionOpen, setConnectionOpen] = useState(false)
@@ -445,11 +508,13 @@ function ProviderCard({
     setNotice(undefined)
     try {
       await task()
-      await onReload()
       if (success) setNotice(success)
     } catch (cause) {
-      setError(messageOf(cause))
+      setError(isStale(cause) ? t('staleReloaded') : messageOf(cause))
     } finally {
+      // Reload after a refusal too: a write refused for a stale revision would
+      // otherwise be retried with that same revision forever.
+      await onReload().catch(() => undefined)
       setBusy(false)
     }
   }
@@ -462,7 +527,7 @@ function ProviderCard({
   const sync = (): Promise<void> => run(async () => {
     const ids = await api.discover({ provider: route, baseURL: provider.baseURL, protocol: provider.fallbackProtocol })
     await api.setProvider(route, { ...provider, modelIds: ids, syncedAt: Date.now() }, snapshot.revision)
-  }, '模型列表已同步')
+  }, t('synced'))
 
   const saveConnection = (): Promise<void> => run(async () => {
     const next = {
@@ -471,11 +536,10 @@ function ProviderCard({
       fallbackProtocol: fallback,
       transport,
       headers: parseHeaderLines(headersDraft),
-      streamIdleTimeoutMs: provider.streamIdleTimeoutMs ?? DEFAULT_STREAM_IDLE_TIMEOUT_MS,
     }
     await api.setProvider(route, next, snapshot.revision, keyDraft.trim() || undefined)
     setKeyDraft('')
-  }, '连接设置已保存')
+  }, t('connectionSaved'))
 
   const remove = (): Promise<void> => run(async () => {
     await api.removeProvider(route, snapshot.revision)
@@ -486,39 +550,74 @@ function ProviderCard({
       <div className="drm-card-head">
         <span className="drm-card-title">{provider.displayName}</span><span className="drm-route">{route}</span>
         <span className="drm-spacer" />
-        <span className={`drm-pill ${credential ? '' : 'warn'}`}>{credential ? '密钥已配置' : '缺少密钥'}</span>
+        <Pill className={credential ? undefined : 'drm-warn'}>{credential ? t('keyConfigured') : t('keyMissing')}</Pill>
         <div className="drm-actions">
-          <button className="drm-button" disabled={busy} onClick={() => { void sync() }}>同步</button>
-          <button className="drm-button" onClick={() => { setConnectionOpen(value => !value) }}>{connectionOpen ? '收起连接' : '连接'}</button>
-          <button className="drm-button" onClick={() => { setModelsOpen(true) }}>模型</button>
-          <button className="drm-button danger" onClick={() => { setConfirmDelete(true) }}>删除</button>
+          <Button size="sm" variant="outline" disabled={busy} onClick={() => { void sync() }}>{t('sync')}</Button>
+          <Button size="sm" variant="outline" onClick={() => { setConnectionOpen(value => !value) }}>{connectionOpen ? t('connectionCollapse') : t('connection')}</Button>
+          <Button size="sm" variant="outline" onClick={() => { setModelsOpen(true) }}>{t('models')}</Button>
+          <Button size="sm" className="drm-danger" onClick={() => { setConfirmDelete(true) }}>{t('remove')}</Button>
         </div>
       </div>
-      <div className="drm-summary"><span>{active.length} 个可用模型</span><span>{matched.length} 个匹配官方元数据</span><span>{included.length - matched.length} 个未匹配</span>{unsupported.length > 0 ? <span>{unsupported.length} 个协议需覆盖</span> : null}<span>{statuses.filter(status => status.excluded).length} 个已排除</span>{provider.syncedAt ? <span>同步于 {new Date(provider.syncedAt).toLocaleString()}</span> : null}</div>
-      {confirmDelete ? <div className="drm-confirm"><span>删除 Provider、配置和托管密钥？</span><button className="drm-button danger" disabled={busy} onClick={() => { void remove() }}>确认删除</button><button className="drm-button" onClick={() => { setConfirmDelete(false) }}>取消</button></div> : null}
+      <div className="drm-summary">
+        <span>{t('summaryActive', { count: active.length })}</span>
+        <span>{t('summaryMatched', { count: matched.length })}</span>
+        <span>{t('summaryUnmatched', { count: included.length - matched.length })}</span>
+        {unsupported.length > 0 ? <span>{t('summaryUnsupported', { count: unsupported.length })}</span> : null}
+        <span>{t('summaryExcluded', { count: statuses.filter(status => status.excluded).length })}</span>
+        {provider.syncedAt ? <span>{t('summarySyncedAt', { at: new Date(provider.syncedAt).toLocaleString() })}</span> : null}
+      </div>
+      {confirmDelete ? (
+        <div className="drm-confirm">
+          <span>{t('removeConfirm')}</span>
+          <Button size="sm" className="drm-danger" disabled={busy} onClick={() => { void remove() }}>{t('removeConfirmAction')}</Button>
+          <Button size="sm" variant="outline" onClick={() => { setConfirmDelete(false) }}>{t('cancel')}</Button>
+        </div>
+      ) : null}
       {error && !modelsOpen ? <div className="drm-error">{error}</div> : null}{notice && !modelsOpen ? <div className="drm-success">{notice}</div> : null}
       {connectionOpen ? (
         <>
           <div className="drm-grid">
-            <label className="drm-field wide"><span className="drm-label">Base URL</span><input className="drm-input" value={baseURL} onChange={event => { setBaseURL(event.target.value) }} /></label>
-            <label className="drm-field"><span className="drm-label">默认协议</span><select className="drm-select" value={fallback} onChange={event => { setFallback(event.target.value as RelayProtocol) }}>{RELAY_PROTOCOLS.map(value => <option key={value} value={value}>{protocolLabel(value)}</option>)}</select></label>
-            <label className="drm-field"><span className="drm-label">Codex 传输</span><select className="drm-select" value={transport} onChange={event => { setTransport(event.target.value as RelayTransport) }}>{RELAY_TRANSPORTS.map(value => <option key={value} value={value}>{transportLabel(value)}</option>)}</select></label>
-            <label className="drm-field"><span className="drm-label">替换 API Key（留空则保留）</span><input className="drm-input" type="password" autoComplete="off" value={keyDraft} onChange={event => { setKeyDraft(event.target.value) }} /></label>
-            <label className="drm-field wide"><span className="drm-label">额外请求头（每行 Name: value；不要放密钥。User-Agent 由 DSH 覆盖）</span><textarea className="drm-input" style={{ height: 72, padding: '8px 10px' }} value={headersDraft} placeholder="X-Custom: value" onChange={event => { setHeadersDraft(event.target.value) }} /></label>
+            <label className="drm-field wide">
+              <span className="drm-label">{t('baseURL')}</span>
+              <Input value={baseURL} onChange={event => { setBaseURL(event.target.value) }} />
+            </label>
+            <label className="drm-field">
+              <span className="drm-label">{t('fallbackProtocol')}</span>
+              <select className="drm-select" value={fallback} onChange={event => { setFallback(event.target.value as RelayProtocol) }}>
+                {RELAY_PROTOCOLS.map(value => <option key={value} value={value}>{protocolLabel(t, value)}</option>)}
+              </select>
+            </label>
+            <label className="drm-field">
+              <span className="drm-label">{t('codexTransport')}</span>
+              <select className="drm-select" value={transport} onChange={event => { setTransport(event.target.value as RelayTransport) }}>
+                {RELAY_TRANSPORTS.map(value => <option key={value} value={value}>{transportLabel(t, value)}</option>)}
+              </select>
+            </label>
+            <label className="drm-field">
+              <span className="drm-label">{t('replaceKey')}</span>
+              <Input type="password" autoComplete="off" value={keyDraft} onChange={event => { setKeyDraft(event.target.value) }} />
+            </label>
+            <label className="drm-field wide">
+              <span className="drm-label">{t('extraHeaders')}</span>
+              <textarea className="drm-textarea" value={headersDraft} placeholder={t('extraHeadersPlaceholder')} onChange={event => { setHeadersDraft(event.target.value) }} />
+            </label>
           </div>
-          <div className="drm-actions"><button className="drm-button primary" disabled={busy} onClick={() => { void saveConnection() }}>保存连接设置</button></div>
+          <div className="drm-actions">
+            <Button variant="primary" size="sm" disabled={busy} onClick={() => { void saveConnection() }}>{t('saveConnection')}</Button>
+          </div>
         </>
       ) : null}
-      <Dialog open={modelsOpen} title={`${provider.displayName} · 模型`} onClose={() => { setModelsOpen(false) }}>
-        <ModelManager provider={provider} catalog={catalog} statuses={statuses} busy={busy} error={error} notice={notice} onSave={save} />
+      <Dialog open={modelsOpen} title={`${provider.displayName} · ${t('models')}`} closeLabel={t('close')} onClose={() => { setModelsOpen(false) }}>
+        <ModelManager provider={provider} catalog={catalog} statuses={statuses} busy={busy} error={error} notice={notice} t={t} onSave={save} />
       </Dialog>
     </article>
   )
 }
 
-export function RelayModelsSection({ api }: Props): ReactNode {
+export function RelayModelsSection({ api, t }: Props): ReactNode {
   const [snapshot, setSnapshot] = useState(() => peekRelayPage())
   const [catalog, setCatalog] = useState(() => peekRelayPage()?.catalog)
+  const [adding, setAdding] = useState(false)
   const [error, setError] = useState<string>()
   const applySnapshot = (next: RelayPageSnapshot): void => {
     setSnapshot(next)
@@ -545,10 +644,15 @@ export function RelayModelsSection({ api }: Props): ReactNode {
 
   return (
     <section className="drm-section">
-      <div className="drm-head"><h2 className="drm-title">中转模型</h2>{snapshot ? <AddProvider api={api} snapshot={snapshot} onDone={reload} /> : null}</div>
-      {error ? <div className="drm-error">{error}<div><button className="drm-button" onClick={() => { void initialize() }}>重试</button></div></div> : null}
-      {snapshot && Object.keys(snapshot.config.providers).length === 0 ? <div className="drm-empty">还没有中转站。点击右上角 + 开始。</div> : null}
-      {snapshot && catalog ? Object.entries(snapshot.config.providers).map(([route, provider]) => <ProviderCard key={route} route={route} provider={provider} snapshot={snapshot} catalog={catalog.models} api={api} onReload={reload} />) : null}
+      <div className="drm-head">
+        <h2 className="drm-title">{t('title')}</h2>
+        {snapshot ? <AddProvider api={api} snapshot={snapshot} t={t} open={adding} onOpen={setAdding} onDone={reload} /> : null}
+      </div>
+      {error ? <div className="drm-error">{error}<div><Button size="sm" variant="outline" onClick={() => { void initialize() }}>{t('retry')}</Button></div></div> : null}
+      {/* The empty state points at the add button, so it stays out of the way
+          while that form is the thing on screen. */}
+      {snapshot && !adding && Object.keys(snapshot.config.providers).length === 0 ? <div className="drm-empty">{t('empty')}</div> : null}
+      {snapshot && catalog ? Object.entries(snapshot.config.providers).map(([route, provider]) => <ProviderCard key={route} route={route} provider={provider} snapshot={snapshot} catalog={catalog.models} api={api} t={t} onReload={reload} />) : null}
     </section>
   )
 }

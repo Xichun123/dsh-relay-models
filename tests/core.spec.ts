@@ -10,6 +10,7 @@ import {
   relayCredentialRef,
   relayModelStatuses,
   suggestOfficialCandidates,
+  suggestProviderIdentity,
   updateExcludedModels,
   validateProviderId,
 } from '../src/shared/core.ts'
@@ -55,6 +56,16 @@ describe('relay core', () => {
   it('rejects credential-bearing extra headers', () => {
     expect(() => assertSafeHeaders({ Authorization: 'Bearer secret' })).toThrow(/credentials/)
     expect(parseHeaderLines('X-Custom: yes\nX-Trace=abc')).toEqual({ 'X-Custom': 'yes', 'X-Trace': 'abc' })
+  })
+
+  it('names a provider after its brand, and an address literal after the machine', () => {
+    expect(suggestProviderIdentity('https://api.gateway.example/v1', new Set()))
+      .toEqual({ id: 'relay-example', name: 'Example Relay' })
+    // An octet is not a brand: `relay-127` would name the provider after 127.0.0.1.
+    expect(suggestProviderIdentity('http://127.0.0.1:3098/v1', new Set()))
+      .toEqual({ id: 'relay-local', name: 'Local Relay' })
+    expect(suggestProviderIdentity('http://[::1]:3098/v1', new Set()).id).toBe('relay-local')
+    expect(suggestProviderIdentity('http://127.0.0.1:3098/v1', new Set(['relay-local'])).id).toBe('relay-local-2')
   })
 
   it('discovers common model-list shapes and endpoint fallbacks', () => {

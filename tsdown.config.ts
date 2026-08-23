@@ -1,7 +1,18 @@
 import type { UserConfig } from 'tsdown'
 
 const ID = 'dsh-relay-models'
-const CLIENT_EXTERNALS = ['react', 'react/jsx-runtime', 'react-dom']
+/**
+ * Modules the web shell seeds into the client module table. They must stay
+ * external: a bundled second copy would break the shared React identity and
+ * ship duplicate primitive components with their own styles.
+ */
+const CLIENT_EXTERNALS = [
+  'react',
+  'react/jsx-runtime',
+  'react-dom',
+  '@deepseek-ai/dsh-client-ui-primitives',
+  '@deepseek-ai/dsh-client-ui-slots',
+]
 
 const node: UserConfig = {
   name: ID,

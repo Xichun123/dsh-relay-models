@@ -66,6 +66,15 @@ export const DEFAULT_STREAM_IDLE_TIMEOUT_MS = 300_000
 export const DEFAULT_CONTEXT_WINDOW = 262_144
 export const DEFAULT_MAX_TOKENS = 32_768
 
+/**
+ * Request-image bounds mirroring `dsh-llm-pi-ai`'s own defaults, which that
+ * package does not re-export from its entry. A relay behind a gateway with a
+ * smaller request-body cap lowers them per provider.
+ */
+export const DEFAULT_MAX_REQUEST_IMAGE_BYTES = 20 * 1024 * 1024
+export const DEFAULT_REQUEST_IMAGE_PIXEL_BUDGET = 2048 * 2048
+export const DEFAULT_REQUEST_IMAGE_MAX_BYTES = 1024 * 1024
+
 /** Official pi-ai / DSH routes this plugin must not claim. */
 export const RESERVED_PROVIDER_IDS: ReadonlySet<string> = new Set([
   'amazon-bedrock',
@@ -162,7 +171,12 @@ export function suggestProviderIdentity(rawBaseURL: string, existingIds: Readonl
   const hostname = new URL(normalizeBaseURL(rawBaseURL)).hostname.toLowerCase()
   const generic = new Set(['api', 'www', 'gateway', 'proxy', 'openai', 'anthropic', 'ai', 'v1', 'com', 'net', 'org', 'io', 'cn'])
   const labels = hostname.split('.').filter(Boolean)
-  const brand = labels.find(label => !generic.has(label)) ?? labels[0] ?? 'relay'
+  // An address literal has no brand label to borrow: its first octet would
+  // name the provider `relay-127`. A self-hosted gateway on this machine is
+  // what that address usually is, so say so.
+  const brand = /^[\d.]+$/u.test(hostname) || hostname.startsWith('[')
+    ? 'local'
+    : labels.find(label => !generic.has(label)) ?? labels[0] ?? 'relay'
   const stem = `relay-${brand.replace(/[^a-z0-9]+/gu, '-')}`
   let id = validateProviderId(stem)
   for (let suffix = 2; existingIds.has(id); suffix += 1) id = `${stem}-${suffix}`

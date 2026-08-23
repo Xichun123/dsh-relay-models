@@ -10,6 +10,31 @@ import type { RelayConfig, RelayProtocol, RelayProviderConfig } from './shared/t
 const PATH = '/relay-models/api'
 const MAX_BODY_BYTES = 1024 * 1024
 
+/** The operations this endpoint serves; anything else is refused by name. */
+const RELAY_ACTIONS = ['catalog', 'discover', 'set-provider', 'remove-provider'] as const
+
+/** One operation of {@link RELAY_ACTIONS}. */
+type RelayAction = (typeof RELAY_ACTIONS)[number]
+
+/**
+ * Whether a request names an operation this endpoint serves.
+ * @param value - the `action` field of the request body.
+ * @returns true when the endpoint has a branch for it.
+ */
+function isRelayAction(value: string): value is RelayAction {
+  return (RELAY_ACTIONS as readonly string[]).includes(value)
+}
+
+/**
+ * Refuse an operation the switch above did not handle. Unreachable while the
+ * action union and the branches agree; adding a member without its branch is a
+ * compile error here.
+ * @param action - the unhandled action.
+ */
+function assertNever(action: never): never {
+  throw new Error(`Unhandled relay action: ${String(action)}`)
+}
+
 export class RelayHttpError extends Error {
   constructor(readonly status: number, message: string) {
     super(message)
@@ -17,15 +42,95 @@ export class RelayHttpError extends Error {
   }
 }
 
-export function assertRequestOrigin(req: IncomingMessage, method: string): void {
+/**
+ * The normalized URL of a bare `host[:port]` authority. Anything WHATWG parsing
+ * would rewrite — a path, userinfo, an unbracketed IPv6 literal — is not an
+ * authority and gets no trust, because parsing it would silently authorize the
+ * embedded hostname instead.
+ * @param value - the header value or configured entry, verbatim.
+ * @returns the parsed authority, or undefined when the value is not one.
+ */
+function authority(value: string): URL | undefined {
+  try {
+    const url = new URL(`http://${value}`)
+    const written = value.toLowerCase()
+    return url.host === written || url.hostname === written ? url : undefined
+  } catch {
+    // A value that is not a parsable authority carries no host to trust.
+    return undefined
+  }
+}
+
+/**
+ * Whether a hostname names this machine's loopback authority.
+ * @param hostname - a WHATWG URL hostname (IPv6 literals keep their brackets).
+ * @returns true for localhost, IPv6 loopback, or any address in 127/8.
+ */
+function isLoopbackHostname(hostname: string): boolean {
+  if (hostname === 'localhost' || hostname === '[::1]') return true
+  const parts = hostname.split('.')
+  return parts.length === 4
+    && parts[0] === '127'
+    && parts.every(part => /^\d{1,3}$/u.test(part) && Number(part) <= 255)
+}
+
+/**
+ * Whether the request authority is one this deployment serves. A configured
+ * entry naming a port matches that exact authority; a port-less entry matches
+ * its hostname on any port.
+ */
+function isTrustedAuthority(host: URL, trustedHosts: readonly string[]): boolean {
+  return trustedHosts.some(entry => {
+    const trusted = authority(entry)
+    if (!trusted) return false
+    return trusted.port === '' ? trusted.hostname === host.hostname : trusted.host === host.host
+  })
+}
+
+/**
+ * Refuse a configuration request a browser could have been tricked into
+ * sending. Three fences, in the order the `/api` carrier applies them:
+ *
+ * - **Host** — the socket reached this server, but a DNS-rebound page carries
+ *   the attacker's domain here, and Host is the one header rebinding cannot
+ *   forge. A deployment served behind a reverse proxy names its public
+ *   authority in `trustedHosts`.
+ * - **Fetch metadata** — an explicit cross-site marker is refused whatever
+ *   Origin says.
+ * - **Origin** — when a browser attaches one it must be exactly this authority.
+ *   A read may omit it; a write may not, because this endpoint stores API keys
+ *   and can make the host interrogate an address the request names.
+ * @param req - the incoming request.
+ * @param method - its HTTP method.
+ * @param trustedHosts - non-loopback authorities this deployment serves.
+ */
+export function assertRequestOrigin(
+  req: IncomingMessage,
+  method: string,
+  trustedHosts: readonly string[] = [],
+): void {
+  const rawHost = req.headers.host
+  const host = typeof rawHost === 'string' ? authority(rawHost) : undefined
+  if (!host) throw new RelayHttpError(403, 'Relay configuration requests must include a parsable Host')
+  if (!isLoopbackHostname(host.hostname) && !isTrustedAuthority(host, trustedHosts)) {
+    throw new RelayHttpError(403, `Relay configuration requests refuse Host "${host.host}"; add it to trustedHosts to serve it`)
+  }
+  if (req.headers['sec-fetch-site'] === 'cross-site') {
+    throw new RelayHttpError(403, 'Cross-site relay configuration requests are refused')
+  }
   const origin = req.headers.origin
-  const host = req.headers.host
-  if (!host) throw new RelayHttpError(403, 'Relay configuration requests must include Host')
   if (!origin) {
     if (method === 'GET') return
     throw new RelayHttpError(403, 'Relay configuration requests must include Origin')
   }
-  if (origin !== `http://${host}` && origin !== `https://${host}`) {
+  let originHost: string
+  try {
+    originHost = new URL(origin).host
+  } catch {
+    // An opaque or malformed Origin names no authority that could match.
+    throw new RelayHttpError(403, 'Cross-origin relay configuration requests are refused')
+  }
+  if (originHost !== host.host) {
     throw new RelayHttpError(403, 'Cross-origin relay configuration requests are refused')
   }
 }
@@ -104,6 +209,18 @@ function requiredString(value: unknown, field: string): string {
   return value
 }
 
+/**
+ * The stable code a refusal carries, for the page to act on rather than parse
+ * a message. A settings write refused for a stale revision is the one case the
+ * page can recover from on its own.
+ * @param error - the thrown value.
+ * @returns the code, or undefined when the failure has none.
+ */
+function failureCode(error: unknown): string | undefined {
+  const code = (error as { code?: unknown } | null)?.code
+  return typeof code === 'string' && code.length > 0 ? code : undefined
+}
+
 export function installWebApi(
   ctx: Context,
   ns: SettingsNamespace,
@@ -131,7 +248,7 @@ export function installWebApi(
 
   const handler = async (req: IncomingMessage, res: ServerResponse): Promise<void> => {
     try {
-      assertRequestOrigin(req, req.method ?? 'GET')
+      assertRequestOrigin(req, req.method ?? 'GET', current().trustedHosts ?? [])
       if (req.method === 'GET') {
         reply(res, 200, { ok: true, value: await state() })
         return
@@ -143,6 +260,11 @@ export function installWebApi(
       }
       const input = record(await readBody(req))
       const action = requiredString(input.action, 'action')
+      if (!isRelayAction(action)) {
+        // Named before any field is read: an unknown action must not be
+        // reported as a missing field of an operation that does not exist.
+        throw new Error(`Unknown action: ${action}`)
+      }
       if (action === 'catalog') {
         const previous = currentOfficialCatalog()
         const value = await refreshOfficialCatalog().catch(() => currentOfficialCatalog())
@@ -183,10 +305,17 @@ export function installWebApi(
         reply(res, 200, { ok: true })
         return
       }
-      throw new Error(`Unknown action: ${action}`)
+      assertNever(action)
     } catch (error) {
-      const status = error instanceof RelayHttpError ? error.status : 400
-      reply(res, status, { ok: false, error: error instanceof Error ? error.message : String(error) })
+      const code = failureCode(error)
+      const status = error instanceof RelayHttpError
+        ? error.status
+        : code === 'SETTINGS_CONFLICT' ? 409 : 400
+      reply(res, status, {
+        ok: false,
+        error: error instanceof Error ? error.message : String(error),
+        ...code ? { code } : {},
+      })
     }
   }
 

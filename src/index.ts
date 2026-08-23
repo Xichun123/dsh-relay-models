@@ -16,6 +16,9 @@ import { relayAuthInjection } from './pi-auth.ts'
 import {
   assertSafeHeaders,
   assertUnreservedProviderId,
+  DEFAULT_MAX_REQUEST_IMAGE_BYTES,
+  DEFAULT_REQUEST_IMAGE_MAX_BYTES,
+  DEFAULT_REQUEST_IMAGE_PIXEL_BUDGET,
   DEFAULT_STREAM_IDLE_TIMEOUT_MS,
   isRelayProtocol,
   normalizeBaseURL,
@@ -51,12 +54,16 @@ const providerConfig = Schema.object({
   headers: Schema.dict(Schema.string()).default({}),
   transport: Schema.union(RELAY_TRANSPORTS),
   streamIdleTimeoutMs: Schema.number().min(Number.MIN_VALUE).max(MAX_TIMER_DELAY_MS).default(DEFAULT_STREAM_IDLE_TIMEOUT_MS),
+  maxRequestImageBytes: Schema.number().step(1).min(1).default(DEFAULT_MAX_REQUEST_IMAGE_BYTES),
+  requestImagePixelBudget: Schema.number().step(1).min(1).default(DEFAULT_REQUEST_IMAGE_PIXEL_BUDGET),
+  requestImageMaxBytes: Schema.number().step(1).min(1).default(DEFAULT_REQUEST_IMAGE_MAX_BYTES),
   retryPolicy: RetryPolicySchema,
   syncedAt: Schema.natural(),
 })
 
 export const Config: Schema<Config> = Schema.object({
   providers: Schema.dict(providerConfig).default({}),
+  trustedHosts: Schema.array(Schema.string()).default([]),
 })
 
 function liveReservedProviderIds(): Set<string> {
@@ -71,10 +78,6 @@ function validateProvider(route: string, config: RelayProviderConfig): void {
     throw new Error(`Relay provider "${route}" must use credential reference ${relayCredentialRef(route)}`)
   }
   assertSafeHeaders(config.headers ?? {})
-  if (config.streamIdleTimeoutMs !== undefined
-    && (!Number.isFinite(config.streamIdleTimeoutMs) || config.streamIdleTimeoutMs <= 0 || config.streamIdleTimeoutMs > MAX_TIMER_DELAY_MS)) {
-    throw new Error(`Relay provider "${route}" streamIdleTimeoutMs must be a positive finite number no greater than ${MAX_TIMER_DELAY_MS}`)
-  }
   for (const remoteId of Object.keys(config.modelMappings)) {
     if (!remoteId.trim()) throw new Error(`Relay provider "${route}" has an empty remote model mapping key`)
   }
@@ -83,8 +86,17 @@ function validateProvider(route: string, config: RelayProviderConfig): void {
   }
 }
 
+/**
+ * Refuse a section this plugin could not serve, at the write that stores it.
+ * Materialization is part of the check because that is where an unserviceable
+ * protocol or model fails: without it a schema-valid provider would be stored,
+ * the swap below would refuse it, and the page would report a successful save
+ * of a route that is not registered.
+ * @param config - the resolved section, schema-valid by construction.
+ */
 function validateConfig(config: Config): void {
   for (const [route, provider] of Object.entries(config.providers)) validateProvider(route, provider)
+  resolveProfiles(config, currentOfficialCatalog().models)
 }
 
 function resolveProfile(
@@ -97,9 +109,9 @@ function resolveProfile(
     displayName: source.displayName,
     apiKeyEnv: credentialRef(source.apiKeyEnv),
     streamIdleTimeoutMs: source.streamIdleTimeoutMs ?? DEFAULT_STREAM_IDLE_TIMEOUT_MS,
-    maxRequestImageBytes: 20 * 1024 * 1024,
-    requestImagePixelBudget: 2048 * 2048,
-    requestImageMaxBytes: 1024 * 1024,
+    maxRequestImageBytes: source.maxRequestImageBytes ?? DEFAULT_MAX_REQUEST_IMAGE_BYTES,
+    requestImagePixelBudget: source.requestImagePixelBudget ?? DEFAULT_REQUEST_IMAGE_PIXEL_BUDGET,
+    requestImageMaxBytes: source.requestImageMaxBytes ?? DEFAULT_REQUEST_IMAGE_MAX_BYTES,
     retryPolicy: resolveRetryPolicy(source.retryPolicy, `relay-models: provider "${provider}" retry policy`),
     piProvider: buildRelayProvider(provider, source, catalog),
     configuredMaxTokens: new Map(),
@@ -124,17 +136,26 @@ export function apply(ctx: Context, config: Config): void {
   let current: () => Config = () => config
   let profiles = resolveProfiles(config, currentOfficialCatalog().models)
 
+  /**
+   * The key one request authenticates with, or undefined for a relay that takes
+   * none — a self-hosted gateway on loopback is the case, and the page shows
+   * such a provider as having no key.
+   *
+   * Handing pi-ai `undefined` cannot leak an unrelated ambient key here the way
+   * it can for an installed catalog route: {@link buildRelayProvider} gives
+   * every relay route one `apiKey` method whose resolver answers from this
+   * credential alone, so an absent key means no `Authorization` header rather
+   * than provider-native environment discovery.
+   * @param profile - the resolved profile naming the credential reference.
+   * @returns the usable key, or undefined when none is stored.
+   */
   const resolveApiKey = async (
-    provider: string,
+    _provider: string,
     profile: ResolvedPiAiProviderProfile,
   ): Promise<string | undefined> => {
     const ref = String(profile.apiKeyEnv)
     const hit = (await ctx.credentials.resolve(credentialRef(ref)))?.value
-    if (hit) return assertUsableApiKey(hit, 'relay-models', ref)
-    throw new LlmError(
-      `relay-models: no credential for provider "${provider}"; store ${ref} on the Relay Models page`,
-      'MISSING_CREDENTIAL',
-    )
+    return hit ? assertUsableApiKey(hit, 'relay-models', ref) : undefined
   }
 
   const adapter = new PiAiAdapter({
@@ -142,6 +163,12 @@ export function apply(ctx: Context, config: Config): void {
     resolveApiKey,
     auth: relayAuthInjection(ctx),
     resolveAttachments: () => ctx.get('attachments'),
+    onReplayDegrade: ({ provider, model, reason }) => {
+      ctx.logger.warn(
+        `relay-models: unusable replay state on assistant history for route "${provider}/${model}";`
+        + ` sending that message as provider-neutral content (${reason})`,
+      )
+    },
   })
 
   let registration: AdapterRegistrationHandle | undefined

@@ -1,4 +1,4 @@
-import { attributionHeaders, LlmError } from '@deepseek-ai/dsh-llm'
+import { attributionHeaders, INVALID_CREDENTIAL_CODE, LlmError, normalizeApiKey } from '@deepseek-ai/dsh-llm'
 import type { LlmDiscoveredModel, LlmModelDiscoveryRequest } from '@deepseek-ai/dsh-llm'
 import { readBoundedText } from './bounded-response.ts'
 import { assertSafeHeaders, isRelayProtocol, modelsEndpoints, parseModelIds } from './shared/core.ts'
@@ -110,6 +110,26 @@ function failureMessage(url: string, status: number, detail: string): string {
   return `${url} answered ${status}`
 }
 
+/**
+ * Accept one interrogation key, or refuse it before the header is built. A key
+ * carrying a character no HTTP header can hold makes `fetch` throw, which the
+ * loop below would otherwise report as an unreachable endpoint — blaming the
+ * relay for a local, deterministic fault. A blank field means "no key", which
+ * is how an unauthenticated endpoint is interrogated.
+ * @param raw - the key typed into the page or read from the credentials service.
+ * @returns the trimmed key, or undefined when none was supplied.
+ */
+function usableKey(raw: string | undefined): string | undefined {
+  if (raw === undefined) return undefined
+  const checked = normalizeApiKey(raw)
+  if (checked.ok) return checked.value
+  if (checked.reason === 'empty') return undefined
+  throw new LlmError(
+    'This API key contains characters no HTTP header can carry; paste the raw key only',
+    INVALID_CREDENTIAL_CODE,
+  )
+}
+
 export async function discoverRelayModels(
   request: RelayDiscoveryRequest,
 ): Promise<readonly LlmDiscoveredModel[]> {
@@ -119,7 +139,7 @@ export async function discoverRelayModels(
   if (!isRelayProtocol(protocol)) {
     throw new LlmError(`Unsupported relay protocol: ${protocol}`, 'DISCOVERY_UNSUPPORTED')
   }
-  const apiKey = request.apiKey?.trim()
+  const apiKey = usableKey(request.apiKey)
   const attribution = attributionHeaders()
   const extra = deploymentHeaders(request.headers, attribution)
   let lastError = ''

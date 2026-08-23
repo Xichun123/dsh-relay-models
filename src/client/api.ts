@@ -14,7 +14,19 @@ interface ApiResult<T> {
   ok: boolean
   value?: T
   error?: string
+  code?: string
 }
+
+/** A refusal the page can act on: {@link RelayApiError.code} names the cause. */
+export class RelayApiError extends Error {
+  constructor(message: string, readonly code?: string) {
+    super(message)
+    this.name = 'RelayApiError'
+  }
+}
+
+/** The host's stale-revision refusal, which a reload clears. */
+export const RELAY_STALE_CODE = 'SETTINGS_CONFLICT'
 
 let cachedPage: RelayPageSnapshot | undefined
 
@@ -27,7 +39,9 @@ async function request<T>(body?: object): Promise<T> {
     body: JSON.stringify(body),
   })
   const result = await response.json() as ApiResult<T>
-  if (!response.ok || !result.ok) throw new Error(result.error ?? `Relay API answered ${response.status}`)
+  if (!response.ok || !result.ok) {
+    throw new RelayApiError(result.error ?? `Relay API answered ${response.status}`, result.code)
+  }
   return result.value as T
 }
 

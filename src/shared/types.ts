@@ -64,13 +64,27 @@ export interface RelayProviderConfig {
   excludedModels: string[]
   headers: Record<string, string>
   transport?: RelayTransport
-  streamIdleTimeoutMs: number
+  /** Provider idle ceiling while a stream read is outstanding; the schema default applies when absent. */
+  streamIdleTimeoutMs?: number
+  /** Base64 image payload ceiling per request; oldest images offload above it. */
+  maxRequestImageBytes?: number
+  /** Total-pixel budget of each inline request image version. */
+  requestImagePixelBudget?: number
+  /** Raw encoded-byte cap of each inline request image version. */
+  requestImageMaxBytes?: number
   retryPolicy?: RelayRetryPolicy
   syncedAt?: number
 }
 
 export interface RelayConfig {
   providers: Record<string, RelayProviderConfig>
+  /**
+   * Non-loopback `host[:port]` authorities the configuration page may be served
+   * from — the reverse-proxy case. An entry naming a port matches that exact
+   * authority; a port-less entry matches its hostname on any port. Empty means
+   * loopback only, which is what a DNS-rebound page cannot satisfy.
+   */
+  trustedHosts?: string[]
 }
 
 export interface ModelCandidate extends OfficialModelRef {

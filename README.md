@@ -15,17 +15,21 @@
 
 - 添加、删除和同步中转站。
 - 从 `/models` 或 `/v1/models` 自动发现模型。
-- 从 [`pi.dev/api/models`](https://pi.dev/api/models) 获取最新官方模型元数据，并在离线时回退到随包快照。
+- 从 [`pi.dev/api/models`](https://pi.dev/api/models) 获取最新官方模型元数据，并在离线时回退到随宿主 `pi-ai` 安装的内置目录。
 - 人工映射或取消映射官方元数据。
 - 按模型覆盖或清除协议。
 - 排除或恢复模型。
+- 中英文界面，跟随 DSH 的语言设置。
+- 不需要密钥的中转站（本机自建网关）留空 API Key 即可，请求不带 `Authorization`。
 - 同一 Provider 混用：
   - OpenAI Chat Completions
   - OpenAI Responses
   - Codex Responses（WebSocket / SSE）
   - Anthropic Messages
 
-官方目录由 Host 使用 ETag 缓存；Adapter 继续使用 DSH 对齐的 `pi-ai` 运行时。目录中的其他 API 协议会显示为需要人工覆盖，不会在未覆盖时注册为可调用模型。
+官方目录由 Host 使用 ETag 缓存；离线快照就是宿主实际用于建模的那一份 `pi-ai` 内置目录，两者不会因为构建时间不同而错位。目录中的其他 API 协议会显示为需要人工覆盖，不会在未覆盖时注册为可调用模型。
+
+匹配到官方元数据的模型会带上该模型的 `compat` 开关。这些开关按协议定型，所以**一旦用协议覆盖把模型改到另一种协议，`compat` 就不再继承**，交回 pi-ai 自己的 baseURL 探测——和 `dsh-llm-pi-ai` 对改指协议的官方路由采用同一条规则。远端 id 与官方 id 不同时，显示名会附上远端 id，避免两个别名映射到同一官方模型后在选择器里同名。
 
 ## 安装
 
@@ -43,7 +47,7 @@ npx @deepseek-ai/dsh@latest plugin --profile web add github:Xichun123/dsh-relay-
 
 安装后重启当前 DSH Web 进程，并刷新页面。不要先停止仍在提供服务的实例；先完成安装和下面的隔离验证，再安排一次重启。
 
-DSH 核心包（`dsh-host-webserver`、`dsh-llm` 等）是 **peerDependencies**，由正在运行的 DSH 提供，不会装进 profile 的 `node_modules` 去遮蔽宿主版本。
+DSH 核心包（`dsh-host-webserver`、`dsh-llm` 等）和 `@earendil-works/pi-ai` 都是 **peerDependencies**，由正在运行的 DSH 通过 `$DSH_HOME/profiles/node_modules` 提供，不会装进 profile 的 `node_modules` 去遮蔽宿主版本。pi-ai 尤其不能自带副本：本插件构造的 Provider 会交给宿主的 `PiAiAdapter`，两边必须是同一个模块实例；副本还会把各家 provider SDK（`@google/genai`、`@aws-sdk` 等）拖进 profile，pnpm 会因为拒绝执行它们的构建脚本而让 `dsh plugin add` 失败。安装本插件只新增 4 个包。
 
 ### 从本地 tarball 安装
 
@@ -70,16 +74,33 @@ DSH_HOME=/tmp/dsh-relay-models-home \
   npx @deepseek-ai/dsh@latest --profile web -- --port 3081
 ```
 
-打开 `http://127.0.0.1:3081/`，确认设置中出现“中转模型”且能添加测试中转站。验证完成后再把同一版本安装到实际 profile，并重启原有 Web 进程。无需开启“创造模式”；它不影响依赖解析、插件加载或服务生命周期。
+打开 `http://127.0.0.1:3081/`，确认设置中出现“中转模型”（在“模型”与“插件”之间）且能添加测试中转站。验证完成后再把同一版本安装到实际 profile，并重启原有 Web 进程。无需开启“创造模式”；它不影响依赖解析、插件加载或服务生命周期。
+
+不想动真实中转站时，可以用一个只回 `/v1/models` 的本地端点走完整流程：
+
+```bash
+cat > /tmp/fake-relay.mjs <<'EOF'
+import { createServer } from 'node:http'
+const models = { data: [{ id: 'gpt-5.6-sol' }, { id: 'claude-sonnet-4-6' }, { id: 'house-brand-turbo' }] }
+createServer((req, res) => {
+  res.writeHead(new URL(req.url, 'http://x').pathname.endsWith('/models') ? 200 : 404,
+    { 'content-type': 'application/json' })
+  res.end(JSON.stringify(models))
+}).listen(3098, '127.0.0.1')
+EOF
+node /tmp/fake-relay.mjs
+```
+
+Base URL 填 `http://127.0.0.1:3098/v1`，API Key 随便填或留空，应当发现 3 个模型：两个匹配官方元数据（协议随之变为 Responses / Anthropic Messages），一个未匹配走默认协议。
 
 ## 使用
 
 1. 打开 DSH 设置。
-2. 进入“中转模型”。
+2. 进入“中转模型”（在“模型”和“插件”之间）。
 3. 点击“添加中转站”。
-4. 填写 Provider ID、显示名称、Base URL、默认协议和 API Key。
+4. 填写 Provider ID、显示名称、Base URL、默认协议和 API Key（自建无鉴权网关可留空）。
 5. 点击“发现模型并添加”。
-6. 在“管理”中修改映射、协议或排除状态。
+6. 在“模型”里修改映射、协议或排除状态。
 
 Base URL 可以带或不带 `/v1`。插件会为不同协议生成对应调用地址，并尝试 `/models` 与 `/v1/models` 进行发现。
 
@@ -89,15 +110,35 @@ CLIProxyAPI 上游还要在对应 Codex 凭证里打开 `"websockets": true`，�
 
 ## 配置和凭据
 
-插件设置使用命名空间 `llm-relay-models`。每个中转站保存 Base URL、模型列表、元数据映射、协议覆盖、排除列表、可选额外请求头、Codex 传输、流空闲超时和重试策略。API Key 使用从 Provider ID 生成的 credentials 引用，例如 `relay-example` 对应 `RELAY_EXAMPLE_API_KEY`，由 DSH credentials provider 管理。
+插件设置使用命名空间 `llm-relay-models`。每个中转站保存 Base URL、模型列表、元数据映射、协议覆盖、排除列表、可选额外请求头、Codex 传输、流空闲超时、请求图片上限和重试策略。API Key 使用从 Provider ID 生成的 credentials 引用，例如 `relay-example` 对应 `RELAY_EXAMPLE_API_KEY`，由 DSH credentials provider 管理。
+
+`maxRequestImageBytes`、`requestImagePixelBudget`、`requestImageMaxBytes` 默认镜像 `dsh-llm-pi-ai` 的取值（20 MiB / 2048² 像素 / 1 MiB）。中转站的请求体上限更小时，在 `settings.yaml` 的对应段里调低即可；这三项没有页面入口。
 
 不要使用 `openai`、`anthropic`、`deepseek` 等官方路由名作为 Provider ID，应使用 `relay-*`。此插件只在 Web profile 加载（依赖 `webServer`）。
 
-浏览器配置请求只发送到当前 DSH 服务的同源 `/relay-models/api`。POST 必须带匹配的 `Origin`；已有中转站的模型发现只使用已保存的 Base URL，不会把托管密钥发到请求里另写的地址。中转站发现响应和 pi.dev 目录响应上限均为 4 MiB，请求体上限为 1 MiB。
+保存时会先完整解析一遍 Provider（含建模），解析不通过的配置在写入处就被拒绝，不会出现“保存成功但路由没生效”。
 
-模型发现失败时，错误信息原样带上中转站自己的 JSON 说明（`error.message`、`error`、`message` 或 `detail`；单行，最多 300 字符），只有中转站什么都没说时才提示检查 API Key。所以 `unauthorized client detected` 这类“只认特定客户端”的拦截会直接显示出来，不会被误读成 Key 失效。
+## 浏览器请求的信任边界
 
-官方 Models 页可以通过 `registerConfigurableProviders` / `registerModelDiscovery` 看到这些路由；混协议和元数据匹配仍以本插件的“中转模型”页为准。
+DSH 的 webserver 本身不提供 CSRF、Origin 或鉴权，所以 `/relay-models/api` 自带三道闸，顺序与 DSH `/api` 一致：
+
+1. **Host** —— 必须是回环地址，或 `trustedHosts` 里声明的 `host[:port]`。这一道防的是 DNS rebinding：请求确实打到了本机，但被重绑定的页面在 Host 里写的是攻击者域名，而 Host 是重绑定伪造不了的那个头。反向代理（Caddy 等）部署时把对外权威写进 `trustedHosts`：
+   ```yaml
+   llm-relay-models:
+     trustedHosts: ['dsh.example.com']
+   ```
+   带端口的条目只匹配该端口，不带端口的条目匹配该主机的任意端口。不是纯 `host[:port]` 的条目（含路径、含 userinfo）一律不授信。
+2. **Fetch metadata** —— 显式 `Sec-Fetch-Site: cross-site` 直接拒绝。
+3. **Origin** —— 浏览器带了 Origin 就必须与 Host 权威完全一致；读可以不带，写必须带，因为这个端点会保存 API Key，也会让宿主去访问请求里给出的地址。
+
+已有中转站的模型发现只使用已保存的 Base URL，不会把托管密钥发到请求里另写的地址。中转站发现响应和 pi.dev 目录响应上限均为 4 MiB，请求体上限为 1 MiB。
+
+模型发现失败时，错误信息原样带上中转站自己的 JSON 说明（`error.message`、`error`、`message` 或 `detail`；单行，最多 300 字符），只有中转站什么都没说时才提示检查 API Key。所以 `unauthorized client detected` 这类“只认特定客户端”的拦截会直接显示出来，不会被误读成 Key 失效。密钥里带了 HTTP 头装不下的字符（智能引号、换行）时也会当场指出，而不是报成“连不上中转站”。
+
+配置被别处改动后，页面的写入会被 `SETTINGS_CONFLICT` 拒绝；页面会自动重新载入并提示重试，而不是拿着过期的 revision 一直失败。
+
+官方 Models 页可以通过 `registerConfigurableProviders` / `registerModelDiscovery` 看到这些路由，并支持整条删除（含托管密钥）；但它对本插件的命名空间只显示“其余字段在 settings.yaml 中”并禁用应用按钮——混协议和元数据匹配以本插件的“中转模型”页为准。
+
 
 ## 开发
 
@@ -106,7 +147,9 @@ pnpm install
 pnpm run validate
 ```
 
-`validate` 会运行单元测试并重新生成官方模型目录和 Host/Web bundles。
+`validate` 会运行单元测试、类型检查并重建 Host/Web bundles。没有代码生成步骤：离线模型目录直接读取已安装的 `pi-ai` 内置目录。
+
+Web 页面复用宿主已经注入模块表的 `@deepseek-ai/dsh-client-ui-primitives`（Button / Input / Pill）和 `ctx.locale`，因此这两个包必须保持 external，不能打进 `lib/client.js`。
 
 DSH 包在 `peerDependencies` 里由宿主提供，本地只用 `devDependencies` 跑测试和 typecheck。这些 devDependencies 跟随 DSH 的 **`next`** dist-tag：库包（`dsh-llm` 等）的 `latest` 还停在 `0.0.1-rc.1`，正在发布的那条线在 `next`。同步一次：
 

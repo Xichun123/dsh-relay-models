@@ -1,10 +1,46 @@
+import { getBuiltinModels, getBuiltinProviders } from '@earendil-works/pi-ai/providers/all'
+import type { Api, Model } from '@earendil-works/pi-ai'
 import { readBoundedText } from './bounded-response.ts'
-import { OFFICIAL_MODELS } from './shared/catalog.generated.ts'
 import type { OfficialCatalogSnapshot, OfficialModelSummary } from './shared/types.ts'
 
 const CATALOG_URL = 'https://pi.dev/api/models'
 const MAX_CATALOG_BYTES = 4 * 1024 * 1024
 const CACHE_MS = 60_000
+
+/**
+ * Every model the installed `pi-ai` build ships. This is the offline catalog
+ * and the source of the api-specific model fields a matched relay model copies,
+ * so both read the same build that materialization hands to `PiAiAdapter`.
+ */
+export const BUILTIN_MODELS: readonly Model<Api>[] = getBuiltinProviders()
+  .flatMap(provider => getBuiltinModels(provider) as Model<Api>[])
+
+/**
+ * The metadata summary of one installed model.
+ * @param model - an installed `pi-ai` model.
+ * @returns the summary the matcher and the settings page read.
+ */
+function summarize(model: Model<Api>): OfficialModelSummary {
+  return {
+    provider: model.provider,
+    id: model.id,
+    name: model.name,
+    api: model.api,
+    contextWindow: model.contextWindow,
+    maxTokens: model.maxTokens,
+    reasoning: model.reasoning,
+    input: model.input,
+    ...model.thinkingLevelMap ? { thinkingLevelMap: model.thinkingLevelMap } : {},
+    // pi-ai types `compat` as one closed interface per api, none of which is
+    // indexable; the summary carries it opaquely for materialization to copy
+    // back onto a model of the same api.
+    ...model.compat ? { compat: model.compat as Readonly<Record<string, unknown>> } : {},
+    ...model.cost ? { cost: model.cost } : {},
+  }
+}
+
+/** The installed build's metadata, served whenever pi.dev is unreachable. */
+export const BUNDLED_MODELS: readonly OfficialModelSummary[] = BUILTIN_MODELS.map(summarize)
 
 function object(value: unknown): Record<string, unknown> | undefined {
   return value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : undefined
@@ -73,7 +109,7 @@ export function parseOfficialCatalog(payload: unknown): OfficialModelSummary[] {
   return models
 }
 
-let snapshot: OfficialCatalogSnapshot = { models: OFFICIAL_MODELS, source: 'bundled' }
+let snapshot: OfficialCatalogSnapshot = { models: BUNDLED_MODELS, source: 'bundled' }
 let etag: string | undefined
 let expiresAt = 0
 let pending: Promise<OfficialCatalogSnapshot> | undefined

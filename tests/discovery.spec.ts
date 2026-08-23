@@ -137,4 +137,19 @@ describe('relay model discovery', () => {
     expect(await refusalMessage({ baseURL: 'https://relay.example', api: 'openai-completions' }))
       .toBe('https://relay.example/v1/models answered 405: GET only')
   })
+
+  it('refuses a key no HTTP header can carry instead of blaming the endpoint', async () => {
+    const fetchMock = stubFetch(listing(['m1']))
+    // Such a key makes fetch throw a ByteString TypeError, which the endpoint
+    // loop would otherwise report as an unreachable relay.
+    await expect(discoverRelayModels({ ...openai, apiKey: 'sk-\u201Ctest\u201D' }))
+      .rejects.toMatchObject({ code: 'INVALID_CREDENTIAL' })
+    expect(fetchMock).not.toHaveBeenCalled()
+  })
+
+  it('interrogates unauthenticated when the key field holds only whitespace', async () => {
+    const fetchMock = stubFetch(listing(['m1']))
+    await expect(discoverRelayModels({ ...openai, apiKey: '   ' })).resolves.toEqual([{ id: 'm1' }])
+    expect(sentHeaders(fetchMock).authorization).toBeUndefined()
+  })
 })
