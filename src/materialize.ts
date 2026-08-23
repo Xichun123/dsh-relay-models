@@ -6,9 +6,9 @@ import {
 } from '@earendil-works/pi-ai'
 import { anthropicMessagesApi } from '@earendil-works/pi-ai/api/anthropic-messages.lazy'
 import { openAICompletionsApi } from '@earendil-works/pi-ai/api/openai-completions.lazy'
-import { openAICodexResponsesApi } from '@earendil-works/pi-ai/api/openai-codex-responses.lazy'
 import { openAIResponsesApi } from '@earendil-works/pi-ai/api/openai-responses.lazy'
 import { BUILTIN_MODELS } from './catalog.ts'
+import { codexRelayApi } from './codex-relay.ts'
 import {
   DEFAULT_CONTEXT_WINDOW,
   DEFAULT_MAX_TOKENS,
@@ -117,7 +117,9 @@ export function buildRelayProvider(
     api: {
       'openai-completions': openAICompletionsApi(),
       'openai-responses': openAIResponsesApi(),
-      'openai-codex-responses': openAICodexResponsesApi(),
+      // Codex Responses on a relay authenticates differently from Codex
+      // Responses on ChatGPT; see `codexRelayApi`.
+      'openai-codex-responses': codexRelayApi(route),
       'anthropic-messages': anthropicMessagesApi(),
     },
   })

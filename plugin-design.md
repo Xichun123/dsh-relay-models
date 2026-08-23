@@ -53,10 +53,17 @@
 - **`compat` 按协议定型。** 只有解析后的协议仍等于官方模型自己的 `api` 时才继承 `compat`；这与 `dsh-llm-pi-ai` 对改指协议的官方路由的处理一致。
 - **数值默认值镜像而非引用。** `dsh-llm-pi-ai` 没有从包入口导出 `DEFAULT_*`（只有 `./src/*` 深路径，发布产物里不可用），所以本插件自持同名常量并在注释里标明镜像关系。
 
+## Codex Responses 的鉴权拆分
+
+- pi-ai 的 `openai-codex-responses` 在选传输之前先 `extractAccountId(apiKey)`：把 Key 当 ChatGPT OAuth token 解码，取 `https://api.openai.com/auth` → `chatgpt_account_id`，失败就抛 `Failed to extract accountId from token`。中转站的普通 Key 过不了这一步，WS 和 SSE 都到不了；pi-ai 0.82–0.84 没有传入 account id 的选项，`Authorization` 也总是被 `Bearer <apiKey>` 覆盖，额外头改不动。
+- 中转站不需要这个头：CLIProxyAPI 认自己的 Key、注入自己的上游 Codex 凭证，`chatgpt-account-id` 不是它签发的也放行。
+- 所以 `src/codex-relay.ts` 只包一层 `ProviderStreams`：Key 解不出 account id 时，交给 pi-ai 的是按路由名合成的未签名 token，真 Key 进 `x-api-key`；解得出（中转站转发真 ChatGPT token）就原样放过。留空 Key 的路由也发合成 token——pi-ai 没 token 建不出头，而这本来就是"No API key for provider"直接失败的情形。
+- 只认 `Authorization` 的中转站会 401，但那条路径此前 100% 失败，所以没有回归；这条例外写进 README 的"保证"一节。
+
 ## 验证计划
 
 - [x] `validate_dsh_plugin.py`
-- [x] 单元测试：保留路由、安全头、Host/Origin/Fetch-metadata 三闸、DNS rebinding、trustedHosts、发现 URL 锁定、无默认伪装头、发现错误透传中转站说明、非法密钥当场拒绝、协议覆盖后丢弃 `compat`、别名模型显示名、IP 字面量命名、pi-ai auth 注入、peer 声明覆盖所有被 import 的宿主包
+- [x] 单元测试：保留路由、安全头、Host/Origin/Fetch-metadata 三闸、DNS rebinding、trustedHosts、发现 URL 锁定、无默认伪装头、发现错误透传中转站说明、非法密钥当场拒绝、协议覆盖后丢弃 `compat`、别名模型显示名、IP 字面量命名、pi-ai auth 注入、Codex account id 解析与 Key 侧带、peer 声明覆盖所有被 import 的宿主包
 - [x] 独立 `DSH_HOME` 冷启动：`dsh plugin add` 退出码 0（此前在干净环境下会因 pnpm 拒绝 `@google/genai` 的构建脚本而失败，插件装上却没进 bundles）；profile 只新增 4 个包
 - [x] 设置页添加中转站：导航项落在“模型”与“插件”之间；用本地假 `/v1/models` 端点走完发现 → 保存 → 注册；`settings.yaml` 只存配置，`RELAY_127_API_KEY` 落在 `0600` 的 `.credentials.yaml`
 - [x] `llm.providers` / `llm.models` 确认路由 `active: true`、`declared: true`，匹配到的模型带官方 reasoning 档位，未匹配模型退回纯文本
