@@ -24,6 +24,8 @@ export type RelayLocaleKey =
   | 'protocolCompletions' | 'protocolResponses' | 'protocolCodex' | 'protocolAnthropic'
   | 'protocolUnsupported'
   | 'transportAuto' | 'transportWebsocket' | 'transportWebsocketCached' | 'transportSse'
+  | 'codexServiceTier' | 'serviceTierUnset' | 'serviceTierFast' | 'serviceTierPriority'
+  | 'serviceTierFlex'
   | 'staleReloaded'
 
 /** English copy. */
@@ -120,6 +122,11 @@ export const en: Record<RelayLocaleKey, string> = {
   transportWebsocket: 'WebSocket',
   transportWebsocketCached: 'WebSocket cached session',
   transportSse: 'SSE',
+  codexServiceTier: 'Codex speed mode',
+  serviceTierUnset: 'Not set (no service_tier)',
+  serviceTierFast: 'Fast mode (1.5x speed, 2.5x credits)',
+  serviceTierPriority: 'Priority (API keys, 2x rate)',
+  serviceTierFlex: 'Flex (slower, cheaper)',
   staleReloaded: 'These settings changed elsewhere. The page reloaded them; try again.',
 }
 
@@ -217,5 +224,10 @@ export const zh: Record<RelayLocaleKey, string> = {
   transportWebsocket: 'WebSocket',
   transportWebsocketCached: 'WebSocket 缓存会话',
   transportSse: 'SSE',
+  codexServiceTier: 'Codex 速度模式',
+  serviceTierUnset: '不设置（不发 service_tier）',
+  serviceTierFast: 'Fast 快速（1.5 倍速度，2.5 倍 credits）',
+  serviceTierPriority: 'Priority 优先（API Key 计费，2 倍单价）',
+  serviceTierFlex: 'Flex 弹性（更慢更便宜）',
   staleReloaded: '配置已在别处更新，页面已重新载入，请再试一次。',
 }

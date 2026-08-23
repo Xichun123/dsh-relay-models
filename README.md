@@ -115,9 +115,21 @@ CLIProxyAPI 上游还要在对应 Codex 凭证里打开 `"websockets": true`，�
 
 只认 `Authorization` 的中转站会拒掉这种请求——它本来也跑不通这条协议，只是报错更早、更难懂。Key 本身就是带 `chatgpt_account_id` 的 JWT（中转站转发真 ChatGPT token）时，插件原样放过，不改 `Authorization`。
 
+#### Fast 模式（Codex 速度模式）
+
+Fast 模式在协议层就是请求体里的 `service_tier`：Codex CLI 的 `/fast on`、`config.toml` 里的 `service_tier = "fast"` 都落到这一个字段。DSH 自己从不发它（`dsh-llm-pi-ai` 里没有任何 `service_tier`），所以连接设置里新增了 **Codex 速度模式**：
+
+- **不设置**（默认）——请求体里没有 `service_tier`，与本插件之前的行为一致。
+- **Fast 快速** —— 按 [OpenAI 文档](https://learn.chatgpt.com/docs/agent-configuration/speed)提速约 1.5 倍；GPT-5.6 / 5.5 按 2.5 倍、GPT-5.4 按 2 倍消耗 ChatGPT credits。用 API Key 计费的链路拿到的是 Priority 定价（GPT-5.6 为 2 倍单价），不是 credits 倍率。
+- **Priority 优先** / **Flex 弹性** —— API 侧的两档；pi-ai 会按 2 倍 / 0.5 倍换算这两档的成本统计，`fast` 它还不认识，成本按标准价记。
+
+只有 Codex Responses 协议的模型会带这个字段，其余三种协议忽略它。
+
+上游认不认要自己确认：ChatGPT 的 Codex 后端对这个字段既不校验也不回显（响应里的 `service_tier` 一律是 `default`，pi-ai 对这个回显本身就有 workaround），连 `service_tier: "turbo"` 都返回 200。CLIProxyAPI 转发 codex 请求时只删 `parallel_tool_calls`，字段会原样带到上游；它的 Keeper 请求日志有一列“速度模式”，显示“请求值 / 实际值”（例如 `快速 / 标准`），以那一列为准。
+
 ## 配置和凭据
 
-插件设置使用命名空间 `llm-relay-models`。每个中转站保存 Base URL、模型列表、元数据映射、协议覆盖、排除列表、可选额外请求头、Codex 传输、流空闲超时、请求图片上限和重试策略。API Key 使用从 Provider ID 生成的 credentials 引用，例如 `relay-example` 对应 `RELAY_EXAMPLE_API_KEY`，由 DSH credentials provider 管理。
+插件设置使用命名空间 `llm-relay-models`。每个中转站保存 Base URL、模型列表、元数据映射、协议覆盖、排除列表、可选额外请求头、Codex 传输、Codex 速度模式、流空闲超时、请求图片上限和重试策略。API Key 使用从 Provider ID 生成的 credentials 引用，例如 `relay-example` 对应 `RELAY_EXAMPLE_API_KEY`，由 DSH credentials provider 管理。
 
 `maxRequestImageBytes`、`requestImagePixelBudget`、`requestImageMaxBytes` 默认镜像 `dsh-llm-pi-ai` 的取值（20 MiB / 2048² 像素 / 1 MiB）。中转站的请求体上限更小时，在 `settings.yaml` 的对应段里调低即可；这三项没有页面入口。
 

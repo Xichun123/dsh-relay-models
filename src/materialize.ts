@@ -118,8 +118,9 @@ export function buildRelayProvider(
       'openai-completions': openAICompletionsApi(),
       'openai-responses': openAIResponsesApi(),
       // Codex Responses on a relay authenticates differently from Codex
-      // Responses on ChatGPT; see `codexRelayApi`.
-      'openai-codex-responses': codexRelayApi(route),
+      // Responses on ChatGPT, and it is the only protocol carrying a speed
+      // tier; see `codexRelayApi`.
+      'openai-codex-responses': codexRelayApi(route, config.serviceTier),
       'anthropic-messages': anthropicMessagesApi(),
     },
   })

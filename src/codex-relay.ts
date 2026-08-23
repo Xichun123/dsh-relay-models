@@ -1,5 +1,6 @@
 import type { ProviderStreams, StreamOptions } from '@earendil-works/pi-ai'
 import { openAICodexResponsesApi } from '@earendil-works/pi-ai/api/openai-codex-responses.lazy'
+import type { RelayServiceTier } from './shared/types.ts'
 
 /** The claim pi-ai reads `chatgpt-account-id` from. */
 const CODEX_ACCOUNT_CLAIM = 'https://api.openai.com/auth'
@@ -52,16 +53,29 @@ export function syntheticCodexToken(accountId: string): string {
 /**
  * The options one Codex Responses call runs with on a relay route.
  *
- * A key that already carries the claim is left exactly where it is, including
- * its `Authorization`: that is a relay fronting real ChatGPT tokens, and pi-ai
- * reads such a key itself.
+ * A key that already carries the claim keeps its `Authorization` untouched:
+ * that is a relay fronting real ChatGPT tokens, and pi-ai reads such a key
+ * itself. The speed tier still applies, because it is configuration rather
+ * than authentication.
  * @param route - the provider id, which names the synthetic account.
+ * @param serviceTier - the configured speed tier, or undefined to send none.
  * @param options - the options pi-ai was called with.
  * @returns the options to delegate with.
  */
-export function codexRelayStreamOptions<T extends StreamOptions>(route: string, options: T | undefined): T {
+export function codexRelayStreamOptions<T extends StreamOptions>(
+  route: string,
+  serviceTier: RelayServiceTier | undefined,
+  options: T | undefined,
+): T {
+  // pi-ai types `serviceTier` as the OpenAI SDK's `service_tier` union, which
+  // predates the ChatGPT-credit `fast` tier; on the wire it is a plain string.
+  // A caller that already chose a tier keeps it.
+  const chosen = (options as { serviceTier?: unknown } | undefined)?.serviceTier
+  const tier = serviceTier !== undefined && chosen === undefined
+    ? { serviceTier: serviceTier as 'priority' }
+    : {}
   const apiKey = options?.apiKey
-  if (apiKey !== undefined && codexAccountId(apiKey) !== undefined) return options as T
+  if (apiKey !== undefined && codexAccountId(apiKey) !== undefined) return { ...options, ...tier } as T
   const headers = {
     ...options?.headers,
     // The relay key is what the gateway checks, so it wins over a configured
@@ -71,6 +85,7 @@ export function codexRelayStreamOptions<T extends StreamOptions>(route: string, 
   }
   return {
     ...options,
+    ...tier,
     apiKey: syntheticCodexToken(route),
     ...Object.keys(headers).length > 0 ? { headers } : {},
   } as T
@@ -92,13 +107,21 @@ export function codexRelayStreamOptions<T extends StreamOptions>(route: string, 
  * passes through untouched. A relay that authenticates on `Authorization`
  * alone refuses such a request — it refuses the un-rewritten one too, one step
  * earlier and with a less usable message, so nothing that worked stops working.
+ *
+ * The same wrapper carries the route's speed tier, because `service_tier` is a
+ * Codex-only body field and no DSH adapter sets one.
  * @param route - the provider id whose credential authenticates the call.
+ * @param serviceTier - the configured speed tier, or undefined to send none.
  * @param base - the implementation to wrap; pi-ai's Codex api by default.
  * @returns the api entry to register for `openai-codex-responses`.
  */
-export function codexRelayApi(route: string, base: ProviderStreams = openAICodexResponsesApi()): ProviderStreams {
+export function codexRelayApi(
+  route: string,
+  serviceTier?: RelayServiceTier,
+  base: ProviderStreams = openAICodexResponsesApi(),
+): ProviderStreams {
   return {
-    stream: (model, context, options) => base.stream(model, context, codexRelayStreamOptions(route, options)),
-    streamSimple: (model, context, options) => base.streamSimple(model, context, codexRelayStreamOptions(route, options)),
+    stream: (model, context, options) => base.stream(model, context, codexRelayStreamOptions(route, serviceTier, options)),
+    streamSimple: (model, context, options) => base.streamSimple(model, context, codexRelayStreamOptions(route, serviceTier, options)),
   }
 }

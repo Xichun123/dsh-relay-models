@@ -4,6 +4,7 @@ import type {
   RelayModelStatus,
   RelayProtocol,
   RelayProviderConfig,
+  RelayServiceTier,
 } from './types.ts'
 
 export const RELAY_PROTOCOLS = [
@@ -19,6 +20,18 @@ export const RELAY_TRANSPORTS = [
   'websocket-cached',
   'sse',
 ] as const
+
+/**
+ * The Codex speed tiers this plugin offers, in the order the page lists them.
+ * `fast` is Codex Fast mode, `priority` its API-key equivalent, `flex` the
+ * cheaper slower lane. Choosing none keeps `service_tier` out of the body,
+ * which is what every DSH route does today.
+ */
+export const RELAY_SERVICE_TIERS = [
+  'fast',
+  'priority',
+  'flex',
+] as const satisfies readonly RelayServiceTier[]
 
 export function isRelayProtocol(value: unknown): value is RelayProtocol {
   return RELAY_PROTOCOLS.includes(value as RelayProtocol)

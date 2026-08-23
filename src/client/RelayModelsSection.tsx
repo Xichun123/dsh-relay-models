@@ -4,6 +4,7 @@ import { Button, Input, Pill } from '@deepseek-ai/dsh-client-ui-primitives'
 import type { Translate } from '@deepseek-ai/dsh-client-ui-slots'
 import {
   RELAY_PROTOCOLS,
+  RELAY_SERVICE_TIERS,
   RELAY_TRANSPORTS,
   assertUnreservedProviderId,
   formatHeaderLines,
@@ -18,6 +19,7 @@ import type {
   RelayModelStatus,
   RelayProtocol,
   RelayProviderConfig,
+  RelayServiceTier,
   RelayTransport,
 } from '../shared/types.ts'
 import { peekRelayPage, RELAY_STALE_CODE, type RelayPageApi, type RelayPageSnapshot } from './api.ts'
@@ -53,6 +55,12 @@ function transportLabel(t: T, transport: RelayTransport): string {
   if (transport === 'websocket-cached') return t('transportWebsocketCached')
   if (transport === 'sse') return t('transportSse')
   return t('transportAuto')
+}
+
+function serviceTierLabel(t: T, tier: RelayServiceTier): string {
+  if (tier === 'fast') return t('serviceTierFast')
+  if (tier === 'priority') return t('serviceTierPriority')
+  return t('serviceTierFlex')
 }
 
 function officialModel(
@@ -486,12 +494,14 @@ function ProviderCard({
   const [baseURL, setBaseURL] = useState(provider.baseURL)
   const [fallback, setFallback] = useState(provider.fallbackProtocol)
   const [transport, setTransport] = useState<RelayTransport>(provider.transport ?? 'auto')
+  const [serviceTier, setServiceTier] = useState<RelayServiceTier | ''>(provider.serviceTier ?? '')
   const [headersDraft, setHeadersDraft] = useState(formatHeaderLines(provider.headers ?? {}))
   const [keyDraft, setKeyDraft] = useState('')
   useEffect(() => {
     setBaseURL(provider.baseURL)
     setFallback(provider.fallbackProtocol)
     setTransport(provider.transport ?? 'auto')
+    setServiceTier(provider.serviceTier ?? '')
     setHeadersDraft(formatHeaderLines(provider.headers ?? {}))
   }, [provider])
 
@@ -530,13 +540,17 @@ function ProviderCard({
   }, t('synced'))
 
   const saveConnection = (): Promise<void> => run(async () => {
-    const next = {
+    const next: RelayProviderConfig = {
       ...provider,
       baseURL: baseURL.trim(),
       fallbackProtocol: fallback,
       transport,
       headers: parseHeaderLines(headersDraft),
     }
+    // No tier means no `service_tier` field at all, so the key has to go rather
+    // than carry the previously saved value forward.
+    if (serviceTier) next.serviceTier = serviceTier
+    else delete next.serviceTier
     await api.setProvider(route, next, snapshot.revision, keyDraft.trim() || undefined)
     setKeyDraft('')
   }, t('connectionSaved'))
@@ -591,6 +605,13 @@ function ProviderCard({
               <span className="drm-label">{t('codexTransport')}</span>
               <select className="drm-select" value={transport} onChange={event => { setTransport(event.target.value as RelayTransport) }}>
                 {RELAY_TRANSPORTS.map(value => <option key={value} value={value}>{transportLabel(t, value)}</option>)}
+              </select>
+            </label>
+            <label className="drm-field">
+              <span className="drm-label">{t('codexServiceTier')}</span>
+              <select className="drm-select" value={serviceTier} onChange={event => { setServiceTier(event.target.value as RelayServiceTier | '') }}>
+                <option value="">{t('serviceTierUnset')}</option>
+                {RELAY_SERVICE_TIERS.map(value => <option key={value} value={value}>{serviceTierLabel(t, value)}</option>)}
               </select>
             </label>
             <label className="drm-field">
