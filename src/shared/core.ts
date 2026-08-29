@@ -22,10 +22,10 @@ export const RELAY_TRANSPORTS = [
 ] as const
 
 /**
- * The Codex speed tiers this plugin offers, in the order the page lists them.
- * `fast` is Codex Fast mode, `priority` its API-key equivalent, `flex` the
- * cheaper slower lane. Choosing none keeps `service_tier` out of the body,
- * which is what every DSH route does today.
+ * The Codex speed tiers a session may choose, in the order the Speed menu
+ * lists them. `fast` is Codex Fast mode, `priority` its API-key equivalent,
+ * `flex` the cheaper slower lane. Choosing none keeps `service_tier` out of
+ * the body, which is what every DSH route does today.
  */
 export const RELAY_SERVICE_TIERS = [
   'fast',

@@ -8,7 +8,7 @@ import { anthropicMessagesApi } from '@earendil-works/pi-ai/api/anthropic-messag
 import { openAICompletionsApi } from '@earendil-works/pi-ai/api/openai-completions.lazy'
 import { openAIResponsesApi } from '@earendil-works/pi-ai/api/openai-responses.lazy'
 import { BUILTIN_MODELS } from './catalog.ts'
-import { codexRelayApi } from './codex-relay.ts'
+import { codexRelayApi, type SpeedResolver } from './codex-relay.ts'
 import {
   DEFAULT_CONTEXT_WINDOW,
   DEFAULT_MAX_TOKENS,
@@ -99,6 +99,7 @@ export function buildRelayProvider(
   route: string,
   config: RelayProviderConfig,
   catalog: readonly OfficialModelSummary[],
+  speedFor: SpeedResolver,
 ): Provider {
   return createProvider({
     id: route,
@@ -120,7 +121,7 @@ export function buildRelayProvider(
       // Codex Responses on a relay authenticates differently from Codex
       // Responses on ChatGPT, and it is the only protocol carrying a speed
       // tier; see `codexRelayApi`.
-      'openai-codex-responses': codexRelayApi(route, config.serviceTier),
+      'openai-codex-responses': codexRelayApi(route, speedFor),
       'anthropic-messages': anthropicMessagesApi(),
     },
   })

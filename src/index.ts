@@ -13,6 +13,8 @@ import { currentOfficialCatalog, refreshOfficialCatalog } from './catalog.ts'
 import { discoverRelayModels } from './discovery.ts'
 import { buildRelayProvider } from './materialize.ts'
 import { relayAuthInjection } from './pi-auth.ts'
+import type { SpeedResolver } from './codex-relay.ts'
+import { SpeedController } from './shared/speed.ts'
 import {
   assertSafeHeaders,
   assertUnreservedProviderId,
@@ -23,7 +25,6 @@ import {
   isRelayProtocol,
   normalizeBaseURL,
   RELAY_PROTOCOLS,
-  RELAY_SERVICE_TIERS,
   RELAY_TRANSPORTS,
   relayCredentialRef,
   RESERVED_PROVIDER_IDS,
@@ -54,7 +55,6 @@ const providerConfig = Schema.object({
   excludedModels: Schema.array(Schema.string()).default([]),
   headers: Schema.dict(Schema.string()).default({}),
   transport: Schema.union(RELAY_TRANSPORTS),
-  serviceTier: Schema.union(RELAY_SERVICE_TIERS),
   streamIdleTimeoutMs: Schema.number().min(Number.MIN_VALUE).max(MAX_TIMER_DELAY_MS).default(DEFAULT_STREAM_IDLE_TIMEOUT_MS),
   maxRequestImageBytes: Schema.number().step(1).min(1).default(DEFAULT_MAX_REQUEST_IMAGE_BYTES),
   requestImagePixelBudget: Schema.number().step(1).min(1).default(DEFAULT_REQUEST_IMAGE_PIXEL_BUDGET),
@@ -98,13 +98,16 @@ function validateProvider(route: string, config: RelayProviderConfig): void {
  */
 function validateConfig(config: Config): void {
   for (const [route, provider] of Object.entries(config.providers)) validateProvider(route, provider)
-  resolveProfiles(config, currentOfficialCatalog().models)
+  // The speed tier is session state, not configuration: validation only proves
+  // the routes materialize, with no tier in play.
+  resolveProfiles(config, currentOfficialCatalog().models, () => undefined)
 }
 
 function resolveProfile(
   provider: string,
   source: RelayProviderConfig,
   catalog: readonly OfficialModelSummary[],
+  speedFor: SpeedResolver,
 ): ResolvedPiAiProviderProfile {
   const profile: ResolvedPiAiProviderProfile = {
     provider,
@@ -115,7 +118,7 @@ function resolveProfile(
     requestImagePixelBudget: source.requestImagePixelBudget ?? DEFAULT_REQUEST_IMAGE_PIXEL_BUDGET,
     requestImageMaxBytes: source.requestImageMaxBytes ?? DEFAULT_REQUEST_IMAGE_MAX_BYTES,
     retryPolicy: resolveRetryPolicy(source.retryPolicy, `relay-models: provider "${provider}" retry policy`),
-    piProvider: buildRelayProvider(provider, source, catalog),
+    piProvider: buildRelayProvider(provider, source, catalog, speedFor),
     configuredMaxTokens: new Map(),
   }
   if (source.headers && Object.keys(source.headers).length > 0) profile.headers = { ...source.headers }
@@ -126,17 +129,22 @@ function resolveProfile(
 function resolveProfiles(
   config: Config,
   catalog: readonly OfficialModelSummary[],
+  speedFor: SpeedResolver,
 ): Map<string, ResolvedPiAiProviderProfile> {
   const profiles = new Map<string, ResolvedPiAiProviderProfile>()
   for (const [provider, source] of Object.entries(config.providers)) {
-    profiles.set(provider, resolveProfile(provider, source, catalog))
+    profiles.set(provider, resolveProfile(provider, source, catalog, speedFor))
   }
   return profiles
 }
 
 export function apply(ctx: Context, config: Config): void {
+  // Per-session Codex speed tier, chosen from the composer Speed toggle or the
+  // /fast popup; in-memory, so a restart restores the no-`service_tier` default.
+  const speed = new SpeedController()
+  const speedFor: SpeedResolver = options => speed.get(options?.sessionId)
   let current: () => Config = () => config
-  let profiles = resolveProfiles(config, currentOfficialCatalog().models)
+  let profiles = resolveProfiles(config, currentOfficialCatalog().models, speedFor)
 
   /**
    * The key one request authenticates with, or undefined for a relay that takes
@@ -196,7 +204,7 @@ export function apply(ctx: Context, config: Config): void {
   }
 
   const refresh = (): void => {
-    const next = resolveProfiles(current(), currentOfficialCatalog().models)
+    const next = resolveProfiles(current(), currentOfficialCatalog().models, speedFor)
     const routes = [...next.keys()]
     const previous = profiles
     profiles = next
@@ -254,5 +262,5 @@ export function apply(ctx: Context, config: Config): void {
     setSource: source => { current = source },
     onChange: safeRefresh,
   })
-  installWebApi(ctx, NS, () => current(), safeRefresh)
+  installWebApi(ctx, NS, () => current(), safeRefresh, speed)
 }

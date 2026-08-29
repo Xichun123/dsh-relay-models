@@ -1,4 +1,4 @@
-import type { OfficialCatalogSnapshot, RelayConfig, RelayProviderConfig, RelayProtocol } from '../shared/types.ts'
+import type { OfficialCatalogSnapshot, RelayConfig, RelayProviderConfig, RelayProtocol, RelayServiceTier } from '../shared/types.ts'
 
 const ENDPOINT = '/relay-models/api'
 
@@ -87,6 +87,12 @@ export const relayPageApi = {
     protocol: RelayProtocol
     apiKey?: string
   }): Promise<string[]> => request<string[]>({ action: 'discover', ...input }),
+
+  getSpeed: async (sessionId: string): Promise<RelayServiceTier | null> =>
+    (await request<{ tier: RelayServiceTier | null }>({ action: 'get-speed', sessionId })).tier,
+
+  setSpeed: (sessionId: string, tier: RelayServiceTier | null): Promise<void> =>
+    request<void>({ action: 'set-speed', sessionId, tier }),
 }
 
 export type RelayPageApi = typeof relayPageApi

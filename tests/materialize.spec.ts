@@ -31,7 +31,7 @@ describe('relay provider materialization', () => {
     expect(models.every(model => model.provider === 'relay-test')).toBe(true)
     expect(models.every(model => model.headers === undefined)).toBe(true)
 
-    const provider = buildRelayProvider('relay-test', config(), BUNDLED_MODELS)
+    const provider = buildRelayProvider('relay-test', config(), BUNDLED_MODELS, () => undefined)
     expect(provider.getModels().map(model => model.id)).toEqual(models.map(model => model.id))
   })
 
@@ -69,7 +69,7 @@ describe('relay provider materialization', () => {
       api: 'openai-codex-responses',
       baseUrl: 'https://relay.test/backend-api',
     })
-    expect(buildRelayProvider('relay-test', next, BUNDLED_MODELS).getModels()[0]?.api).toBe('openai-codex-responses')
+    expect(buildRelayProvider('relay-test', next, BUNDLED_MODELS, () => undefined).getModels()[0]?.api).toBe('openai-codex-responses')
   })
 
   it('drops the official compat switches when an override repoints the protocol', () => {

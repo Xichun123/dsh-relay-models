@@ -24,8 +24,9 @@ export type RelayLocaleKey =
   | 'protocolCompletions' | 'protocolResponses' | 'protocolCodex' | 'protocolAnthropic'
   | 'protocolUnsupported'
   | 'transportAuto' | 'transportWebsocket' | 'transportWebsocketCached' | 'transportSse'
-  | 'codexServiceTier' | 'serviceTierUnset' | 'serviceTierFast' | 'serviceTierPriority'
+  | 'serviceTierUnset' | 'serviceTierFast' | 'serviceTierPriority'
   | 'serviceTierFlex'
+  | 'speed' | 'commandFast' | 'commandFastUnavailable'
   | 'staleReloaded'
 
 /** English copy. */
@@ -122,11 +123,13 @@ export const en: Record<RelayLocaleKey, string> = {
   transportWebsocket: 'WebSocket',
   transportWebsocketCached: 'WebSocket cached session',
   transportSse: 'SSE',
-  codexServiceTier: 'Codex speed mode',
-  serviceTierUnset: 'Not set (no service_tier)',
+  serviceTierUnset: 'Standard (no service_tier)',
   serviceTierFast: 'Fast mode (1.5x speed, 2.5x credits)',
   serviceTierPriority: 'Priority (API keys, 2x rate)',
   serviceTierFlex: 'Flex (slower, cheaper)',
+  speed: 'Speed',
+  commandFast: 'Switch this session’s Codex speed tier',
+  commandFastUnavailable: 'The current model is not a Codex Responses relay model; /fast only applies to one',
   staleReloaded: 'These settings changed elsewhere. The page reloaded them; try again.',
 }
 
@@ -224,10 +227,12 @@ export const zh: Record<RelayLocaleKey, string> = {
   transportWebsocket: 'WebSocket',
   transportWebsocketCached: 'WebSocket 缓存会话',
   transportSse: 'SSE',
-  codexServiceTier: 'Codex 速度模式',
-  serviceTierUnset: '不设置（不发 service_tier）',
+  serviceTierUnset: '标准（不发 service_tier）',
   serviceTierFast: 'Fast 快速（1.5 倍速度，2.5 倍 credits）',
   serviceTierPriority: 'Priority 优先（API Key 计费，2 倍单价）',
   serviceTierFlex: 'Flex 弹性（更慢更便宜）',
+  speed: '速度',
+  commandFast: '切换当前会话的 Codex 速度档',
+  commandFastUnavailable: '当前模型不是 Codex Responses 中转模型；/fast 仅对此类模型可用',
   staleReloaded: '配置已在别处更新，页面已重新载入，请再试一次。',
 }

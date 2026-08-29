@@ -4,14 +4,15 @@ import { credentialRef } from '@deepseek-ai/dsh-credentials'
 import type { SettingsNamespace } from '@deepseek-ai/dsh-settings'
 import { currentOfficialCatalog, refreshOfficialCatalog } from './catalog.ts'
 import { discoverRelayModels } from './discovery.ts'
-import { isRelayProtocol } from './shared/core.ts'
-import type { RelayConfig, RelayProtocol, RelayProviderConfig } from './shared/types.ts'
+import { isRelayProtocol, RELAY_SERVICE_TIERS } from './shared/core.ts'
+import type { SpeedController } from './shared/speed.ts'
+import type { RelayConfig, RelayProtocol, RelayProviderConfig, RelayServiceTier } from './shared/types.ts'
 
 const PATH = '/relay-models/api'
 const MAX_BODY_BYTES = 1024 * 1024
 
 /** The operations this endpoint serves; anything else is refused by name. */
-const RELAY_ACTIONS = ['catalog', 'discover', 'set-provider', 'remove-provider'] as const
+const RELAY_ACTIONS = ['catalog', 'discover', 'set-provider', 'remove-provider', 'get-speed', 'set-speed'] as const
 
 /** One operation of {@link RELAY_ACTIONS}. */
 type RelayAction = (typeof RELAY_ACTIONS)[number]
@@ -226,6 +227,7 @@ export function installWebApi(
   ns: SettingsNamespace,
   current: () => RelayConfig,
   onCatalogRefresh: () => void,
+  speed: SpeedController,
 ): void {
   const state = async (): Promise<unknown> => {
     const descriptor = ctx.settings.describe({ redactSecrets: true }).find(item => item.ns === ns)
@@ -285,6 +287,21 @@ export function installWebApi(
           ...target.headers ? { headers: target.headers } : {},
         })
         reply(res, 200, { ok: true, value: models.map(model => model.id) })
+        return
+      }
+      if (action === 'get-speed') {
+        const sessionId = requiredString(input.sessionId, 'sessionId')
+        reply(res, 200, { ok: true, value: { tier: speed.get(sessionId) ?? null } })
+        return
+      }
+      if (action === 'set-speed') {
+        const sessionId = requiredString(input.sessionId, 'sessionId')
+        const raw = input.tier
+        if (raw !== null && raw !== undefined && !(RELAY_SERVICE_TIERS as readonly string[]).includes(String(raw))) {
+          throw new Error(`Invalid speed tier: ${String(raw)}`)
+        }
+        speed.set(sessionId, (raw ?? undefined) as RelayServiceTier | undefined)
+        reply(res, 200, { ok: true })
         return
       }
       const route = requiredString(input.route, 'route')

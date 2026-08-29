@@ -7,9 +7,10 @@ export type RelayProtocol =
 export type RelayTransport = 'sse' | 'websocket' | 'websocket-cached' | 'auto'
 
 /**
- * The Codex speed tier a route asks for. `fast` is Codex Fast mode: 1.5x model
- * speed at a higher ChatGPT credit rate. Absent sends no `service_tier` field,
- * which is what every DSH route does today.
+ * The Codex speed tier a session asks for. `fast` is Codex Fast mode: 1.5x
+ * model speed at a higher ChatGPT credit rate. Absent sends no `service_tier`
+ * field, which is what every DSH route does today. Chosen per session from the
+ * composer Speed toggle or the /fast popup; the relay route carries no tier.
  */
 export type RelayServiceTier = 'fast' | 'priority' | 'flex'
 
@@ -71,8 +72,6 @@ export interface RelayProviderConfig {
   excludedModels: string[]
   headers: Record<string, string>
   transport?: RelayTransport
-  /** Codex speed tier; absent sends no `service_tier`. Only Codex Responses reads it. */
-  serviceTier?: RelayServiceTier
   /** Provider idle ceiling while a stream read is outstanding; the schema default applies when absent. */
   streamIdleTimeoutMs?: number
   /** Base64 image payload ceiling per request; oldest images offload above it. */

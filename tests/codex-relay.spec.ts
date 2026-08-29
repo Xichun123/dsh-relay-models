@@ -36,6 +36,17 @@ function recorder(): { calls: (StreamOptions | undefined)[]; base: ProviderStrea
 const model = { id: 'gpt-5.6-sol', provider: 'relay-cliproxy', api: 'openai-codex-responses' } as unknown as Model<Api>
 const context: Context = { messages: [] }
 
+/** A resolver answering no tier for any session. */
+const noTier = (): undefined => undefined
+
+/** A resolver answering one fixed tier, recording the sessionId it was asked about. */
+function fixedTier(tier: 'fast' | 'priority' | 'flex', seen?: (string | undefined)[]) {
+  return (options: StreamOptions | undefined): 'fast' | 'priority' | 'flex' => {
+    seen?.push(options?.sessionId)
+    return tier
+  }
+}
+
 describe('codex account id extraction', () => {
   it('reads the claim pi-ai reads', () => {
     expect(codexAccountId(chatgptToken('acct_123'))).toBe('acct_123')
@@ -54,19 +65,19 @@ describe('codex account id extraction', () => {
 
 describe('codex relay stream options', () => {
   it('moves a relay key to the sidecar header and hands pi-ai a token it can read', () => {
-    const options = codexRelayStreamOptions<StreamOptions>('relay-cliproxy', undefined, { apiKey: 'sk-relay-plain-key' })
+    const options = codexRelayStreamOptions<StreamOptions>('relay-cliproxy', noTier, { apiKey: 'sk-relay-plain-key' })
     expect(codexAccountId(options.apiKey!)).toBe('relay-cliproxy')
     expect(options.headers).toEqual({ [CODEX_RELAY_KEY_HEADER]: 'sk-relay-plain-key' })
   })
 
   it('keeps a key that already carries the claim exactly where pi-ai expects it', () => {
     const token = chatgptToken('acct_123')
-    const options = codexRelayStreamOptions<StreamOptions>('relay-cliproxy', undefined, { apiKey: token, headers: { 'x-trace': '1' } })
+    const options = codexRelayStreamOptions<StreamOptions>('relay-cliproxy', noTier, { apiKey: token, headers: { 'x-trace': '1' } })
     expect(options).toEqual({ apiKey: token, headers: { 'x-trace': '1' } })
   })
 
   it('preserves configured headers and unrelated options', () => {
-    const options = codexRelayStreamOptions<StreamOptions>('relay-cliproxy', undefined, {
+    const options = codexRelayStreamOptions<StreamOptions>('relay-cliproxy', noTier, {
       apiKey: 'sk-relay-plain-key',
       transport: 'websocket',
       headers: { 'x-trace': '1' },
@@ -76,27 +87,34 @@ describe('codex relay stream options', () => {
   })
 
   it('mints a token for a keyless relay without inventing a key to sidecar', () => {
-    const options = codexRelayStreamOptions<StreamOptions>('relay-local', undefined, {})
+    const options = codexRelayStreamOptions<StreamOptions>('relay-local', noTier, {})
     expect(codexAccountId(options.apiKey!)).toBe('relay-local')
     expect(options.headers).toBeUndefined()
-    expect(codexAccountId(codexRelayStreamOptions<StreamOptions>('relay-local', undefined, undefined).apiKey!)).toBe('relay-local')
+    expect(codexAccountId(codexRelayStreamOptions<StreamOptions>('relay-local', noTier, undefined).apiKey!)).toBe('relay-local')
   })
 
-  it('sends no service_tier unless the route configured one', () => {
-    const off = codexRelayStreamOptions<StreamOptions>('relay-cliproxy', undefined, { apiKey: 'sk-relay-plain-key' })
+  it('sends no service_tier unless the session chose one', () => {
+    const off = codexRelayStreamOptions<StreamOptions>('relay-cliproxy', noTier, { apiKey: 'sk-relay-plain-key', sessionId: 's1' })
     expect('serviceTier' in off).toBe(false)
-    const fast = codexRelayStreamOptions<StreamOptions>('relay-cliproxy', 'fast', { apiKey: 'sk-relay-plain-key' })
+    const fast = codexRelayStreamOptions<StreamOptions>('relay-cliproxy', fixedTier('fast'), { apiKey: 'sk-relay-plain-key', sessionId: 's1' })
     expect(fast).toMatchObject({ serviceTier: 'fast' })
     expect(fast.headers).toEqual({ [CODEX_RELAY_KEY_HEADER]: 'sk-relay-plain-key' })
   })
 
+  it('resolves the tier from the calling session id', () => {
+    const seen: (string | undefined)[] = []
+    const fast = codexRelayStreamOptions<StreamOptions>('relay-cliproxy', fixedTier('fast', seen), { apiKey: 'sk-relay-plain-key', sessionId: 's1' })
+    expect(fast).toMatchObject({ serviceTier: 'fast' })
+    expect(seen).toEqual(['s1'])
+  })
+
   it('carries the tier for a real ChatGPT token too, and yields to an explicit one', () => {
     const token = chatgptToken('acct_123')
-    expect(codexRelayStreamOptions<StreamOptions>('relay-cliproxy', 'fast', { apiKey: token }))
+    expect(codexRelayStreamOptions<StreamOptions>('relay-cliproxy', fixedTier('fast'), { apiKey: token }))
       .toEqual({ apiKey: token, serviceTier: 'fast' })
     const explicit = codexRelayStreamOptions<StreamOptions>(
       'relay-cliproxy',
-      'fast',
+      fixedTier('fast'),
       { apiKey: 'sk-relay-plain-key', serviceTier: 'flex' } as StreamOptions,
     )
     expect(explicit).toMatchObject({ serviceTier: 'flex' })
@@ -106,9 +124,9 @@ describe('codex relay stream options', () => {
 describe('codex relay api', () => {
   it('rewrites both stream and streamSimple', () => {
     const { calls, base } = recorder()
-    const api = codexRelayApi('relay-cliproxy', 'fast', base)
-    api.stream(model, context, { apiKey: 'sk-relay-plain-key' })
-    api.streamSimple(model, context, { apiKey: 'sk-relay-plain-key' })
+    const api = codexRelayApi('relay-cliproxy', fixedTier('fast'), base)
+    api.stream(model, context, { apiKey: 'sk-relay-plain-key', sessionId: 's1' })
+    api.streamSimple(model, context, { apiKey: 'sk-relay-plain-key', sessionId: 's1' })
     expect(calls).toHaveLength(2)
     for (const seen of calls) {
       expect(codexAccountId(seen!.apiKey!)).toBe('relay-cliproxy')
