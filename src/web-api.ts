@@ -98,6 +98,7 @@ export function installWebApi(
   current: () => RelayConfig,
   onCatalogRefresh: () => void,
   speed: SpeedController,
+  onOfficialEnrich?: () => void,
 ): void {
   const state = async (): Promise<unknown> => {
     const descriptor = ctx.settings.describe({ redactSecrets: true }).find(item => item.ns === ns)
@@ -127,7 +128,12 @@ export function installWebApi(
         const previous = currentOfficialCatalog()
         const value = await refreshOfficialCatalog(signal).catch(() => currentOfficialCatalog())
         if (value !== previous) onCatalogRefresh()
+        onOfficialEnrich?.()
         return { ok: true, value }
+      }
+      case 'enrich-official': {
+        onOfficialEnrich?.()
+        return { ok: true, value: null }
       }
       case 'discover': {
         const target = resolveDiscoveryTarget(input, current())

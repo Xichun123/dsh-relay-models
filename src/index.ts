@@ -29,11 +29,13 @@ import {
 } from './shared/core.ts'
 import type { OfficialModelSummary, RelayConfig, RelayProviderConfig } from './shared/types.ts'
 import { installWebApi } from './web-api.ts'
+import { enrichOfficialProviders, type PiAiProvidersMap } from './enrich-official.ts'
 
 export const name = 'relay-models'
 export const inject = ['llm', 'settings', 'credentials', 'connection']
 
 const NS = settingsNamespace('llm-relay-models')
+const PI_AI_NS = settingsNamespace('llm-pi-ai')
 
 export type Config = RelayConfig
 
@@ -262,10 +264,32 @@ export function apply(ctx: Context, config: Config): void {
     return () => { controller.abort() }
   }, 'relay-models: refresh pi.dev model catalog')
 
+  const syncOfficialModels = (): void => {
+    const snapshot = ctx.settings.get(PI_AI_NS) as { providers?: PiAiProvidersMap } | undefined
+    const providers = snapshot?.providers
+    if (!providers || Object.keys(providers).length === 0) return
+    const result = enrichOfficialProviders(providers, currentOfficialCatalog().models)
+    if (!result.changed) return
+    const revision = ctx.settings.describe({ redactSecrets: true }).find(item => item.ns === PI_AI_NS)?.revision
+    void ctx.settings.mutate(PI_AI_NS, [{ op: 'set', path: ['providers'], value: result.providers }], revision).then(() => {
+      ctx.logger.info(`relay-models: filled official Models metadata (${result.notes.join('; ')})`)
+    }).catch((error: unknown) => {
+      ctx.logger.warn('relay-models: did not write llm-pi-ai enrichment: %s', String(error))
+    })
+  }
+
+  ctx.effect(() => {
+    syncOfficialModels()
+    const stop = ctx.on('settings/updated', (ns: unknown) => {
+      if (ns === PI_AI_NS) syncOfficialModels()
+    })
+    return () => { stop() }
+  }, 'relay-models: fill official Models capabilities')
+
   installSettingsSection(ctx, NS, Config, config, {
     validate: validateConfig,
     setSource: source => { current = source },
     onChange: safeRefresh,
   })
-  installWebApi(ctx, NS, () => current(), safeRefresh, speed)
+  installWebApi(ctx, NS, () => current(), safeRefresh, speed, syncOfficialModels)
 }

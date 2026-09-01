@@ -71,3 +71,13 @@
 - [x] 切换 DSH 语言：导航项与整页文案在中英之间跟随
 - [x] 用真实中转站完成一次模型调用：`buildRelayProvider` 直连 CLIProxyAPI 的 codex 别名，WS 与 SSE 都拿到回复；选中 Fast 后 `onPayload` 里确认请求体带 `service_tier: "priority"`，中转站的 Keeper 日志显示“快速 / 标准”
 - [ ] 在真实 Codex 凭证上确认 Fast 模式确实生效（响应不回显，只能看中转站日志或 credits 消耗）
+
+
+## 官方 llm-pi-ai 元数据补齐（0.1.2-alpha.3）
+
+官方自定义供应商不会模糊匹配 pi-ai 目录，也不会为未知网关填 `compat`。本插件在 `llm-pi-ai` 命名空间上只填空：
+
+- 触发：插件加载、pi.dev 目录刷新、`settings/updated`（`llm-pi-ai`）、RPC `enrich-official`。
+- 范围：带 `baseURL` 且 `models` 非空的手写路由。
+- 不覆盖用户已写的 `contextWindow` / `reasoningEfforts` / `compat` 字段。
+- 不注册这些路由的 Adapter（仍由官方 `dsh-llm-pi-ai` 持有），避免官方 Models 页只读。

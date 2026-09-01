@@ -155,6 +155,18 @@ DSH 自己从不发它（`dsh-llm-pi-ai` 里没有任何 `service_tier`），所
 
 配置被别处改动后，页面的写入会被 `settings-conflict` 拒绝（带上期望与实际 revision）；页面会自动重新载入并提示重试，而不是拿着过期的 revision 一直失败。
 
+### 官方 Models 页（自动补齐能力）
+
+在设置 → 模型里添加自定义供应商之后，官方适配器只按**精确模型 id** 继承 pi-ai 目录。中转站常用 `openai/gpt-4.1` 这类 id，结果是没有思考等级、也没有上下文窗口；未识别的网关 URL 上，pi-ai 还会按官方 OpenAI 去探测 `compat`（`developer` 角色、`max_completion_tokens`），普通人很难知道要改哪些开关。
+
+本插件在 Host 启动和官方 `llm-pi-ai` 配置变更时，**只填空、不覆盖已有值**：
+
+- 按官方目录匹配模型（含 vendor 前缀 / 日期后缀的等价 id），写入 `contextWindow`、`maxTokens`、`input`、`reasoningEfforts`。
+- 对 OpenAI 兼容中转写入默认 `compat`：`supportsDeveloperRole: false`、`supportsStore: false`、`maxTokensField: max_tokens`。Responses 路由只关 `developer` 角色。
+- 匹配到 Completions 官方条目时，若对方带了 `thinkingFormat` / `supportsReasoningEffort`，一并补上。
+
+官方目录路由（只配了 Key、没有 `models` 列表）不会动。混协议仍受官方限制：一条路由一种协议。
+
 官方 Models 页可以通过 `registerConfigurableProviders` / `registerModelDiscovery` 看到这些路由，并支持整条删除（含托管密钥）；但它对本插件的命名空间只显示“其余字段在 settings.yaml 中”并禁用应用按钮——混协议和元数据匹配以本插件的“中转模型”页为准。
 
 
