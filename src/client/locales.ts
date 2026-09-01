@@ -1,34 +1,5 @@
 /** Locale bundles for the relay models settings section. */
 
-/** Locale keys this section renders. */
-export type RelayLocaleKey =
-  | 'nav' | 'title' | 'empty' | 'retry' | 'add' | 'cancel' | 'close' | 'save'
-  | 'providerId' | 'providerIdPlaceholder' | 'displayName' | 'displayNamePlaceholder'
-  | 'baseURL' | 'baseURLPlaceholder' | 'suggestName' | 'fallbackProtocol' | 'apiKey'
-  | 'discoverAndAdd' | 'discovering' | 'needDisplayName' | 'alreadyExists' | 'noModels'
-  | 'keyConfigured' | 'keyMissing' | 'sync' | 'synced' | 'connection' | 'connectionCollapse'
-  | 'models' | 'remove' | 'removeConfirm' | 'removeConfirmAction'
-  | 'summaryActive' | 'summaryMatched' | 'summaryUnmatched' | 'summaryUnsupported'
-  | 'summaryExcluded' | 'summarySyncedAt'
-  | 'codexTransport' | 'replaceKey' | 'extraHeaders' | 'extraHeadersPlaceholder'
-  | 'saveConnection' | 'connectionSaved'
-  | 'filterAll' | 'filterActive' | 'filterUnmatched' | 'filterUnsupported' | 'filterExcluded'
-  | 'searchModels' | 'showingCount' | 'modelCount'
-  | 'selectedCount' | 'exclude' | 'restore' | 'excluded' | 'restored'
-  | 'autoProtocol' | 'applyProtocol' | 'protocolApplied' | 'protocolCleared' | 'clearSelection'
-  | 'protocolAutoOption' | 'protocolUnsupportedApi'
-  | 'columnModel' | 'columnSource' | 'columnProtocol' | 'columnActions'
-  | 'selectVisible' | 'selectOne' | 'noMatches' | 'unmatched' | 'manual' | 'needsOverride'
-  | 'map' | 'unmap' | 'mapSaved' | 'unmapped' | 'searchCatalog' | 'noCandidates'
-  | 'protocolSaved' | 'protocolAuto' | 'excludedTag'
-  | 'protocolCompletions' | 'protocolResponses' | 'protocolCodex' | 'protocolAnthropic'
-  | 'protocolUnsupported'
-  | 'transportAuto' | 'transportWebsocket' | 'transportWebsocketCached' | 'transportSse'
-  | 'serviceTierUnset' | 'serviceTierFast' | 'serviceTierPriority'
-  | 'serviceTierFlex'
-  | 'speed' | 'commandFast' | 'commandFastUnavailable'
-  | 'staleReloaded'
-
 /** English copy. */
 export const en: Record<RelayLocaleKey, string> = {
   nav: 'Relay models',
@@ -38,7 +9,6 @@ export const en: Record<RelayLocaleKey, string> = {
   add: 'Add a relay',
   cancel: 'Cancel',
   close: 'Close',
-  save: 'Save',
   providerId: 'Provider ID',
   providerIdPlaceholder: 'relay-example',
   displayName: 'Display name',
@@ -123,18 +93,16 @@ export const en: Record<RelayLocaleKey, string> = {
   transportWebsocket: 'WebSocket',
   transportWebsocketCached: 'WebSocket cached session',
   transportSse: 'SSE',
-  serviceTierUnset: 'Standard (no service_tier)',
-  serviceTierFast: 'Fast mode (1.5x speed, 2.5x credits)',
-  serviceTierPriority: 'Priority (API keys, 2x rate)',
-  serviceTierFlex: 'Flex (slower, cheaper)',
+  serviceTierUnset: 'Standard',
+  serviceTierFast: 'Fast',
   speed: 'Speed',
   commandFast: 'Switch this session’s Codex speed tier',
   commandFastUnavailable: 'The current model is not a Codex Responses relay model; /fast only applies to one',
   staleReloaded: 'These settings changed elsewhere. The page reloaded them; try again.',
 }
 
-/** Chinese copy. */
-export const zh: Record<RelayLocaleKey, string> = {
+/** Chinese copy. This dictionary defines the key set every other locale must match. */
+export const zh = {
   nav: '中转模型',
   title: '中转模型',
   empty: '还没有中转站。点击右上角“添加中转站”。',
@@ -142,7 +110,6 @@ export const zh: Record<RelayLocaleKey, string> = {
   add: '添加中转站',
   cancel: '取消',
   close: '关闭',
-  save: '保存',
   providerId: 'Provider ID',
   providerIdPlaceholder: 'relay-example',
   displayName: '显示名称',
@@ -227,12 +194,13 @@ export const zh: Record<RelayLocaleKey, string> = {
   transportWebsocket: 'WebSocket',
   transportWebsocketCached: 'WebSocket 缓存会话',
   transportSse: 'SSE',
-  serviceTierUnset: '标准（不发 service_tier）',
-  serviceTierFast: 'Fast 快速（1.5 倍速度，2.5 倍 credits）',
-  serviceTierPriority: 'Priority 优先（API Key 计费，2 倍单价）',
-  serviceTierFlex: 'Flex 弹性（更慢更便宜）',
+  serviceTierUnset: '标准',
+  serviceTierFast: '快速',
   speed: '速度',
   commandFast: '切换当前会话的 Codex 速度档',
   commandFastUnavailable: '当前模型不是 Codex Responses 中转模型；/fast 仅对此类模型可用',
   staleReloaded: '配置已在别处更新，页面已重新载入，请再试一次。',
 }
+
+/** Locale keys this section renders, derived from the dictionaries themselves. */
+export type RelayLocaleKey = keyof typeof zh

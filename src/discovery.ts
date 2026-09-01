@@ -71,11 +71,9 @@ function statedMessage(text: string): string | undefined {
     // A non-JSON refusal body carries no message field; the status alone describes it.
     return undefined
   }
-  if (!payload || typeof payload !== 'object') return undefined
-  const record = payload as Record<string, unknown>
-  const nested = record.error && typeof record.error === 'object'
-    ? (record.error as Record<string, unknown>).message
-    : undefined
+  // A string or number payload reads as an object with none of these fields.
+  const record = (payload ?? {}) as Record<string, unknown>
+  const nested = (record.error as Record<string, unknown> | undefined)?.message
   for (const candidate of [nested, record.error, record.message, record.detail]) {
     if (typeof candidate === 'string' && candidate.trim()) return candidate
   }

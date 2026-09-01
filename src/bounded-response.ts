@@ -19,11 +19,5 @@ export async function readBoundedText(response: Response, url: string, maxBytes:
   } finally {
     await reader.cancel().catch(() => {})
   }
-  const body = new Uint8Array(total)
-  let offset = 0
-  for (const chunk of chunks) {
-    body.set(chunk, offset)
-    offset += chunk.byteLength
-  }
-  return new TextDecoder().decode(body)
+  return Buffer.concat(chunks).toString('utf8')
 }

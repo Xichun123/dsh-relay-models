@@ -1,6 +1,5 @@
-import { useCallback, useEffect, useId, useMemo, useState, type ReactNode } from 'react'
-import { createPortal } from 'react-dom'
-import { Button, Input, Pill } from '@deepseek-ai/dsh-client-ui-primitives'
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
+import { Button, Input, Modal, Pill } from '@deepseek-ai/dsh-client-ui-primitives'
 import type { Translate } from '@deepseek-ai/dsh-client-ui-slots'
 import {
   RELAY_PROTOCOLS,
@@ -100,7 +99,7 @@ function AddProvider({
     setBusy(true)
     setError(undefined)
     try {
-      const id = assertUnreservedProviderId(route)
+      const id = assertUnreservedProviderId(route, new Set(snapshot.catalog.models.map(model => model.provider)))
       if (snapshot.config.providers[id]) throw new Error(t('alreadyExists', { id }))
       if (!displayName.trim()) throw new Error(t('needDisplayName'))
       const modelIds = await api.discover({
@@ -181,55 +180,6 @@ function AddProvider({
         </Button>
       </div>
     </div>
-  )
-}
-
-/**
- * The page's own wide dialog. `Modal` from the primitives is tuned to a 380px
- * confirmation card with no scrolling body, while the model manager is a wide
- * scrollable table; this keeps the escape key, the portal, the labelled
- * `role="dialog"`, and the page scroll lock.
- */
-function Dialog({
-  open,
-  title,
-  closeLabel,
-  onClose,
-  children,
-}: {
-  open: boolean
-  title: string
-  closeLabel: string
-  onClose: () => void
-  children: ReactNode
-}): ReactNode {
-  const titleId = useId()
-  useEffect(() => {
-    if (!open) return
-    const onKey = (event: KeyboardEvent): void => {
-      if (event.key === 'Escape') onClose()
-    }
-    const previous = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    window.addEventListener('keydown', onKey)
-    return () => {
-      document.body.style.overflow = previous
-      window.removeEventListener('keydown', onKey)
-    }
-  }, [onClose, open])
-  if (!open) return null
-  return createPortal(
-    <div className="drm-overlay" onMouseDown={onClose}>
-      <div className="drm-dialog" role="dialog" aria-modal="true" aria-labelledby={titleId} onMouseDown={event => { event.stopPropagation() }}>
-        <div className="drm-dialog-head">
-          <h3 className="drm-dialog-title" id={titleId}>{title}</h3>
-          <span className="drm-spacer" />
-          <Button size="sm" variant="outline" onClick={onClose}>{closeLabel}</Button>
-        </div>
-        <div className="drm-dialog-body">{children}</div>
-      </div>
-    </div>,
-    document.body,
   )
 }
 
@@ -607,9 +557,16 @@ function ProviderCard({
           </div>
         </>
       ) : null}
-      <Dialog open={modelsOpen} title={`${provider.displayName} · ${t('models')}`} closeLabel={t('close')} onClose={() => { setModelsOpen(false) }}>
+      <Modal
+        open={modelsOpen}
+        title={`${provider.displayName} · ${t('models')}`}
+        closeLabel={t('close')}
+        onClose={() => { setModelsOpen(false) }}
+        className="drm-wide-dialog"
+        contentClassName="drm-dialog-content"
+      >
         <ModelManager provider={provider} catalog={catalog} statuses={statuses} busy={busy} error={error} notice={notice} t={t} onSave={save} />
-      </Dialog>
+      </Modal>
     </article>
   )
 }
@@ -619,28 +576,23 @@ export function RelayModelsSection({ api, t }: Props): ReactNode {
   const [catalog, setCatalog] = useState(() => peekRelayPage()?.catalog)
   const [adding, setAdding] = useState(false)
   const [error, setError] = useState<string>()
-  const applySnapshot = (next: RelayPageSnapshot): void => {
-    setSnapshot(next)
-    setCatalog(next.catalog)
-  }
-  const reload = useCallback(async () => {
+  /**
+   * Read the page state. `refreshCatalog` additionally asks the host to re-read
+   * pi.dev, which only the first mount and an explicit retry need.
+   */
+  const load = useCallback(async (refreshCatalog = false) => {
     try {
-      applySnapshot(await api.load())
+      const next = await api.load()
+      setSnapshot(next)
+      setCatalog(next.catalog)
       setError(undefined)
+      if (refreshCatalog) void api.catalog().then(setCatalog).catch(() => undefined)
     } catch (cause) {
       setError(messageOf(cause))
     }
   }, [api])
-  const initialize = useCallback(async () => {
-    try {
-      applySnapshot(await api.load())
-      setError(undefined)
-      void api.catalog().then(setCatalog).catch(() => undefined)
-    } catch (cause) {
-      setError(messageOf(cause))
-    }
-  }, [api])
-  useEffect(() => { void initialize() }, [initialize])
+  const reload = useCallback(async () => { await load() }, [load])
+  useEffect(() => { void load(true) }, [load])
 
   return (
     <section className="drm-section">
@@ -648,7 +600,7 @@ export function RelayModelsSection({ api, t }: Props): ReactNode {
         <h2 className="drm-title">{t('title')}</h2>
         {snapshot ? <AddProvider api={api} snapshot={snapshot} t={t} open={adding} onOpen={setAdding} onDone={reload} /> : null}
       </div>
-      {error ? <div className="drm-error">{error}<div><Button size="sm" variant="outline" onClick={() => { void initialize() }}>{t('retry')}</Button></div></div> : null}
+      {error ? <div className="drm-error">{error}<div><Button size="sm" variant="outline" onClick={() => { void load(true) }}>{t('retry')}</Button></div></div> : null}
       {/* The empty state points at the add button, so it stays out of the way
           while that form is the thing on screen. */}
       {snapshot && !adding && Object.keys(snapshot.config.providers).length === 0 ? <div className="drm-empty">{t('empty')}</div> : null}

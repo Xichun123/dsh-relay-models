@@ -5,6 +5,7 @@ import type {
   RelayProtocol,
   RelayProviderConfig,
   RelayServiceTier,
+  RelayTransport,
 } from './types.ts'
 
 export const RELAY_PROTOCOLS = [
@@ -19,18 +20,26 @@ export const RELAY_TRANSPORTS = [
   'websocket',
   'websocket-cached',
   'sse',
-] as const
+] as const satisfies readonly RelayTransport[]
 
 /**
- * The Codex speed tiers a session may choose, in the order the Speed menu
- * lists them. `fast` is Codex Fast mode, `priority` its API-key equivalent,
- * `flex` the cheaper slower lane. Choosing none keeps `service_tier` out of
- * the body, which is what every DSH route does today.
+ * The logical RPC channel the settings page is served on. Connection owns the
+ * physical route, its browser-trust fence, and its authentication; both halves
+ * only have to agree on this string.
+ */
+export const RELAY_CHANNEL = '/relay-models'
+
+/**
+ * The Codex speed tiers a session may choose, in the order the Speed menu lists
+ * them. Only `priority` — the canonical `service_tier` for Fast mode, and the
+ * value Codex CLI sends for `/fast`. The `fast` spelling is an alias the public
+ * API accepts, but pi-ai prices and echo-corrects only `priority` and `flex`,
+ * so sending `fast` would silently record the turn at the standard rate.
+ * Choosing none keeps `service_tier` out of the body, which is what every other
+ * DSH route does.
  */
 export const RELAY_SERVICE_TIERS = [
-  'fast',
   'priority',
-  'flex',
 ] as const satisfies readonly RelayServiceTier[]
 
 export function isRelayProtocol(value: unknown): value is RelayProtocol {
@@ -88,48 +97,14 @@ export const DEFAULT_MAX_REQUEST_IMAGE_BYTES = 20 * 1024 * 1024
 export const DEFAULT_REQUEST_IMAGE_PIXEL_BUDGET = 2048 * 2048
 export const DEFAULT_REQUEST_IMAGE_MAX_BYTES = 1024 * 1024
 
-/** Official pi-ai / DSH routes this plugin must not claim. */
-export const RESERVED_PROVIDER_IDS: ReadonlySet<string> = new Set([
-  'amazon-bedrock',
-  'ant-ling',
-  'anthropic',
-  'azure-openai-responses',
-  'cerebras',
-  'cloudflare-ai-gateway',
-  'cloudflare-workers-ai',
-  'deepseek',
-  'deepseek-official',
-  'fireworks',
-  'github-copilot',
-  'google',
-  'google-vertex',
-  'groq',
-  'huggingface',
-  'kimi-coding',
-  'minimax',
-  'minimax-cn',
-  'mistral',
-  'moonshotai',
-  'moonshotai-cn',
-  'nvidia',
-  'openai',
-  'openai-codex',
-  'opencode',
-  'opencode-go',
-  'openrouter',
-  'qwen-token-plan',
-  'qwen-token-plan-cn',
-  'radius',
-  'together',
-  'vercel-ai-gateway',
-  'xai',
-  'xiaomi',
-  'xiaomi-token-plan-ams',
-  'xiaomi-token-plan-cn',
-  'xiaomi-token-plan-sgp',
-  'zai',
-  'zai-coding-cn',
-])
+/**
+ * DSH routes that no pi-ai provider entry names, so no live provider list can
+ * report them. Every other official id is read from the installed pi-ai build
+ * (the node half) or from the model catalog the page already holds, which is
+ * why this set holds one entry instead of a copy of pi-ai's registry going
+ * stale on every release.
+ */
+export const RESERVED_PROVIDER_IDS: ReadonlySet<string> = new Set(['deepseek-official'])
 
 const SECRET_HEADER = /^(authorization|api-key|x-api-key|proxy-authorization)$/iu
 
@@ -141,9 +116,16 @@ export function validateProviderId(raw: string): string {
   return id
 }
 
-export function assertUnreservedProviderId(raw: string, extraReserved: ReadonlySet<string> = RESERVED_PROVIDER_IDS): string {
+/**
+ * Accept a provider id no other route already owns.
+ * @param raw - the id typed into the page or stored in settings.
+ * @param taken - official ids this caller knows: the installed pi-ai providers
+ * on the node half, the catalog's providers on the page.
+ * @returns the normalized id.
+ */
+export function assertUnreservedProviderId(raw: string, taken: ReadonlySet<string> = new Set()): string {
   const id = validateProviderId(raw)
-  if (RESERVED_PROVIDER_IDS.has(id) || extraReserved.has(id)) {
+  if (RESERVED_PROVIDER_IDS.has(id) || taken.has(id)) {
     throw new Error(`Provider ID "${id}" is reserved by DeepSeek Harness; use a relay-* name`)
   }
   return id
@@ -220,9 +202,17 @@ export function parseModelIds(payload: unknown): string[] {
   }).filter(Boolean))]
 }
 
+/**
+ * How much one catalog entry is preferred when several official models share a
+ * remote id. `openai-codex` ranks first: those ids are the Codex family, and
+ * Codex Responses is the only wire that carries `service_tier`, so a bare
+ * `gpt-5.6-sol` from a relay lands on Codex rather than plain Responses. A
+ * relay that speaks only plain Responses needs `protocolOverrides` for that
+ * model, or a `modelMappings` entry naming the `openai` catalog copy.
+ */
 function sourceRank(model: OfficialModelSummary): number {
-  if (model.provider === 'anthropic' || model.provider === 'openai') return 0
-  if (model.provider === 'openai-codex') return 1
+  if (model.provider === 'openai-codex') return 0
+  if (model.provider === 'anthropic' || model.provider === 'openai') return 1
   if (isRelayProtocol(model.api)) return 2
   if (model.api.startsWith('openai-')) return 3
   return 10
@@ -241,22 +231,16 @@ function normalizeModelName(value: string): string {
   return value.toLowerCase().replace(/^.*\//u, '').replace(/(?:^|[-_.])20\d{6}$/u, '').replace(/[^a-z0-9]+/gu, '')
 }
 
-function editDistance(left: string, right: string): number {
-  const previous = Array.from({ length: right.length + 1 }, (_, index) => index)
-  for (let leftIndex = 1; leftIndex <= left.length; leftIndex += 1) {
-    const current = [leftIndex]
-    for (let rightIndex = 1; rightIndex <= right.length; rightIndex += 1) {
-      current[rightIndex] = Math.min(
-        current[rightIndex - 1]! + 1,
-        previous[rightIndex]! + 1,
-        previous[rightIndex - 1]! + (left[leftIndex - 1] === right[rightIndex - 1] ? 0 : 1),
-      )
-    }
-    for (let index = 0; index < current.length; index += 1) previous[index] = current[index]!
-  }
-  return previous[right.length]!
-}
-
+/**
+ * Official models whose normalized id contains the remote one or is contained
+ * by it — a release-dated or vendor-prefixed spelling of the same model. This
+ * is a shortlist, not a search: the mapping panel searches the whole catalog by
+ * hand when none of these is the right model.
+ * @param remoteModelId - the id the relay serves.
+ * @param catalog - official metadata to match against.
+ * @param limit - how many candidates to offer.
+ * @returns the closest candidates, nearest length first.
+ */
 export function suggestOfficialCandidates(
   remoteModelId: string,
   catalog: readonly OfficialModelSummary[],
@@ -264,27 +248,17 @@ export function suggestOfficialCandidates(
 ): ModelCandidate[] {
   const needle = normalizeModelName(remoteModelId)
   if (!needle) return []
-  const candidates = new Map<string, ModelCandidate>()
-  for (const model of catalog) {
-    const normalized = normalizeModelName(model.id)
-    if (!normalized) continue
-    const maxLength = Math.max(needle.length, normalized.length)
-    const similarity = maxLength === 0 ? 1 : 1 - editDistance(needle, normalized) / maxLength
-    const containment = needle.includes(normalized) || normalized.includes(needle) ? 0.25 : 0
-    const candidate = {
-      provider: model.provider,
-      id: model.id,
-      name: model.name,
-      api: model.api,
-      score: Math.round(Math.min(1, similarity + containment) * 100),
-    }
-    const key = `${candidate.provider}/${candidate.id}`
-    if ((candidates.get(key)?.score ?? -1) < candidate.score) candidates.set(key, candidate)
-  }
-  return [...candidates.values()]
-    .filter(candidate => candidate.score >= 35)
-    .sort((a, b) => b.score - a.score || a.provider.localeCompare(b.provider) || a.id.localeCompare(b.id))
+  return catalog
+    .filter(model => {
+      const normalized = normalizeModelName(model.id)
+      return normalized !== '' && (needle.includes(normalized) || normalized.includes(needle))
+    })
+    .sort((a, b) => sourceRank(a) - sourceRank(b)
+      || Math.abs(normalizeModelName(a.id).length - needle.length) - Math.abs(normalizeModelName(b.id).length - needle.length)
+      || a.provider.localeCompare(b.provider)
+      || a.id.localeCompare(b.id))
     .slice(0, limit)
+    .map(model => ({ provider: model.provider, id: model.id, name: model.name, api: model.api }))
 }
 
 export function inferProtocol(source: OfficialModelSummary | undefined, fallback: RelayProtocol): RelayProtocol | undefined {

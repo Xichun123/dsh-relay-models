@@ -2,9 +2,15 @@ import type { ClientContext } from '@deepseek-ai/dsh-client-runtime/client'
 // Type-only: pulls the locale plugin's Context merge (ctx.locale) into this program.
 import type {} from '@deepseek-ai/dsh-client-locale/client'
 import type {} from '@deepseek-ai/dsh-client-ui-settings/client'
-import { relayModelStatuses } from '../shared/core.ts'
+// Type-only: pulls the conversation package's own `conversation.input.right`
+// SlotMap entry (it owns the key) into this program; no runtime edge.
+import type {} from '@deepseek-ai/dsh-client-ui-conversation/client'
+import type { ClientConnectionRpc, SessionId } from '@deepseek-ai/dsh-client-connection/client'
+import type { ModelDirectoryResolver } from '@deepseek-ai/dsh-client-ui-model-selection/client'
+import type { CommandUiContract } from '@deepseek-ai/dsh-client-ui-commands/client'
+import { RELAY_SERVICE_TIERS, relayModelStatuses } from '../shared/core.ts'
 import type { RelayServiceTier } from '../shared/types.ts'
-import { relayPageApi } from './api.ts'
+import { bindRelayTransport, onSpeedChanged, relayPageApi } from './api.ts'
 import { en, zh, type RelayLocaleKey } from './locales.ts'
 import { RelayModelsSection } from './RelayModelsSection.tsx'
 import { SpeedSelect, speedTierLabel, type SpeedSelectInjected, type SpeedSelectState } from './SpeedSelect.tsx'
@@ -18,52 +24,15 @@ declare module '@deepseek-ai/dsh-client-ui-slots' {
     /** This page's own copy. */
     'relay-models': RelayLocaleKey
   }
-  interface SlotMap {
-    /**
-     * The composer tool-row seat the Speed toggle joins. The conversation
-     * package owns this slot in the real host and declares the authoritative
-     * entry (with its InputZone owner); this declaration only has to be
-     * compatible for this program to register into it, so the owner share is
-     * opaque here — the toggle reads nothing from it.
-     */
-    'conversation.input.right': { kind: 'list'; scope: 'session' }
-  }
-}
-
-/**
- * The sliver of the model-selection plugin's `modelDirectories` service this
- * page reads: the session's current provider/model selection. That service
- * lives in another client plugin this one does not import, so the face is
- * structural — `ctx.get` answers undefined when the seat is absent, and the
- * Speed control stays hidden rather than guess.
- */
-interface ModelDirectoriesFace {
-  directoryFor(sessionId: string): {
-    store: { getSnapshot(): { current: { provider: string; model: string } | null } }
-  }
-}
-
-/** The sliver of the commands plugin's `commandUi` service the /fast popup uses. */
-interface CommandUiFace {
-  register(contribution: {
-    name: string
-    description: string
-    available(session: { sessionId: string }): boolean
-    ui: {
-      kind: 'popupSelect'
-      options(session: { sessionId: string }): Promise<readonly { id: string; label: string; detail?: string; active?: boolean }[]>
-      onSelect(option: { id: string }, session: { sessionId: string }): void | Promise<void>
-    }
-  }): () => void
 }
 
 /**
  * Whether the session's current model is served on the Codex Responses wire —
  * the only protocol a speed tier reaches. Read live so a model switch made
- * since the last poll self-corrects the toggle.
+ * since the last announcement self-corrects the toggle.
  */
-async function currentCodexModel(directories: ModelDirectoriesFace, sessionId: string): Promise<boolean> {
-  const selection = directories.directoryFor(sessionId).store.getSnapshot().current
+async function currentCodexModel(directories: ModelDirectoryResolver, sessionId: string): Promise<boolean> {
+  const selection = directories.directoryFor(sessionId as SessionId).store.getSnapshot().current
   if (selection === null) return false
   const page = await relayPageApi.load()
   const provider = page.config.providers[selection.provider]
@@ -73,7 +42,7 @@ async function currentCodexModel(directories: ModelDirectoriesFace, sessionId: s
 }
 
 /** The `loadSpeed` half of the inject face: this page's speed state plus visibility. */
-function createSpeedLoader(directories: ModelDirectoriesFace, sessionId: string): SpeedSelectInjected['loadSpeed'] {
+function createSpeedLoader(directories: ModelDirectoryResolver, sessionId: string): SpeedSelectInjected['loadSpeed'] {
   return async (): Promise<SpeedSelectState> => {
     const [visible, tier] = await Promise.all([
       currentCodexModel(directories, sessionId),
@@ -88,7 +57,26 @@ function createSpeedSetter(sessionId: string): SpeedSelectInjected['setSpeed'] {
   return tier => relayPageApi.setSpeed(sessionId, tier).then(() => true, () => false)
 }
 
-export const inject = ['slots', 'locale']
+/**
+ * The `subscribe` half of the inject face. The two things that invalidate the
+ * toggle both announce themselves: the session's model directory is a store,
+ * and every tier write on this page goes through one function.
+ */
+function createSpeedSubscriber(
+  directories: ModelDirectoryResolver,
+  sessionId: string,
+): SpeedSelectInjected['subscribe'] {
+  return (listener) => {
+    const stopModel = directories.directoryFor(sessionId as SessionId).store.subscribe(listener)
+    const stopSpeed = onSpeedChanged(listener)
+    return () => {
+      stopModel()
+      stopSpeed()
+    }
+  }
+}
+
+export const inject = ['slots', 'locale', 'connection']
 
 /**
  * Mount the relay models settings page.
@@ -99,6 +87,11 @@ export const inject = ['slots', 'locale']
  * @param ctx - the browser plugin context.
  */
 export function apply(ctx: ClientContext): void {
+  // Both halves of Connection merge `connection` onto the same cordis Context
+  // interface, and this program sees the Host shape because the node half
+  // imports it; in the browser the service is the client handle.
+  const connection = ctx.get('connection') as unknown as { rpc: ClientConnectionRpc }
+  bindRelayTransport(connection.rpc)
   ctx.effect(() => installStyles(), 'relay-models: settings styles')
   ctx.effect(() => ctx.locale.register(NS, { zh, en }), 'relay-models: section dictionaries')
   const t = ctx.locale.bind(NS)
@@ -112,11 +105,15 @@ export function apply(ctx: ClientContext): void {
     inject: () => ({ api: relayPageApi }),
   }, RelayModelsSection))
 
-  // The composer Speed toggle and /fast popup both depend on the
-  // model-selection service; either entry stays off when that seat is absent.
-  const directories = ctx.get('modelDirectories') as ModelDirectoriesFace | undefined
-  if (directories !== undefined) {
-    ctx.slots.inject('conversation.input.right', () => ctx.slots.register({
+  // The composer Speed toggle and /fast popup both need the model-selection
+  // service. Wait for that seat through `ctx.inject` instead of reading it once:
+  // a bare `ctx.get` at apply time races whichever plugin provides the seat, and
+  // losing that race drops both surfaces silently for the whole page load — the
+  // settings section still installs, so nothing looks broken.
+  ctx.inject(['modelDirectories'], (modelScope) => {
+    const scope = modelScope as unknown as ClientContext
+    const directories = scope.get('modelDirectories') as ModelDirectoryResolver
+    scope.slots.inject('conversation.input.right', () => scope.slots.register({
       name: 'conversation.input.right',
       id: 'relay-models-speed',
       order: 0,
@@ -124,12 +121,14 @@ export function apply(ctx: ClientContext): void {
       inject: (sessionId: string): SpeedSelectInjected => ({
         loadSpeed: createSpeedLoader(directories, sessionId),
         setSpeed: createSpeedSetter(sessionId),
+        subscribe: createSpeedSubscriber(directories, sessionId),
       }),
     }, SpeedSelect))
 
-    const commandUi = ctx.get('commandUi') as CommandUiFace | undefined
-    if (commandUi !== undefined) {
-      ctx.effect(() => commandUi.register({
+    scope.inject(['commandUi'], (commandScope) => {
+      const command = commandScope as unknown as ClientContext
+      const commandUi = command.get('commandUi') as CommandUiContract
+      command.effect(() => commandUi.register({
         name: 'fast',
         description: t('commandFast'),
         available: () => true,
@@ -138,7 +137,7 @@ export function apply(ctx: ClientContext): void {
           options: async (session) => {
             const state = await createSpeedLoader(directories, session.sessionId)()
             if (!state.visible) throw new Error(t('commandFastUnavailable'))
-            return ([null, 'fast', 'priority', 'flex'] as const).map(tier => ({
+            return ([null, ...RELAY_SERVICE_TIERS] as const).map(tier => ({
               id: tier ?? 'unset',
               label: speedTierLabel(t, tier),
               active: tier === state.tier,
@@ -149,6 +148,6 @@ export function apply(ctx: ClientContext): void {
           },
         },
       }), 'relay-models: /fast contribution')
-    }
-  }
+    })
+  })
 }

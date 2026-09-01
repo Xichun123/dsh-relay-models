@@ -7,8 +7,7 @@ import { PiAiAdapter } from '@deepseek-ai/dsh-llm-pi-ai'
 import type { ResolvedPiAiProviderProfile } from '@deepseek-ai/dsh-llm-pi-ai'
 import { installSettingsSection, settingsNamespace } from '@deepseek-ai/dsh-settings'
 import { MAX_TIMER_DELAY_MS } from '@deepseek-ai/dsh-timeout'
-import type {} from '@deepseek-ai/dsh-host-webserver'
-import { getBuiltinProviders } from '@earendil-works/pi-ai/providers/all'
+import { builtinProviders } from '@earendil-works/pi-ai/providers/all'
 import { currentOfficialCatalog, refreshOfficialCatalog } from './catalog.ts'
 import { discoverRelayModels } from './discovery.ts'
 import { buildRelayProvider } from './materialize.ts'
@@ -27,13 +26,12 @@ import {
   RELAY_PROTOCOLS,
   RELAY_TRANSPORTS,
   relayCredentialRef,
-  RESERVED_PROVIDER_IDS,
 } from './shared/core.ts'
 import type { OfficialModelSummary, RelayConfig, RelayProviderConfig } from './shared/types.ts'
 import { installWebApi } from './web-api.ts'
 
 export const name = 'relay-models'
-export const inject = ['llm', 'settings', 'credentials', 'webServer']
+export const inject = ['llm', 'settings', 'credentials', 'connection']
 
 const NS = settingsNamespace('llm-relay-models')
 
@@ -56,20 +54,23 @@ const providerConfig = Schema.object({
   headers: Schema.dict(Schema.string()).default({}),
   transport: Schema.union(RELAY_TRANSPORTS),
   streamIdleTimeoutMs: Schema.number().min(Number.MIN_VALUE).max(MAX_TIMER_DELAY_MS).default(DEFAULT_STREAM_IDLE_TIMEOUT_MS),
-  maxRequestImageBytes: Schema.number().step(1).min(1).default(DEFAULT_MAX_REQUEST_IMAGE_BYTES),
-  requestImagePixelBudget: Schema.number().step(1).min(1).default(DEFAULT_REQUEST_IMAGE_PIXEL_BUDGET),
-  requestImageMaxBytes: Schema.number().step(1).min(1).default(DEFAULT_REQUEST_IMAGE_MAX_BYTES),
   retryPolicy: RetryPolicySchema,
   syncedAt: Schema.natural(),
 })
 
 export const Config: Schema<Config> = Schema.object({
   providers: Schema.dict(providerConfig).default({}),
-  trustedHosts: Schema.array(Schema.string()).default([]),
 })
 
+/**
+ * Every provider id the installed pi-ai build ships, read live so a pi-ai
+ * release that adds one is covered without editing this plugin.
+ * `builtinProviders()` rather than `getBuiltinProviders()` because a provider
+ * with a dynamically refreshed catalog (`radius`) owns no static model table
+ * and is missing from the latter.
+ */
 function liveReservedProviderIds(): Set<string> {
-  return new Set<string>([...RESERVED_PROVIDER_IDS, ...getBuiltinProviders()])
+  return new Set(builtinProviders().map(provider => provider.id))
 }
 
 function validateProvider(route: string, config: RelayProviderConfig): void {
@@ -114,9 +115,13 @@ function resolveProfile(
     displayName: source.displayName,
     apiKeyEnv: credentialRef(source.apiKeyEnv),
     streamIdleTimeoutMs: source.streamIdleTimeoutMs ?? DEFAULT_STREAM_IDLE_TIMEOUT_MS,
-    maxRequestImageBytes: source.maxRequestImageBytes ?? DEFAULT_MAX_REQUEST_IMAGE_BYTES,
-    requestImagePixelBudget: source.requestImagePixelBudget ?? DEFAULT_REQUEST_IMAGE_PIXEL_BUDGET,
-    requestImageMaxBytes: source.requestImageMaxBytes ?? DEFAULT_REQUEST_IMAGE_MAX_BYTES,
+    // pi-ai's own request-image ceilings: `ResolvedPiAiProviderProfile` requires
+    // the numbers and `dsh-llm-pi-ai` exports neither them nor its resolver, so
+    // they are restated here rather than offered as per-provider knobs no
+    // surface sets.
+    maxRequestImageBytes: DEFAULT_MAX_REQUEST_IMAGE_BYTES,
+    requestImagePixelBudget: DEFAULT_REQUEST_IMAGE_PIXEL_BUDGET,
+    requestImageMaxBytes: DEFAULT_REQUEST_IMAGE_MAX_BYTES,
     retryPolicy: resolveRetryPolicy(source.retryPolicy, `relay-models: provider "${provider}" retry policy`),
     piProvider: buildRelayProvider(provider, source, catalog, speedFor),
     configuredMaxTokens: new Map(),

@@ -7,7 +7,7 @@
  * Codex Responses — the only wire a tier reaches.
  */
 import { useEffect, useRef, useState } from 'react'
-import type { CSSProperties } from 'react'
+import { Menu } from '@deepseek-ai/dsh-client-ui-primitives'
 import type { Translate } from '@deepseek-ai/dsh-client-ui-slots'
 import { RELAY_SERVICE_TIERS } from '../shared/core.ts'
 import type { RelayServiceTier } from '../shared/types.ts'
@@ -28,76 +28,84 @@ export interface SpeedSelectInjected {
   loadSpeed: () => Promise<SpeedSelectState>
   /** Set the session's speed tier (null clears it); resolves false on failure. */
   setSpeed: (tier: RelayServiceTier | null) => Promise<boolean>
+  /** Announce a model switch or a tier written elsewhere (the /fast popup). */
+  subscribe: (listener: () => void) => () => void
 }
 
 export type SpeedSelectProps = Partial<SpeedSelectInjected> & { t?: T }
 
 /** The display label of one tier, or the no-tier default when null. */
 export function speedTierLabel(t: T, tier: RelayServiceTier | null): string {
-  if (tier === 'fast') return t('serviceTierFast')
-  if (tier === 'priority') return t('serviceTierPriority')
-  if (tier === 'flex') return t('serviceTierFlex')
-  return t('serviceTierUnset')
+  // `priority` is the wire value; "Fast mode" is what OpenAI and Codex CLI call it.
+  return tier === 'priority' ? t('serviceTierFast') : t('serviceTierUnset')
 }
-
-/** How often the control re-reads the host state (model switches arrive only by asking). */
-const POLL_INTERVAL_MS = 3000
 
 /** The option rows the menu lists: the no-tier default, then each speed tier. */
 const OPTIONS: readonly (RelayServiceTier | null)[] = [null, ...RELAY_SERVICE_TIERS]
 
+/** The row id one option carries; the no-tier default has no tier to name it. */
+function optionId(tier: RelayServiceTier | null): string {
+  return tier ?? 'unset'
+}
+
 /**
- * The composer Speed control. The host pushes nothing on a model switch, so
- * the control re-reads on a slow poll with a single-flight guard; a failed
- * read keeps the last known state, so a transient failure never locks the
- * toggle away.
+ * The composer Speed control. State is re-read when the session's model
+ * selection changes or another surface writes the tier, both of which arrive
+ * through {@link SpeedSelectInjected.subscribe}; a failed read keeps the last
+ * known state, so a transient failure never locks the toggle away.
  */
-export function SpeedSelect({ loadSpeed, setSpeed, t }: SpeedSelectProps) {
+export function SpeedSelect({ loadSpeed, setSpeed, subscribe, t }: SpeedSelectProps) {
   const [state, setState] = useState<SpeedSelectState | null>(null)
   const [open, setOpen] = useState(false)
   const [busy, setBusy] = useState(false)
-  const rootRef = useRef<HTMLDivElement | null>(null)
   // The inject face may be re-evaluated (new callback identities) on re-render;
-  // the poll effect mounts once and reads through this ref, so identity churn
-  // neither resets the interval nor multiplies in-flight loads.
+  // the subscription mounts once and reads through these refs, so identity
+  // churn neither resubscribes nor multiplies in-flight loads.
   const loadRef = useRef(loadSpeed)
+  const subscribeRef = useRef(subscribe)
   loadRef.current = loadSpeed
+  subscribeRef.current = subscribe
 
   useEffect(() => {
-    if (loadRef.current === undefined) return
     let cancelled = false
     let inflight = false
+    let queued = false
     const reload = (): void => {
       const load = loadRef.current
-      if (load === undefined || inflight) return
+      if (load === undefined) return
+      // Coalesce rather than drop: an announcement arriving mid-load is the one
+      // that matters (a model switch), and dropping it leaves the control
+      // showing the previous model's visibility and tier.
+      if (inflight) {
+        queued = true
+        return
+      }
       inflight = true
       void load().then(
         (loaded) => { if (!cancelled) setState(loaded) },
-        () => { /* keep the last known state; the next tick retries */ },
-      ).finally(() => { inflight = false })
+        () => { /* keep the last known state; the queued or next announcement retries */ },
+      ).finally(() => {
+        inflight = false
+        if (queued && !cancelled) {
+          queued = false
+          reload()
+        }
+      })
     }
     reload()
-    const timer = setInterval(reload, POLL_INTERVAL_MS)
+    const stop = subscribeRef.current?.(reload)
     return () => {
       cancelled = true
-      clearInterval(timer)
+      stop?.()
     }
   }, [])
-
-  useEffect(() => {
-    if (!open) return
-    const closeOutside = (event: MouseEvent): void => {
-      if (!rootRef.current?.contains(event.target as Node)) setOpen(false)
-    }
-    document.addEventListener('mousedown', closeOutside)
-    return () => { document.removeEventListener('mousedown', closeOutside) }
-  }, [open])
 
   if (loadSpeed === undefined || setSpeed === undefined || t === undefined || state === null || !state.visible) {
     return null
   }
 
-  const choose = (tier: RelayServiceTier | null): void => {
+  const choose = (id: string): void => {
+    const tier = OPTIONS.find(option => optionId(option) === id) ?? null
     if (busy) return
     if (tier === state.tier) {
       setOpen(false)
@@ -113,87 +121,34 @@ export function SpeedSelect({ loadSpeed, setSpeed, t }: SpeedSelectProps) {
     })
   }
 
-  const show = (): void => {
-    setOpen(true)
-    const load = loadRef.current
-    if (load === undefined) return
-    void load().then(setState, () => { /* keep showing the last good state */ })
-  }
-
-  const triggerLabel = `${t('speed')} · ${speedTierLabel(t, state.tier)}`
+  // The button shows only the current tier. `title` keeps the "Speed" word as
+  // the button's accessible description, so what the control selects stays
+  // discoverable without spending composer width on it.
+  const tierLabel = speedTierLabel(t, state.tier)
 
   return (
-    <div
-      ref={rootRef}
-      style={styles.root}
-      onKeyDown={(event) => {
-        if (event.key === 'Escape' && open) {
-          event.preventDefault()
-          setOpen(false)
-        }
-      }}
-    >
-      {open && (
-        <div style={styles.menu} role="menu" aria-label={t('speed')}>
-          {OPTIONS.map(tier => (
-            <button
-              key={tier ?? 'unset'}
-              type="button"
-              role="menuitemradio"
-              aria-checked={tier === state.tier}
-              style={styles.item}
-              disabled={busy}
-              onClick={() => { choose(tier) }}
-            >
-              <span style={styles.itemCheck}>{tier === state.tier ? '✓' : ''}</span>
-              <span style={styles.itemText}>
-                <span style={styles.itemName}>{speedTierLabel(t, tier)}</span>
-              </span>
-            </button>
-          ))}
-        </div>
+    <Menu
+      open={open}
+      side="top"
+      align="end"
+      compact
+      selectedId={optionId(state.tier)}
+      items={OPTIONS.map(tier => ({ id: optionId(tier), label: speedTierLabel(t, tier), disabled: busy }))}
+      onSelect={choose}
+      onClose={() => { setOpen(false) }}
+      anchor={(
+        <button
+          type="button"
+          className="drm-speed-trigger"
+          aria-haspopup="menu"
+          aria-expanded={open}
+          title={`${t('speed')} · ${tierLabel}`}
+          disabled={busy}
+          onClick={() => { setOpen(value => !value) }}
+        >
+          {tierLabel}
+        </button>
       )}
-      <button
-        type="button"
-        style={styles.trigger}
-        aria-haspopup="menu"
-        aria-expanded={open}
-        title={triggerLabel}
-        disabled={busy}
-        onClick={() => {
-          if (open) setOpen(false)
-          else show()
-        }}
-      >
-        {triggerLabel}
-      </button>
-    </div>
+    />
   )
-}
-
-const styles: Record<string, CSSProperties> = {
-  root: { position: 'relative', display: 'inline-flex' },
-  trigger: {
-    border: '1px solid var(--dsw-alias-border-l2)', borderRadius: 8,
-    background: 'transparent', color: 'var(--dsw-alias-label-secondary)',
-    font: 'inherit', fontSize: 12, lineHeight: '18px',
-    padding: '2px 8px', cursor: 'pointer', whiteSpace: 'nowrap',
-  },
-  menu: {
-    position: 'absolute', bottom: '100%', right: 0, marginBottom: 4,
-    minWidth: 200, padding: 4, zIndex: 20,
-    background: 'var(--dsw-alias-bg-layer-1)', border: '1px solid var(--dsw-alias-border-l2)',
-    borderRadius: 8, display: 'flex', flexDirection: 'column', gap: 2,
-  },
-  item: {
-    display: 'flex', alignItems: 'flex-start', gap: 6, width: '100%',
-    border: 'none', borderRadius: 6, background: 'transparent',
-    padding: '6px 8px', cursor: 'pointer', font: 'inherit', textAlign: 'left',
-  },
-  itemCheck: {
-    width: 14, flexShrink: 0, fontSize: 12, lineHeight: '18px',
-    color: 'var(--dsw-alias-label-primary)',
-  },
-  itemText: { display: 'flex', flexDirection: 'column' },
-  itemName: { fontSize: 12, lineHeight: '18px', color: 'var(--dsw-alias-label-primary)' },
 }

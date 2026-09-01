@@ -117,44 +117,43 @@ CLIProxyAPI 上游还要在对应 Codex 凭证里打开 `"websockets": true`，�
 
 #### Fast 模式（Codex 速度模式）
 
-Fast 模式在协议层就是请求体里的 `service_tier`：Codex CLI 的 `/fast on`、`config.toml` 里的 `service_tier = "fast"` 都落到这一个字段。DSH 自己从不发它（`dsh-llm-pi-ai` 里没有任何 `service_tier`），所以连接设置里新增了 **Codex 速度模式**：
+Fast 模式在协议层就是请求体里的 `service_tier`，而且只有一个正确取值：**`priority`**。
+
+OpenAI 在 2026-07-30 把 Priority processing 改名为 Fast mode，公开 API 因此同时接受 `service_tier: "fast"` 和 `"priority"`，但**规范值仍是 `priority`**。Codex CLI 也是这样：`/fast` 走的是 `ServiceTier::Fast.request_value()`，值为 `"priority"`；`config.toml` 里写 `service_tier = "fast"` 只是别名，加载时被归一化成 `priority`。它另外把哨兵值 `default` 在构造请求时整体剔除，所以 Codex 线上只有两种形态：带 `service_tier: "priority"`，或者根本不带这个字段。
+
+DSH 自己从不发它（`dsh-llm-pi-ai` 里没有任何 `service_tier`），所以连接设置里新增了 **Codex 速度模式**，两档：
 
 - **不设置**（默认）——请求体里没有 `service_tier`，与本插件之前的行为一致。
-- **Fast 快速** —— 按 [OpenAI 文档](https://learn.chatgpt.com/docs/agent-configuration/speed)提速约 1.5 倍；GPT-5.6 / 5.5 按 2.5 倍、GPT-5.4 按 2 倍消耗 ChatGPT credits。用 API Key 计费的链路拿到的是 Priority 定价（GPT-5.6 为 2 倍单价），不是 credits 倍率。
-- **Priority 优先** / **Flex 弹性** —— API 侧的两档；pi-ai 会按 2 倍 / 0.5 倍换算这两档的成本统计，`fast` 它还不认识，成本按标准价记。
+- **Fast 快速** —— 发送 `service_tier: "priority"`。速度与计费由上游决定：走 ChatGPT 凭证时按 [OpenAI 文档](https://learn.chatgpt.com/docs/agent-configuration/speed)提速约 1.5 倍并按更高倍率扣 credits；走 API Key 时是 [Fast mode](https://developers.openai.com/api/docs/guides/fast-mode) 的溢价单价。**同一个字段值，计费面取决于上游用的是哪种凭证，而不是取决于你发哪个字符串。**
+
+不提供 `fast` 拼法，因为 pi-ai 的成本换算和回显纠正都只认 `priority` / `flex`（`getServiceTierCostMultiplier`、`resolveCodexServiceTier`）：发 `fast` 请求体等价，但 DSH 会把这一轮按标准价记账，界面上的实际档位也会显示成 `default`。也不提供 `flex`——那是更慢更便宜的档，方向与"速度模式"相反。
 
 只有 Codex Responses 协议的模型会带这个字段，其余三种协议忽略它。
 
-上游认不认要自己确认：ChatGPT 的 Codex 后端对这个字段既不校验也不回显（响应里的 `service_tier` 一律是 `default`，pi-ai 对这个回显本身就有 workaround），连 `service_tier: "turbo"` 都返回 200。CLIProxyAPI 转发 codex 请求时只删 `parallel_tool_calls`，字段会原样带到上游；它的 Keeper 请求日志有一列“速度模式”，显示“请求值 / 实际值”（例如 `快速 / 标准`），以那一列为准。
+上游认不认要自己确认：ChatGPT 的 Codex 后端对这个字段既不校验也不回显（响应里的 `service_tier` 一律是 `default`，pi-ai 对这个回显本身就有 workaround），连 `service_tier: "turbo"` 都返回 200。CLIProxyAPI 转发 codex 请求时只删 `parallel_tool_calls`，字段会原样带到上游；它的 Keeper 请求日志有一列"速度模式"，显示"请求值 / 实际值"（例如 `快速 / 标准`），以那一列为准。
 
 ## 配置和凭据
 
-插件设置使用命名空间 `llm-relay-models`。每个中转站保存 Base URL、模型列表、元数据映射、协议覆盖、排除列表、可选额外请求头、Codex 传输、Codex 速度模式、流空闲超时、请求图片上限和重试策略。API Key 使用从 Provider ID 生成的 credentials 引用，例如 `relay-example` 对应 `RELAY_EXAMPLE_API_KEY`，由 DSH credentials provider 管理。
+插件设置使用命名空间 `llm-relay-models`。每个中转站保存 Base URL、模型列表、元数据映射、协议覆盖、排除列表、可选额外请求头、Codex 传输、流空闲超时和重试策略。API Key 使用从 Provider ID 生成的 credentials 引用，例如 `relay-example` 对应 `RELAY_EXAMPLE_API_KEY`，由 DSH credentials provider 管理。
 
-`maxRequestImageBytes`、`requestImagePixelBudget`、`requestImageMaxBytes` 默认镜像 `dsh-llm-pi-ai` 的取值（20 MiB / 2048² 像素 / 1 MiB）。中转站的请求体上限更小时，在 `settings.yaml` 的对应段里调低即可；这三项没有页面入口。
+请求图片上限沿用 `dsh-llm-pi-ai` 自己的取值（20 MiB / 2048² 像素 / 1 MiB），不再作为每个中转站的配置项：`ResolvedPiAiProviderProfile` 要求这三个数字，而 `dsh-llm-pi-ai` 既没导出它们也没导出自己的 resolver，所以插件按同样的值传入。
 
-不要使用 `openai`、`anthropic`、`deepseek` 等官方路由名作为 Provider ID，应使用 `relay-*`。此插件只在 Web profile 加载（依赖 `webServer`）。
+不要使用官方路由名作为 Provider ID，应使用 `relay-*`。保留名不再是插件里的硬编码表：节点侧读装机 pi-ai 的 `builtinProviders()`，页面侧读它已经持有的模型目录，所以 pi-ai 新增 provider 时无需改这个插件。此插件只在 Web profile 加载（依赖 `connection`）。
 
 保存时会先完整解析一遍 Provider（含建模），解析不通过的配置在写入处就被拒绝，不会出现“保存成功但路由没生效”。
 
 ## 浏览器请求的信任边界
 
-DSH 的 webserver 本身不提供 CSRF、Origin 或鉴权，所以 `/relay-models/api` 自带三道闸，顺序与 DSH `/api` 一致：
+配置面不自建 HTTP 路由，而是注册一条 Connection 的逻辑 RPC 通道 `/relay-models`（`ctx.connection.rpc.handle`）。Host / Fetch-metadata / Origin 三道闸和浏览器鉴权都由 Connection 施加，用的是部署自己声明的 `trustedHosts`（`client-connection` 配置项），所以：
 
-1. **Host** —— 必须是回环地址，或 `trustedHosts` 里声明的 `host[:port]`。这一道防的是 DNS rebinding：请求确实打到了本机，但被重绑定的页面在 Host 里写的是攻击者域名，而 Host 是重绑定伪造不了的那个头。反向代理（Caddy 等）部署时把对外权威写进 `trustedHosts`：
-   ```yaml
-   llm-relay-models:
-     trustedHosts: ['dsh.example.com']
-   ```
-   带端口的条目只匹配该端口，不带端口的条目匹配该主机的任意端口。不是纯 `host[:port]` 的条目（含路径、含 userinfo）一律不授信。
-2. **Fetch metadata** —— 显式 `Sec-Fetch-Site: cross-site` 直接拒绝。
-3. **Origin** —— 浏览器带了 Origin 就必须与 Host 权威完全一致；读可以不带，写必须带，因为这个端点会保存 API Key，也会让宿主去访问请求里给出的地址。
+- 反向代理部署把对外权威写进 `client-connection` 的 `trustedHosts`，插件不再要求重复声明一遍；
+- 页面侧走 `ctx.connection.rpc.call('/relay-models', …)`，与应用其余部分同一条已鉴权通道，插件不再有自己的 `fetch` 信封。
 
-已有中转站的模型发现只使用已保存的 Base URL，不会把托管密钥发到请求里另写的地址。中转站发现响应和 pi.dev 目录响应上限均为 4 MiB，请求体上限为 1 MiB。
+已有中转站的模型发现只使用已保存的 Base URL，不会把托管密钥发到请求里另写的地址。中转站发现响应和 pi.dev 目录响应上限均为 4 MiB。
 
 模型发现失败时，错误信息原样带上中转站自己的 JSON 说明（`error.message`、`error`、`message` 或 `detail`；单行，最多 300 字符），只有中转站什么都没说时才提示检查 API Key。所以 `unauthorized client detected` 这类“只认特定客户端”的拦截会直接显示出来，不会被误读成 Key 失效。密钥里带了 HTTP 头装不下的字符（智能引号、换行）时也会当场指出，而不是报成“连不上中转站”。
 
-配置被别处改动后，页面的写入会被 `SETTINGS_CONFLICT` 拒绝；页面会自动重新载入并提示重试，而不是拿着过期的 revision 一直失败。
+配置被别处改动后，页面的写入会被 `settings-conflict` 拒绝（带上期望与实际 revision）；页面会自动重新载入并提示重试，而不是拿着过期的 revision 一直失败。
 
 官方 Models 页可以通过 `registerConfigurableProviders` / `registerModelDiscovery` 看到这些路由，并支持整条删除（含托管密钥）；但它对本插件的命名空间只显示“其余字段在 settings.yaml 中”并禁用应用按钮——混协议和元数据匹配以本插件的“中转模型”页为准。
 

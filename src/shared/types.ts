@@ -1,3 +1,6 @@
+// Type-only, so the browser bundle carries no edge to the node LLM package.
+import type { RetryPolicyConfig } from '@deepseek-ai/dsh-llm'
+
 export type RelayProtocol =
   | 'openai-completions'
   | 'openai-responses'
@@ -7,12 +10,15 @@ export type RelayProtocol =
 export type RelayTransport = 'sse' | 'websocket' | 'websocket-cached' | 'auto'
 
 /**
- * The Codex speed tier a session asks for. `fast` is Codex Fast mode: 1.5x
- * model speed at a higher ChatGPT credit rate. Absent sends no `service_tier`
- * field, which is what every DSH route does today. Chosen per session from the
+ * The Codex speed tier a session asks for. One value, because Fast mode is one
+ * thing: OpenAI renamed Priority processing to Fast mode and kept `priority` as
+ * the canonical `service_tier`, so `priority` is what Codex CLI puts on the
+ * wire for `/fast` — `service_tier = "fast"` in its `config.toml` is a legacy
+ * alias normalized to `priority` at load. Absent sends no `service_tier` field,
+ * which is what every other DSH route does. Chosen per session from the
  * composer Speed toggle or the /fast popup; the relay route carries no tier.
  */
-export type RelayServiceTier = 'fast' | 'priority' | 'flex'
+export type RelayServiceTier = 'priority'
 
 export interface OfficialModelRef {
   provider: string
@@ -46,19 +52,6 @@ export interface OfficialModelSummary extends OfficialModelRef {
 export interface OfficialCatalogSnapshot {
   models: readonly OfficialModelSummary[]
   source: 'remote' | 'bundled'
-  revision?: string
-  minimumVersion?: string
-}
-
-export interface RelayRetryPolicy {
-  mode: 'normal' | 'always'
-  maxRetries?: number
-  retryableCodes?: string[]
-  backoff?: {
-    initialDelayMs?: number
-    maxDelayMs?: number
-    jitterRatio?: number
-  }
 }
 
 export interface RelayProviderConfig {
@@ -74,31 +67,17 @@ export interface RelayProviderConfig {
   transport?: RelayTransport
   /** Provider idle ceiling while a stream read is outstanding; the schema default applies when absent. */
   streamIdleTimeoutMs?: number
-  /** Base64 image payload ceiling per request; oldest images offload above it. */
-  maxRequestImageBytes?: number
-  /** Total-pixel budget of each inline request image version. */
-  requestImagePixelBudget?: number
-  /** Raw encoded-byte cap of each inline request image version. */
-  requestImageMaxBytes?: number
-  retryPolicy?: RelayRetryPolicy
+  retryPolicy?: RetryPolicyConfig
   syncedAt?: number
 }
 
 export interface RelayConfig {
   providers: Record<string, RelayProviderConfig>
-  /**
-   * Non-loopback `host[:port]` authorities the configuration page may be served
-   * from — the reverse-proxy case. An entry naming a port matches that exact
-   * authority; a port-less entry matches its hostname on any port. Empty means
-   * loopback only, which is what a DNS-rebound page cannot satisfy.
-   */
-  trustedHosts?: string[]
 }
 
 export interface ModelCandidate extends OfficialModelRef {
   name: string
   api: string
-  score: number
 }
 
 export interface RelayModelStatus {

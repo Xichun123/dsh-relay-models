@@ -58,6 +58,29 @@ export function syntheticCodexToken(accountId: string): string {
 export type SpeedResolver = (options: StreamOptions | undefined) => RelayServiceTier | undefined
 
 /**
+ * Keep a tier through pi-ai's `streamSimple`: its base-options rebuild preserves
+ * `onPayload` but drops the API-specific `serviceTier`, so restore the wire field
+ * at the last hook before serialization. A caller's payload replacement still
+ * runs first and keeps authority when it already names `service_tier`.
+ */
+function preserveServiceTierPayload<T extends StreamOptions>(options: T): T {
+  const serviceTier = (options as { serviceTier?: unknown }).serviceTier
+  if (serviceTier === undefined) return options
+  const onPayload = options.onPayload
+  return {
+    ...options,
+    onPayload: async (payload, model) => {
+      const replaced = await onPayload?.(payload, model)
+      const body = replaced === undefined ? payload : replaced
+      if (body === null || typeof body !== 'object' || Array.isArray(body) || Object.hasOwn(body, 'service_tier')) {
+        return body
+      }
+      return { ...body, service_tier: serviceTier }
+    },
+  } as T
+}
+
+/**
  * The options one Codex Responses call runs with on a relay route.
  *
  * A key that already carries the claim keeps its `Authorization` untouched:
@@ -74,13 +97,12 @@ export function codexRelayStreamOptions<T extends StreamOptions>(
   speedFor: SpeedResolver,
   options: T | undefined,
 ): T {
-  // pi-ai types `serviceTier` as the OpenAI SDK's `service_tier` union, which
-  // predates the ChatGPT-credit `fast` tier; on the wire it is a plain string.
-  // A caller that already chose a tier keeps it.
+  // A caller that already chose a tier keeps it. `priority` is in pi-ai's
+  // `serviceTier` union (it mirrors the OpenAI SDK), so no cast is needed.
   const chosen = (options as { serviceTier?: unknown } | undefined)?.serviceTier
   const sessionTier = speedFor(options)
   const tier = sessionTier !== undefined && chosen === undefined
-    ? { serviceTier: sessionTier as 'priority' }
+    ? { serviceTier: sessionTier }
     : {}
   const apiKey = options?.apiKey
   if (apiKey !== undefined && codexAccountId(apiKey) !== undefined) return { ...options, ...tier } as T
@@ -130,6 +152,10 @@ export function codexRelayApi(
 ): ProviderStreams {
   return {
     stream: (model, context, options) => base.stream(model, context, codexRelayStreamOptions(route, speedFor, options)),
-    streamSimple: (model, context, options) => base.streamSimple(model, context, codexRelayStreamOptions(route, speedFor, options)),
+    streamSimple: (model, context, options) => base.streamSimple(
+      model,
+      context,
+      preserveServiceTierPayload(codexRelayStreamOptions(route, speedFor, options)),
+    ),
   }
 }

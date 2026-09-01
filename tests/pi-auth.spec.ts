@@ -44,8 +44,8 @@ describe('relay pi-ai auth injection', () => {
 
   it('answers env from the credentials service before the process environment', async () => {
     vi.stubEnv('RELAY_EXAMPLE_API_KEY', 'from-env')
-    const { authContext } = relayAuthInjection(contextWith({ RELAY_EXAMPLE_API_KEY: 'from-credentials' }))
-    await expect(authContext.env('RELAY_EXAMPLE_API_KEY')).resolves.toBe('from-credentials')
+    const { authContext } = relayAuthInjection(contextWith({ RELAY_EXAMPLE_API_KEY: 'example-credential' }))
+    await expect(authContext.env('RELAY_EXAMPLE_API_KEY')).resolves.toBe('example-credential')
   })
 
   it('falls back to the process environment, and to nothing at all', async () => {

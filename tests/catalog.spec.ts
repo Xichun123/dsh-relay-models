@@ -33,18 +33,11 @@ describe('pi.dev model catalog', () => {
     expect(currentOfficialCatalog().models.length).toBeGreaterThan(0)
   })
 
-  it('parses metadata and revalidates cached responses with ETag', async () => {
+  it('parses metadata and re-reads pi.dev once the cache window closes', async () => {
     let now = 1_000
     vi.spyOn(Date, 'now').mockImplementation(() => now)
     const fetchMock = vi.fn()
-      .mockResolvedValueOnce(new Response(JSON.stringify(payload), {
-        headers: {
-          etag: '"catalog-1"',
-          'x-pi-model-catalog-revision': 'sha256-test',
-          'x-pi-model-catalog-minimum-version': '0.80.7',
-        },
-      }))
-      .mockResolvedValueOnce(new Response(null, { status: 304 }))
+      .mockImplementation(() => new Response(JSON.stringify(payload), { headers: { 'content-type': 'application/json' } }))
     vi.stubGlobal('fetch', fetchMock)
     vi.resetModules()
     const { refreshOfficialCatalog } = await import('../src/catalog.ts')
@@ -52,14 +45,14 @@ describe('pi.dev model catalog', () => {
     const first = await refreshOfficialCatalog()
     expect(first).toMatchObject({
       source: 'remote',
-      revision: 'sha256-test',
-      minimumVersion: '0.80.7',
       models: [{ id: 'future-model', api: 'openai-responses', contextWindow: 500_000, compat: { supportsStrictMode: true } }],
     })
 
+    // Inside the window the stored snapshot answers; past it the endpoint is asked again.
+    await refreshOfficialCatalog()
+    expect(fetchMock).toHaveBeenCalledTimes(1)
     now = 62_000
     await refreshOfficialCatalog()
     expect(fetchMock).toHaveBeenCalledTimes(2)
-    expect(fetchMock.mock.calls[1]?.[1]).toMatchObject({ headers: { 'if-none-match': '"catalog-1"' } })
   })
 })

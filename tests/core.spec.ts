@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import {
+  RELAY_SERVICE_TIERS,
   assertSafeHeaders,
   assertUnreservedProviderId,
   baseURLForProtocol,
@@ -44,7 +45,10 @@ describe('relay core', () => {
     expect(validateProviderId('relay-example')).toBe('relay-example')
     expect(relayCredentialRef('relay-example')).toBe('RELAY_EXAMPLE_API_KEY')
     expect(() => validateProviderId('Relay Example')).toThrow(/Provider ID/)
-    expect(() => assertUnreservedProviderId('openai')).toThrow(/reserved/)
+    // The official ids come from the live pi-ai build (node) or the page's own
+    // catalog (browser); only a DSH route no provider entry names is hard-coded.
+    expect(() => assertUnreservedProviderId('openai', new Set(['openai']))).toThrow(/reserved/)
+    expect(() => assertUnreservedProviderId('deepseek-official')).toThrow(/reserved/)
     expect(assertUnreservedProviderId('relay-example')).toBe('relay-example')
     expect(baseURLForProtocol('https://relay.test/v1/', 'anthropic-messages')).toBe('https://relay.test')
     expect(baseURLForProtocol('https://relay.test/v1/', 'openai-responses')).toBe('https://relay.test/v1')
@@ -99,5 +103,31 @@ describe('relay core', () => {
     expect(relayModelStatuses(config({ modelIds: ['bedrock-only'] }), catalog)[0]).toMatchObject({
       id: 'bedrock-only', officialApi: 'bedrock-converse-stream', supported: false,
     })
+  })
+
+  it('offers Fast mode only under its canonical service_tier id', () => {
+    // `priority` is what Codex CLI puts on the wire for /fast. The `fast` alias
+    // reaches the same upstream tier but pi-ai neither prices it nor corrects
+    // the `default` echo for it, so the plugin must never offer that spelling.
+    expect(RELAY_SERVICE_TIERS).toEqual(['priority'])
+  })
+
+  it('prefers the Codex catalog copy when one remote id appears twice', () => {
+    // Both official providers publish this id; the Codex entry has to win, or a
+    // relay's bare `gpt-5.6-sol` lands on plain Responses and loses the only
+    // wire that carries `service_tier`.
+    const both: OfficialModelSummary[] = [
+      { provider: 'openai', id: 'gpt-5.6-sol', name: 'GPT-5.6 Sol', api: 'openai-responses', contextWindow: 400_000, maxTokens: 128_000, reasoning: true, input: ['text', 'image'], cost },
+      { provider: 'openai-codex', id: 'gpt-5.6-sol', name: 'GPT-5.6 Sol', api: 'openai-codex-responses', contextWindow: 400_000, maxTokens: 128_000, reasoning: true, input: ['text', 'image'], cost },
+    ]
+    expect(relayModelStatuses(config({ modelIds: ['gpt-5.6-sol'], modelMappings: {} }), both)[0]).toMatchObject({
+      protocol: 'openai-codex-responses',
+      metadataSource: { provider: 'openai-codex', id: 'gpt-5.6-sol' },
+    })
+    // An explicit mapping still reaches the plain-Responses copy.
+    expect(relayModelStatuses(config({
+      modelIds: ['gpt-5.6-sol'],
+      modelMappings: { 'gpt-5.6-sol': { provider: 'openai', id: 'gpt-5.6-sol' } },
+    }), both)[0]).toMatchObject({ protocol: 'openai-responses' })
   })
 })

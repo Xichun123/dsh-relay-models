@@ -110,7 +110,6 @@ export function parseOfficialCatalog(payload: unknown): OfficialModelSummary[] {
 }
 
 let snapshot: OfficialCatalogSnapshot = { models: BUNDLED_MODELS, source: 'bundled' }
-let etag: string | undefined
 let expiresAt = 0
 let pending: Promise<OfficialCatalogSnapshot> | undefined
 
@@ -124,23 +123,13 @@ export async function refreshOfficialCatalog(signal?: AbortSignal): Promise<Offi
   pending = (async () => {
     const timeout = AbortSignal.timeout(10_000)
     const response = await fetch(CATALOG_URL, {
-      headers: { accept: 'application/json', ...etag ? { 'if-none-match': etag } : {} },
+      headers: { accept: 'application/json' },
       signal: signal ? AbortSignal.any([signal, timeout]) : timeout,
     })
-    if (response.status === 304) {
-      expiresAt = Date.now() + CACHE_MS
-      return snapshot
-    }
     if (!response.ok) throw new Error(`${CATALOG_URL} answered ${response.status}`)
     const models = parseOfficialCatalog(JSON.parse(await readBoundedText(response, CATALOG_URL, MAX_CATALOG_BYTES)))
-    etag = response.headers.get('etag') ?? undefined
     expiresAt = Date.now() + CACHE_MS
-    snapshot = {
-      models,
-      source: 'remote',
-      ...response.headers.get('x-pi-model-catalog-revision') ? { revision: response.headers.get('x-pi-model-catalog-revision')! } : {},
-      ...response.headers.get('x-pi-model-catalog-minimum-version') ? { minimumVersion: response.headers.get('x-pi-model-catalog-minimum-version')! } : {},
-    }
+    snapshot = { models, source: 'remote' }
     return snapshot
   })().finally(() => { pending = undefined })
   return pending
