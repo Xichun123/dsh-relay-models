@@ -1,15 +1,17 @@
 {
   "compilerOptions": {
-    "target": "ES2024",
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM"],
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
+    "declaration": true,
+    "outDir": "lib",
+    "rootDir": "src",
     "strict": true,
-    "noImplicitAny": true,
-    "jsx": "react-jsx",
-    "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
     "skipLibCheck": true,
-    "types": ["node", "react", "react-dom"]
+    "verbatimModuleSyntax": true,
+    "rewriteRelativeImportExtensions": true
   },
-  "include": ["src", "tests"]
+  "include": ["src/**/*.ts"],
+  "exclude": ["src/**/*.test.ts", "src/client/**"]
 }

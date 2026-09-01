@@ -1,136 +1,139 @@
-import { getBuiltinModels, getBuiltinProviders } from '@earendil-works/pi-ai/providers/all'
-import type { Api, Model } from '@earendil-works/pi-ai'
-import { readBoundedText } from './bounded-response.ts'
-import type { OfficialCatalogSnapshot, OfficialModelSummary } from './shared/types.ts'
+/** Live pi.dev model catalog. Not the npm `@earendil-works/pi-ai` snapshot. */
+export const CATALOG_URL = 'https://pi.dev/api/models'
 
-const CATALOG_URL = 'https://pi.dev/api/models'
-const MAX_CATALOG_BYTES = 4 * 1024 * 1024
-const CACHE_MS = 60_000
+const MAX_BYTES = 8 * 1024 * 1024
 
-/**
- * Every model the installed `pi-ai` build ships. This is the offline catalog
- * and the source of the api-specific model fields a matched relay model copies,
- * so both read the same build that materialization hands to `PiAiAdapter`.
- */
-export const BUILTIN_MODELS: readonly Model<Api>[] = getBuiltinProviders()
-  .flatMap(provider => getBuiltinModels(provider) as Model<Api>[])
+const PROVIDERS = [
+  'openai', 'anthropic', 'google', 'xai', 'deepseek',
+  'moonshotai', 'minimax', 'qwen', 'zai', 'xiaomi',
+]
 
-/**
- * The metadata summary of one installed model.
- * @param model - an installed `pi-ai` model.
- * @returns the summary the matcher and the settings page read.
- */
-function summarize(model: Model<Api>): OfficialModelSummary {
-  return {
-    provider: model.provider,
-    id: model.id,
-    name: model.name,
-    api: model.api,
-    contextWindow: model.contextWindow,
-    maxTokens: model.maxTokens,
-    reasoning: model.reasoning,
-    input: model.input,
-    ...model.thinkingLevelMap ? { thinkingLevelMap: model.thinkingLevelMap } : {},
-    // pi-ai types `compat` as one closed interface per api, none of which is
-    // indexable; the summary carries it opaquely for materialization to copy
-    // back onto a model of the same api.
-    ...model.compat ? { compat: model.compat as Readonly<Record<string, unknown>> } : {},
-    ...model.cost ? { cost: model.cost } : {},
-  }
+export interface PiModel {
+  id: string
+  name?: string
+  api?: string
+  provider?: string
+  input?: string[]
+  contextWindow?: number
+  maxTokens?: number
+  reasoning?: boolean
+  thinkingLevelMap?: Record<string, string | null>
+  compat?: Record<string, unknown>
 }
 
-/** The installed build's metadata, served whenever pi.dev is unreachable. */
-export const BUNDLED_MODELS: readonly OfficialModelSummary[] = BUILTIN_MODELS.map(summarize)
+export type Catalog = Record<string, Record<string, unknown>>
 
-function object(value: unknown): Record<string, unknown> | undefined {
-  return value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : undefined
+export type ModelIndex = Map<string, PiModel[]>
+
+export interface CatalogChoice {
+  id: string
+  name: string
+  provider: string
 }
 
-function number(value: unknown): number | undefined {
-  return typeof value === 'number' && Number.isFinite(value) ? value : undefined
+function asModel(id: string, raw: unknown): PiModel | undefined {
+  if (raw === null || typeof raw !== 'object' || Array.isArray(raw)) return undefined
+  const row = raw as Record<string, unknown>
+  const resolvedId = typeof row.id === 'string' && row.id.length > 0 ? row.id : id
+  return { ...row, id: resolvedId } as PiModel
 }
 
-export function parseOfficialCatalog(payload: unknown): OfficialModelSummary[] {
-  const providers = object(payload)
-  if (!providers) throw new Error('pi.dev model catalog must be an object')
-  const models: OfficialModelSummary[] = []
-  for (const [providerKey, entriesValue] of Object.entries(providers)) {
-    const entries = object(entriesValue)
-    if (!entries) continue
-    for (const [idKey, value] of Object.entries(entries)) {
-      const model = object(value)
-      if (!model) continue
-      const cost = object(model.cost)
-      const provider = typeof model?.provider === 'string' ? model.provider : providerKey
-      const id = typeof model?.id === 'string' ? model.id : idKey
-      const name = typeof model?.name === 'string' ? model.name : id
-      const api = typeof model?.api === 'string' ? model.api : undefined
-      const contextWindow = number(model?.contextWindow)
-      const maxTokens = number(model?.maxTokens)
-      const reasoning = model?.reasoning
-      const input = Array.isArray(model?.input) ? model.input.filter((item): item is string => typeof item === 'string') : undefined
-      if (!provider || !id || !api || contextWindow === undefined || maxTokens === undefined
-        || typeof reasoning !== 'boolean' || !input) continue
-      const thinkingLevelMap = object(model.thinkingLevelMap)
-      const compat = object(model.compat)
-      const tiers = Array.isArray(cost?.tiers) ? cost.tiers.flatMap(value => {
-        const tier = object(value)
-        const inputTokensAbove = number(tier?.inputTokensAbove)
-        const inputCost = number(tier?.input)
-        const output = number(tier?.output)
-        const cacheRead = number(tier?.cacheRead)
-        const cacheWrite = number(tier?.cacheWrite)
-        return inputTokensAbove === undefined || inputCost === undefined || output === undefined
-          || cacheRead === undefined || cacheWrite === undefined
-          ? [] : [{ inputTokensAbove, input: inputCost, output, cacheRead, cacheWrite }]
-      }) : []
-      models.push({
-        provider,
-        id,
-        name,
-        api,
-        contextWindow,
-        maxTokens,
-        reasoning,
-        input,
-        ...thinkingLevelMap ? { thinkingLevelMap } : {},
-        ...compat ? { compat } : {},
-        cost: {
-          input: number(cost?.input) ?? 0,
-          output: number(cost?.output) ?? 0,
-          cacheRead: number(cost?.cacheRead) ?? 0,
-          cacheWrite: number(cost?.cacheWrite) ?? 0,
-          ...tiers.length > 0 ? { tiers } : {},
-        },
-      })
+export function indexCatalog(catalog: Catalog): ModelIndex {
+  const byId = new Map<string, PiModel[]>()
+  for (const [provider, models] of Object.entries(catalog)) {
+    if (!PROVIDERS.includes(provider)) continue
+    if (models === null || typeof models !== 'object' || Array.isArray(models)) continue
+    for (const [id, raw] of Object.entries(models)) {
+      const model = asModel(id, raw)
+      if (model === undefined) continue
+      const list = byId.get(model.id) ?? []
+      list.push(model)
+      byId.set(model.id, list)
     }
   }
-  if (models.length === 0) throw new Error('pi.dev model catalog contains no usable models')
-  return models
+  return byId
 }
 
-let snapshot: OfficialCatalogSnapshot = { models: BUNDLED_MODELS, source: 'bundled' }
-let expiresAt = 0
-let pending: Promise<OfficialCatalogSnapshot> | undefined
-
-export function currentOfficialCatalog(): OfficialCatalogSnapshot {
-  return snapshot
+function rank(model: PiModel): number {
+  const at = PROVIDERS.indexOf(model.provider ?? '')
+  return at === -1 ? PROVIDERS.length : at
 }
 
-export async function refreshOfficialCatalog(signal?: AbortSignal): Promise<OfficialCatalogSnapshot> {
-  if (Date.now() < expiresAt) return snapshot
-  if (pending) return pending
-  pending = (async () => {
-    const timeout = AbortSignal.timeout(10_000)
-    const response = await fetch(CATALOG_URL, {
-      headers: { accept: 'application/json' },
-      signal: signal ? AbortSignal.any([signal, timeout]) : timeout,
+function pick(models: readonly PiModel[]): PiModel {
+  return models.reduce((a, b) => rank(a) <= rank(b) ? a : b)
+}
+
+const aliases = new Map<string, string>()
+
+export function aliasOf(id: string): string | undefined {
+  return aliases.get(id)
+    ?? (id.includes('/') ? aliases.get(id.slice(id.lastIndexOf('/') + 1)) : undefined)
+}
+
+export function setAlias(id: string, catalogId: string | undefined): void {
+  if (id.length === 0) return
+  if (catalogId === undefined || catalogId.length === 0) aliases.delete(id)
+  else aliases.set(id, catalogId)
+}
+
+export function resetAliases(): void {
+  aliases.clear()
+}
+
+function lookupDirect(index: ModelIndex, id: string, api?: string): PiModel | undefined {
+  const exact = index.get(id)
+  const slash = id.includes('/') ? index.get(id.slice(id.lastIndexOf('/') + 1)) : undefined
+  const candidates = exact ?? slash
+  if (candidates === undefined || candidates.length === 0) return undefined
+  if (api !== undefined) {
+    const matched = candidates.filter(model => model.api === api)
+    if (matched.length > 0) return pick(matched)
+  }
+  return pick(candidates)
+}
+
+export function lookup(index: ModelIndex, id: string, api?: string): PiModel | undefined {
+  const hit = lookupDirect(index, id, api)
+  if (hit !== undefined) return hit
+  const mapped = aliasOf(id)
+  return mapped === undefined ? undefined : lookupDirect(index, mapped, api)
+}
+
+export function listChoices(index: ModelIndex): CatalogChoice[] {
+  const out: CatalogChoice[] = []
+  for (const [id, models] of index) {
+    const model = pick(models)
+    out.push({
+      id,
+      name: typeof model.name === 'string' && model.name.length > 0 ? model.name : id,
+      provider: model.provider ?? '',
     })
-    if (!response.ok) throw new Error(`${CATALOG_URL} answered ${response.status}`)
-    const models = parseOfficialCatalog(JSON.parse(await readBoundedText(response, CATALOG_URL, MAX_CATALOG_BYTES)))
-    expiresAt = Date.now() + CACHE_MS
-    snapshot = { models, source: 'remote' }
-    return snapshot
-  })().finally(() => { pending = undefined })
+  }
+  return out.sort((a, b) => a.id.localeCompare(b.id))
+}
+
+// ponytail: one in-flight fetch for the process; aborted/failed callers retry.
+let pending: Promise<ModelIndex> | undefined
+
+export async function loadIndex(signal?: AbortSignal): Promise<ModelIndex> {
+  pending ??= fetchCatalog(signal).then(indexCatalog).catch((error: unknown) => {
+    pending = undefined
+    throw error
+  })
   return pending
+}
+
+async function fetchCatalog(signal?: AbortSignal): Promise<Catalog> {
+  const response = await fetch(CATALOG_URL, {
+    headers: { accept: 'application/json' },
+    ...signal === undefined ? {} : { signal },
+  })
+  if (!response.ok) throw new Error(`pi.dev models HTTP ${String(response.status)}`)
+  const text = await response.text()
+  if (text.length > MAX_BYTES) throw new Error('pi.dev models response too large')
+  const body: unknown = JSON.parse(text)
+  if (body === null || typeof body !== 'object' || Array.isArray(body)) {
+    throw new Error('pi.dev models: expected a provider map')
+  }
+  return body as Catalog
 }

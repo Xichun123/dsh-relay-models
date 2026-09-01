@@ -1,6 +1,7 @@
 node_modules/
 coverage/
 *.tgz
+*.tsbuildinfo
 .DS_Store
 .agents/
 skills-lock.json

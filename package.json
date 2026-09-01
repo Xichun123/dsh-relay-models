@@ -1,7 +1,7 @@
 {
   "name": "dsh-relay-models",
   "version": "0.6.0",
-  "description": "Mixed-protocol relay model discovery, metadata matching, and Web configuration for DeepSeek Harness",
+  "description": "Fill custom-provider model capabilities from https://pi.dev/api/models",
   "type": "module",
   "license": "MIT",
   "author": "Xichun123",
@@ -14,126 +14,44 @@
     "registry": "https://registry.npmjs.org/"
   },
   "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "exports": {
-    ".": "./lib/index.js",
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    },
     "./client": {
       "default": "./lib/client.js"
     },
     "./package.json": "./package.json"
   },
   "files": [
-    "lib/index.js",
-    "lib/client.js",
-    "cordis.patch.yml",
-    "README.md",
-    "LICENSE"
+    "lib",
+    "cordis.patch.yml"
   ],
   "dsh": {
     "bundle": {
       "patch": "./cordis.patch.yml"
     },
     "client": {
-      "inject": [
-        "@deepseek-ai/dsh-client-runtime",
-        "@deepseek-ai/dsh-client-ui-settings"
-      ],
-      "platform": "web"
+      "platform": "web",
+      "immediately": true
     }
   },
   "scripts": {
-    "build": "tsdown",
-    "test": "vitest run",
+    "build": "tsc && node scripts/build-client.mjs",
+    "test": "node --experimental-strip-types --test src/enrich.test.ts",
     "typecheck": "tsc --noEmit",
-    "sync:dsh": "pnpm up '@deepseek-ai/dsh-*@next'",
     "validate": "npm run test && npm run typecheck && npm run build"
   },
-  "dependencies": {
-    "@deepseek-ai/schemastery": "^3.18.1"
-  },
   "peerDependencies": {
-    "@deepseek-ai/cordis": "^4.0.1",
-    "@deepseek-ai/dsh-client-connection": "*",
-    "@deepseek-ai/dsh-client-locale": "*",
-    "@deepseek-ai/dsh-client-runtime": "*",
-    "@deepseek-ai/dsh-client-ui-commands": "*",
-    "@deepseek-ai/dsh-client-ui-conversation": "*",
-    "@deepseek-ai/dsh-client-ui-model-selection": "*",
-    "@deepseek-ai/dsh-client-ui-primitives": "*",
-    "@deepseek-ai/dsh-client-ui-settings": "*",
-    "@deepseek-ai/dsh-client-ui-slots": "*",
-    "@deepseek-ai/dsh-credentials": "*",
-    "@deepseek-ai/dsh-host-apiproxy": "*",
+    "@deepseek-ai/cordis": "*",
     "@deepseek-ai/dsh-llm": "*",
-    "@deepseek-ai/dsh-llm-pi-ai": "*",
-    "@deepseek-ai/dsh-settings": "*",
-    "@deepseek-ai/dsh-timeout": "*",
-    "@earendil-works/pi-ai": "^0.82.1",
-    "react": "^18.2.0"
-  },
-  "peerDependenciesMeta": {
-    "@deepseek-ai/dsh-client-connection": {
-      "optional": true
-    },
-    "@deepseek-ai/dsh-client-locale": {
-      "optional": true
-    },
-    "@deepseek-ai/dsh-client-runtime": {
-      "optional": true
-    },
-    "@deepseek-ai/dsh-client-ui-commands": {
-      "optional": true
-    },
-    "@deepseek-ai/dsh-client-ui-conversation": {
-      "optional": true
-    },
-    "@deepseek-ai/dsh-client-ui-model-selection": {
-      "optional": true
-    },
-    "@deepseek-ai/dsh-client-ui-primitives": {
-      "optional": true
-    },
-    "@deepseek-ai/dsh-client-ui-settings": {
-      "optional": true
-    },
-    "@deepseek-ai/dsh-client-ui-slots": {
-      "optional": true
-    },
-    "@deepseek-ai/dsh-host-apiproxy": {
-      "optional": true
-    },
-    "@earendil-works/pi-ai": {
-      "optional": true
-    },
-    "react": {
-      "optional": true
-    }
+    "@deepseek-ai/dsh-settings": "*"
   },
   "devDependencies": {
-    "@deepseek-ai/cordis": "^4.0.1",
-    "@deepseek-ai/dsh-client-connection": "0.1.1-rc.2",
-    "@deepseek-ai/dsh-client-locale": "next",
-    "@deepseek-ai/dsh-client-runtime": "next",
-    "@deepseek-ai/dsh-client-ui-commands": "0.1.1-rc.2",
-    "@deepseek-ai/dsh-client-ui-conversation": "0.1.1-rc.2",
-    "@deepseek-ai/dsh-client-ui-model-selection": "0.1.1-rc.2",
-    "@deepseek-ai/dsh-client-ui-primitives": "next",
-    "@deepseek-ai/dsh-client-ui-settings": "next",
-    "@deepseek-ai/dsh-client-ui-slots": "next",
-    "@deepseek-ai/dsh-credentials": "next",
-    "@deepseek-ai/dsh-host-apiproxy": "0.1.1-rc.2",
-    "@deepseek-ai/dsh-host-webserver": "next",
-    "@deepseek-ai/dsh-llm": "next",
-    "@deepseek-ai/dsh-llm-pi-ai": "next",
-    "@deepseek-ai/dsh-settings": "next",
-    "@deepseek-ai/dsh-timeout": "next",
-    "@earendil-works/pi-ai": "^0.82.1",
-    "@types/node": "^24.0.0",
-    "@types/react": "~18.3.1",
-    "@types/react-dom": "~18.3.7",
-    "react": "^18.2.0",
-    "tsdown": "^0.15.11",
-    "typescript": "^5.9.2",
-    "vitest": "^3.2.4"
+    "esbuild": "^0.25.12",
+    "typescript": "^5.9.3"
   },
   "engines": {
     "node": "^22.19.0 || >=24.0.0"
