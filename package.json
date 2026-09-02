@@ -39,10 +39,10 @@
     }
   },
   "scripts": {
-    "build": "tsc && node scripts/build-client.mjs",
+    "build": "tsc -p tsconfig.build.json && node scripts/build-client.mjs",
     "test": "node --experimental-strip-types --test src/enrich.test.ts",
     "typecheck": "tsc --noEmit",
-    "validate": "npm run test && npm run typecheck && npm run build"
+    "validate": "pnpm test && pnpm typecheck && pnpm build"
   },
   "peerDependencies": {
     "@deepseek-ai/cordis": "*",
@@ -50,6 +50,7 @@
     "@deepseek-ai/dsh-settings": "*"
   },
   "devDependencies": {
+    "@types/node": "^22.20.1",
     "esbuild": "^0.25.12",
     "typescript": "^5.9.3"
   },

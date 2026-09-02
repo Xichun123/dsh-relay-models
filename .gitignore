@@ -3,6 +3,5 @@ coverage/
 *.tgz
 *.tsbuildinfo
 .DS_Store
-.agents/
 skills-lock.json
 cordis.dev.yml
