@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import { indexCatalog, listChoices, resetAliases, setAlias } from './catalog.ts'
+import { indexCatalog, listAliases, listChoices, resetAliases, setAlias } from './catalog.ts'
 import { compatFields, enrichDiscovered, enrichEntry, enrichOps, reasoningEfforts } from './enrich.ts'
 
 const index = indexCatalog({
@@ -237,10 +237,18 @@ test('enrichEntry fills openai gpt-5.6-sol onto an openai-responses route', () =
 test('alias map fills unmatched ids and is stamped as catalogId', () => {
   resetAliases()
   setAlias('claude-sonnet-4-5-20250929', 'claude-sonnet-4.5')
+  assert.deepEqual(listAliases(), { 'claude-sonnet-4-5-20250929': 'claude-sonnet-4.5' })
   const entry = enrichEntry({ id: 'claude-sonnet-4-5-20250929' }, index, 'anthropic-messages')
   assert.equal(entry.name, 'Claude Sonnet 4.5')
   assert.equal(entry.catalogId, 'claude-sonnet-4.5')
+  const saved = enrichOps([{
+    op: 'set',
+    path: ['providers', 'relay', 'models'],
+    value: [{ id: 'claude-sonnet-4-5-20250929' }],
+  }], { providers: { relay: { api: 'anthropic-messages' } } }, index)
+  assert.equal((saved[0]!.value as Record<string, unknown>[])[0]!.name, 'Claude Sonnet 4.5')
   resetAliases()
+  assert.deepEqual(listAliases(), {})
   assert.deepEqual(enrichEntry({ id: 'claude-sonnet-4-5-20250929' }, index), { id: 'claude-sonnet-4-5-20250929' })
 })
 

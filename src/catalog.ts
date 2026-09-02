@@ -80,6 +80,10 @@ export function resetAliases(): void {
   aliases.clear()
 }
 
+export function listAliases(): Record<string, string> {
+  return Object.fromEntries(aliases)
+}
+
 function lookupDirect(index: ModelIndex, id: string, api?: string): PiModel | undefined {
   const exact = index.get(id)
   const slash = id.includes('/') ? index.get(id.slice(id.lastIndexOf('/') + 1)) : undefined

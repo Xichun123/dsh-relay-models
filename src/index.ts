@@ -1,4 +1,4 @@
-import { listChoices, loadIndex, setAlias } from './catalog.ts'
+import { listAliases, listChoices, loadIndex, setAlias } from './catalog.ts'
 import { enrichDiscovered, enrichOps } from './enrich.ts'
 import type { DiscoveredModel, PathOp } from './enrich.ts'
 
@@ -111,7 +111,10 @@ export function apply(ctx: PluginContext): void {
             return
           }
           try {
-            const body = JSON.stringify(listChoices(await loadIndex()))
+            const body = JSON.stringify({
+              choices: listChoices(await loadIndex()),
+              aliases: listAliases(),
+            })
             res.writeHead(200, { 'content-type': 'application/json; charset=utf-8' })
             res.end(body)
           } catch (error) {

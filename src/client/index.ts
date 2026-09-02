@@ -8,6 +8,7 @@ interface CatalogChoice {
 
 const MARK = 'data-dsh-relay'
 const ID_SELECTOR = 'input[aria-label^="模型 ID "], input[aria-label^="Model ID "]'
+const NAME_SELECTOR = 'input[aria-label^="显示名称 "], input[aria-label^="Display name "]'
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return value !== null && typeof value === 'object' && !Array.isArray(value)
@@ -27,6 +28,12 @@ function isIdInput(node: EventTarget | null): node is HTMLInputElement {
 
 function zh(): boolean {
   return typeof document !== 'undefined' && document.documentElement.lang.startsWith('zh')
+}
+
+function setReactInput(input: HTMLInputElement, value: string): void {
+  const setter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value')?.set
+  setter?.call(input, value)
+  input.dispatchEvent(new Event('input', { bubbles: true }))
 }
 
 function paintSelect(select: HTMLSelectElement, choices: readonly CatalogChoice[]): void {
@@ -55,7 +62,7 @@ function paintSelect(select: HTMLSelectElement, choices: readonly CatalogChoice[
   select.dataset.dshPainted = '1'
 }
 
-function sync(choices: readonly CatalogChoice[]): void {
+function sync(choices: readonly CatalogChoice[], aliases: Record<string, string>): void {
   if (choices.length === 0) return
   const ids = new Set(choices.map(choice => choice.id))
   const seen = new Set<HTMLElement>()
@@ -82,16 +89,26 @@ function sync(choices: readonly CatalogChoice[]): void {
       select.addEventListener('change', () => {
         const modelId = input.value.trim()
         if (modelId.length === 0) return
+        const catalogId = select.value
+        if (catalogId.length === 0) delete aliases[modelId]
+        else aliases[modelId] = catalogId
+        const choice = choices.find(item => item.id === catalogId)
+        const nameInput = entry.querySelector(NAME_SELECTOR)
+        if (choice !== undefined && nameInput instanceof HTMLInputElement && nameInput.value !== choice.name) {
+          setReactInput(nameInput, choice.name)
+        }
         void fetch('/dsh-relay-models/alias', {
           method: 'POST',
           headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({ id: modelId, catalogId: select.value }),
+          body: JSON.stringify({ id: modelId, catalogId }),
         })
       })
       paintSelect(select, choices)
       box.append(label, select)
       input.parentElement?.after(box)
     }
+    const select = box.querySelector('select')
+    if (select instanceof HTMLSelectElement) select.value = aliases[id] ?? ''
   }
   for (const stale of document.querySelectorAll(`[${MARK}]`)) {
     const parent = stale.parentElement
@@ -101,6 +118,7 @@ function sync(choices: readonly CatalogChoice[]): void {
 
 export function apply(): void {
   let choices: CatalogChoice[] = []
+  let aliases: Record<string, string> = {}
   let scheduled = false
   const observer = new MutationObserver(() => { schedule() })
   const observe = (): void => {
@@ -113,7 +131,7 @@ export function apply(): void {
       scheduled = false
       observer.disconnect()
       try {
-        sync(choices)
+        sync(choices, aliases)
       } finally {
         observe()
       }
@@ -123,8 +141,11 @@ export function apply(): void {
   void fetch('/dsh-relay-models/catalog')
     .then(async response => response.ok ? await response.json() as unknown : [])
     .then((body) => {
-      if (!Array.isArray(body)) return
-      choices = body.filter((row): row is CatalogChoice =>
+      const rows = Array.isArray(body) ? body : isRecord(body) && Array.isArray(body.choices) ? body.choices : []
+      if (isRecord(body) && isRecord(body.aliases)) {
+        aliases = Object.fromEntries(Object.entries(body.aliases).filter((entry): entry is [string, string] => typeof entry[1] === 'string'))
+      }
+      choices = rows.filter((row): row is CatalogChoice =>
         isRecord(row) && typeof row.id === 'string' && typeof row.name === 'string' && typeof row.provider === 'string')
       schedule()
     })

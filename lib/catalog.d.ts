@@ -23,6 +23,7 @@ export declare function indexCatalog(catalog: Catalog): ModelIndex;
 export declare function aliasOf(id: string): string | undefined;
 export declare function setAlias(id: string, catalogId: string | undefined): void;
 export declare function resetAliases(): void;
+export declare function listAliases(): Record<string, string>;
 export declare function lookup(index: ModelIndex, id: string, api?: string): PiModel | undefined;
 export declare function listChoices(index: ModelIndex): CatalogChoice[];
 export declare function loadIndex(signal?: AbortSignal): Promise<ModelIndex>;
