@@ -1,4 +1,5 @@
 import { aliasOf, lookup, type ModelIndex, type PiModel } from './catalog.ts'
+import type { CompatFilter } from './compat.ts'
 
 export interface DiscoveredModel {
   id: string
@@ -15,34 +16,6 @@ export interface PathOp {
 
 const THINKING_LEVELS = ['off', 'minimal', 'low', 'medium', 'high', 'xhigh', 'max'] as const
 
-const THINKING_FORMATS = new Set([
-  'openai', 'deepseek', 'openrouter', 'together', 'baseten', 'zai', 'qwen',
-  'chat-template', 'qwen-chat-template', 'string-thinking', 'ant-ling',
-])
-
-const COMPLETIONS_COMPAT = new Set([
-  'supportsStore', 'supportsDeveloperRole', 'supportsReasoningEffort',
-  'supportsUsageInStreaming', 'supportsFinishReason', 'maxTokensField',
-  'requiresToolResultName', 'requiresAssistantAfterToolResult',
-  'requiresThinkingAsText', 'requiresReasoningContentOnAssistantMessages',
-  'thinkingFormat', 'chatTemplateKwargs', 'chatTemplateArgs',
-  'supportsThinkingTokenBudget', 'thinkingTokenBudgetField', 'vllmPriority',
-  'supportsStrictMode', 'cacheControlFormat',
-  'supportsLongCacheRetention',
-])
-
-const RESPONSES_COMPAT = new Set([
-  'supportsDeveloperRole', 'supportsStrictMode', 'supportsLongCacheRetention', 'supportsMaxOutputTokens',
-])
-
-const ANTHROPIC_COMPAT = new Set([
-  'supportsEagerToolInputStreaming', 'supportsLongCacheRetention',
-  'supportsCacheControlOnTools', 'supportsTemperature', 'forceAdaptiveThinking',
-  'allowEmptySignature', 'supportsStrictTools',
-])
-
-const BEDROCK_COMPAT = new Set(['supportsStrictMode'])
-
 function isRecord(value: unknown): value is Record<string, unknown> {
   return value !== null && typeof value === 'object' && !Array.isArray(value)
 }
@@ -55,14 +28,6 @@ function modalities(input: unknown): string[] | undefined {
   if (!Array.isArray(input)) return undefined
   const next = input.filter((item): item is 'text' | 'image' => item === 'text' || item === 'image')
   return next.length > 0 ? next : undefined
-}
-
-function allowedCompat(api: string | undefined): Set<string> | undefined {
-  if (api === 'openai-completions') return COMPLETIONS_COMPAT
-  if (api === 'anthropic-messages') return ANTHROPIC_COMPAT
-  if (api === 'bedrock-converse-stream') return BEDROCK_COMPAT
-  if (api !== undefined && api.endsWith('responses')) return RESPONSES_COMPAT
-  return undefined
 }
 
 export function reasoningEfforts(model: PiModel): Record<string, string | null> | undefined {
@@ -85,24 +50,6 @@ export function reasoningEfforts(model: PiModel): Record<string, string | null> 
     }
   }
   return Object.keys(out).some(level => level !== 'off') ? out : undefined
-}
-
-export function compatFields(
-  compat: Record<string, unknown> | undefined,
-  api: string | undefined,
-): Record<string, unknown> | undefined {
-  if (compat === undefined) return undefined
-  const allowed = allowedCompat(api)
-  if (allowed === undefined) return undefined
-  const out: Record<string, unknown> = {}
-  for (const [key, value] of Object.entries(compat)) {
-    if (!allowed.has(key) || value == null) continue
-    if (key === 'thinkingFormat' && (typeof value !== 'string' || !THINKING_FORMATS.has(value))) continue
-    if (key === 'maxTokensField' && value !== 'max_tokens' && value !== 'max_completion_tokens') continue
-    if (isRecord(value) && Object.keys(value).length === 0) continue
-    out[key] = value
-  }
-  return Object.keys(out).length > 0 ? out : undefined
 }
 
 function catalogIdOf(value: unknown): string | undefined {
@@ -148,6 +95,7 @@ export function enrichEntry(
   entry: Record<string, unknown>,
   index: ModelIndex,
   api?: string,
+  filterCompat?: CompatFilter,
 ): Record<string, unknown> {
   const id = entry.id
   if (typeof id !== 'string' || id.length === 0) return entry
@@ -168,7 +116,7 @@ export function enrichEntry(
     if (efforts !== undefined) next.reasoningEfforts = efforts
   }
   if (next.compat == null) {
-    const compat = compatFields(hit.compat, api)
+    const compat = filterCompat?.(hit.compat, api)
     if (compat !== undefined) next.compat = compat
   }
   return next
@@ -180,7 +128,7 @@ function apiOf(section: unknown, route: string): string | undefined {
   return typeof api === 'string' ? api : undefined
 }
 
-export function enrichOps(ops: readonly PathOp[], section: unknown, index: ModelIndex): PathOp[] {
+export function enrichOps(ops: readonly PathOp[], section: unknown, index: ModelIndex, filterCompat?: CompatFilter): PathOp[] {
   const apis = new Map<string, string | undefined>()
   return ops.map((op) => {
     if (op.path?.[0] !== 'providers') return op
@@ -199,7 +147,7 @@ export function enrichOps(ops: readonly PathOp[], section: unknown, index: Model
         ...op,
         value: {
           ...op.value,
-          models: op.value.models.map(model => isRecord(model) ? enrichEntry(model, index, api) : model),
+          models: op.value.models.map(model => isRecord(model) ? enrichEntry(model, index, api, filterCompat) : model),
         },
       }
     }
@@ -207,7 +155,7 @@ export function enrichOps(ops: readonly PathOp[], section: unknown, index: Model
       const api = apis.has(route) ? apis.get(route) : apiOf(section, route)
       return {
         ...op,
-        value: op.value.map(model => isRecord(model) ? enrichEntry(model, index, api) : model),
+        value: op.value.map(model => isRecord(model) ? enrichEntry(model, index, api, filterCompat) : model),
       }
     }
     return op

@@ -25,7 +25,7 @@ const fromSource = path => import(pathToFileURL(resolve(root, path)).href)
 const { Context } = await fromSource('vendor/cordis/src/index.ts')
 const { default: Llm } = await fromSource('packages/llm/llm/src/index.ts')
 const { SettingsProvider } = await fromSource('packages/settings/settings/src/index.ts')
-const { Config, resolveProfiles } = await fromSource('packages/llm/llm-pi-ai/src/config.ts')
+const { Config, resolveProfiles, assertServiceable } = await fromSource('packages/llm/llm-pi-ai/src/config.ts')
 const { discoverModels } = await fromSource('packages/llm/llm-pi-ai/src/discovery.ts')
 const plugin = await import('../lib/index.js')
 
@@ -72,7 +72,7 @@ try {
   fibers.push(ctx.plugin({
     name: 'relay-smoke-owner', inject: ['llm', 'settings'],
     apply(owner) {
-      owner.settings.register('llm-pi-ai', Config)
+      owner.settings.register('llm-pi-ai', Config, { validate: assertServiceable })
       owner.llm.registerModelDiscovery('llm-pi-ai', (request, signal) => discoverModels({ ...request, signal }, () => ({
         headers: { 'x-tenant': 'smoke' }, resolveApiKey: async () => 'stored-test-key',
       })))
@@ -128,6 +128,42 @@ try {
     assert.deepEqual(resolved.compat, expected, 'native adapter accepts and retains enriched alpha.2 fields')
   }
 
+  // Exercise every current compat field against the real running registration,
+  // without deriving expectations from a second plugin-owned protocol table.
+  const { createCompatFilter } = await import('../lib/compat.js')
+  const filterCompat = createCompatFilter(ctx.settings, message => assert.fail(message))
+  const nativeFields = Config.dict.providers.inner.dict.models.inner.dict.compat.dict
+  const specialValues = {
+    maxTokensField: 'max_completion_tokens', thinkingFormat: 'openai',
+    chatTemplateKwargs: { budget: { $var: 'thinking.budget', omitWhenOff: true } },
+    chatTemplateArgs: { budget: { $var: 'thinking.budget' } },
+    thinkingTokenBudgetField: 'thinking_budget', vllmPriority: -2, cacheControlFormat: 'anthropic',
+  }
+  const allCompat = Object.fromEntries(Object.keys(nativeFields).map(key => [key, specialValues[key] ?? true]))
+  const withheld = {
+    supportsOpenAIGrammarTools: true, supportsAdditionalTools: true,
+    supportsToolSearch: true, supportsExplicitPromptCacheMode: true,
+    supportsMidConvoEffort: true, allowedFallbackModels: ['other'],
+  }
+  const rawCompat = { ...allCompat, ...withheld }
+  const beforeProbes = structuredClone(ctx.settings.doc)
+  const beforeRequests = probes.length
+  for (const api of ['openai-completions', 'openai-responses', 'anthropic-messages']) {
+    const expected = Object.fromEntries(Object.entries(rawCompat).filter(([key, value]) => {
+      try {
+        assertServiceable(Config({ providers: { oracle: {
+          api, baseURL: 'https://oracle.invalid/v1', models: [{ id: 'oracle', compat: { [key]: value } }],
+        } } }))
+        return true
+      } catch { return false }
+    }))
+    assert.deepEqual(filterCompat(rawCompat, api), expected)
+  }
+  assert.deepEqual(filterCompat({ supportsStrictMode: true, ...withheld }, 'openai-responses'), { supportsStrictMode: true }, 'Astra withheld flags stay out')
+  assert.deepEqual(filterCompat({ supportsStrictMode: 'false', supportsMaxOutputTokens: false }, 'openai-responses'), { supportsMaxOutputTokens: false }, 'real Host schema rejects malformed values without losing valid siblings')
+  assert.deepEqual(ctx.settings.doc, beforeProbes, 'rule checks never persist their synthetic models')
+  assert.equal(probes.length, beforeRequests, 'rule checks never perform discovery')
+
   await fibers.pop().dispose()
   assert.deepEqual(await ctx.llm.discoverModels('llm-pi-ai', draft), [{ id: 'relay-test', name: 'relay-test' }])
   console.log('Harness source smoke passed: native Anthropic discovery, credentials, errors, schema writes, revisions, Cordis disposal')
@@ -164,7 +200,7 @@ try {
   wireFibers.push(wire.plugin({
     name: 'wire-test-owner', inject: ['llm', 'settings'],
     apply(owner) {
-      owner.settings.register('llm-pi-ai', Config)
+      owner.settings.register('llm-pi-ai', Config, { validate: assertServiceable })
       const profiles = () => resolveProfiles(owner.settings.get('llm-pi-ai').providers)
       owner.llm.registerAdapter(['a', 'b', 'chat', 'messages', 'plain'], new PiAiAdapter({
         profiles, resolveApiKey: async () => 'wire-test-key', auth: memoryAuth(),

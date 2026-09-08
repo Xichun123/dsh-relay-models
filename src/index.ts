@@ -5,6 +5,7 @@ import type { ModelIndex } from './catalog.ts'
 import { enrichDiscovered, enrichOps } from './enrich.ts'
 import type { DiscoveredModel, PathOp } from './enrich.ts'
 import { createUserAgentRewrite, userAgentTarget } from './headers.ts'
+import { createCompatFilter } from './compat.ts'
 
 const NS = 'llm-pi-ai'
 
@@ -166,6 +167,7 @@ export function apply(ctx: PluginContext): void {
 
   ctx.inject(['settings'], (settingsCtx) => {
     const settings = settingsCtx.settings!
+    const filterCompat = createCompatFilter(settings, message => settingsCtx.logger.warn(message))
     settingsCtx.effect(() => {
       headerSettings = settings
       return () => { if (headerSettings === settings) headerSettings = undefined }
@@ -189,7 +191,7 @@ export function apply(ctx: PluginContext): void {
               || (op.path.length === 3 && op.path[2] === 'models' && Array.isArray(op.value))))
           const index = hasModels ? await optionalIndex(pending.signal) : undefined
           pending.signal.throwIfAborted()
-          const next = index === undefined ? ops : enrichOps(ops, settings.get(NS), index)
+          const next = index === undefined ? ops : enrichOps(ops, settings.get(NS), index, filterCompat)
           return original.call(settings, ns, next, expectedRevision)
         })
         writes = result.catch(() => { /* A rejected write must not poison the next queued edit. */ })

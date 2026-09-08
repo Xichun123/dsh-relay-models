@@ -4,7 +4,7 @@
 
 当前代码按 **dsh-v0.1.3-alpha.2** 源码适配（验证 checkout：`82a5fd61a7`），peer 依赖最低要求同步为 `0.1.3-alpha.2`；不再兼容仅依赖插件实现 Anthropic 模型发现的旧版本。
 
-alpha.2 的目录补全支持新增 `thinkingTokenBudgetField`、`vllmPriority`、`supportsMaxOutputTokens` 和模板变量 `thinking.budget`，按协议过滤并保留显式配置；宿主未开放的 `supportsMidConvoEffort` / `allowedFallbackModels` 不从目录写入。
+`compat` 不再维护插件自己的字段、协议或枚举白名单：保存时直接使用当前运行 Host 的 `llm-pi-ai` schema 和校验函数，按实际协议与字段值决定是否补入。alpha.2 支持的 `thinkingTokenBudgetField`、`vllmPriority`、`supportsMaxOutputTokens`、模板变量 `thinking.budget` 会自动被接受；宿主未开放的字段仍不写入。已有显式配置优先。
 
 - **模型发现交给 DSH**：宿主已原生支持 `openai-completions`、`openai-responses` 和 `anthropic-messages`，负责请求、凭据、部署头、响应解析与错误码。插件不再接管失败并重试另一条请求。
 - **能力补全**：从 [pi.dev/api/models](https://pi.dev/api/models) 获取目录，在发现结果中补全缺失的名称、上下文窗口和输出上限；设置页保存模型列表时，再补全 `input`、`reasoningEfforts` 和协议允许的 `compat`。已有显式字段优先；名称为空白或与模型 `id` 完全相同时视为默认名称，发现和保存时使用目录名称（保留其大小写），不修改请求用的 `id`，其他自定义名称保留。
@@ -40,6 +40,21 @@ npx @deepseek-ai/dsh@latest plugin --profile web add /path/to/dsh-relay-models
 2. 添加自定义提供方，填写协议、API 地址和凭据，获取可用模型。
 3. 对得上 pi.dev 目录的模型自动补全；对不上的可以手动选择目录模型。
 4. 保存提供方或模型列表。目录不可用时保留原数据并在 Host 记录警告；宿主发现失败则原样报错，不会伪装成目录故障。
+
+### `compat` 自动对齐宿主
+
+补全规则来自**当前进程实际注册的** `llm-pi-ai`，不读取某个 checkout、不导入另一份适配器包，也不解析编译后的 JS：
+
+1. 保存模型列表时，读取当前设置注册项中的可调用 schema 和语义校验函数。
+2. 目录中的 `compat` 先只做 JSON 结构检查（有限数值、最多 20 层嵌套、拒绝原型相关危险键），保留未来可能新增的字段和值；字段类型、枚举及协议是否接受，都由 Host 判断。
+3. 用虚构提供方、模型和 `.invalid` 地址构造隔离的临时配置，先校验整个候选块；若失败，筛选可单独通过的字段，并再次校验组合。不会调用设置写入、凭据解析或模型请求。
+4. 相同目录条目/协议的判定会缓存；每次补全都检查当前注册项、schema、校验函数的身份，重新注册或替换后丢弃旧结果。
+
+这是**自动跟随 Host 的配置接受规则**，不是检测中转站的真实能力，也不把 pi.dev 网页上计算出的所有 API 默认值一并写入。协议必须是 Host 允许显式配置的自定义路由协议；当前验证的是 Completions、Responses、Anthropic。没有显式协议时不猜测 `compat`。
+
+边界：当前 DSH 没有公开的完整只读校验接口，因此插件只读访问内部 `settings.registrations`。这不是稳定公共 API；若后续版本改变注册表/schema 结构、缺少同步校验函数，或临时配置无法通过基本校验，插件跳过 `compat` 自动补全并在 Host 记录去重警告，其他元数据仍照常补全。不会回退到旧白名单或放行全部字段。若未来增加字段间依赖且部分字段被拒绝，插件保守保留可独立通过、组合后也有效的子集，不穷举组合。
+
+**已有非空值（非 `null` / `undefined`）的 `compat`，包括 `{}`，仍原样保留，不自动新增、删除或改写。** 自动对齐只作用于需要补全的条目；DSH 升级并加载新规则后，新补全会使用新规则，但不会迁移已保存的配置。
 
 ### 供应商排序
 
@@ -102,7 +117,7 @@ pnpm run validate
 DSH_SOURCE=/Users/xichun/Downloads/agent/deepseek-harness pnpm run test:harness
 ```
 
-该检查运行构建后的 Host/Web 产物，覆盖真实 Cordis 装载与卸载、原生 Anthropic 发现、凭据优先级、错误透传、设置 schema/修订冲突、alpha.2 新字段的保存及适配器解析，以及 jsdom 中的行定位、手动映射、Headers 编辑/校验/草稿保护和供应商排序。排序检查覆盖拖拽/键盘、持久化/存储失败、真实 React 列表增删改名后的草稿与焦点保留、卸载恢复。三种协议的真实 pi-ai SDK 向临时本地 HTTP 服务发包，验证普通/预备调用、同地址多提供方并发、Headers 热更新、发现草稿地址和卸载恢复；允许 SDK 自带查询参数（例如 Anthropic 的 `?beta=true`），不修改其请求。不调用真实模型服务。先运行 `validate`，并确保源码 checkout 有 `tsx` 与 `jsdom` 依赖。
+该检查运行构建后的 Host/Web 产物，覆盖真实 Cordis 装载与卸载、原生 Anthropic 发现、凭据优先级、错误透传、设置 schema/修订冲突、alpha.2 新字段的保存及适配器解析，并将当前全部 `compat` 字段在三种自定义协议下的过滤结果与真实 Host 校验结果对照（包含 Astra 未开放字段、错误类型和无写入副作用检查），以及 jsdom 中的行定位、手动映射、Headers 编辑/校验/草稿保护和供应商排序。排序检查覆盖拖拽/键盘、持久化/存储失败、真实 React 列表增删改名后的草稿与焦点保留、卸载恢复。三种协议的真实 pi-ai SDK 向临时本地 HTTP 服务发包，验证普通/预备调用、同地址多提供方并发、Headers 热更新、发现草稿地址和卸载恢复；允许 SDK 自带查询参数（例如 Anthropic 的 `?beta=true`），不修改其请求。不调用真实模型服务。先运行 `validate`，并确保源码 checkout 有 `tsx` 与 `jsdom` 依赖。
 
 模型选择器检查直接编译并渲染 checkout 中的 `ModelSelect`，覆盖保存顺序、跨组键盘导航、焦点保留、原生增删、选择提交、重开和卸载；仅图标/Toast 等装饰组件被替换，不调用真实模型服务。
 

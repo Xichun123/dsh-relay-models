@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 import { indexCatalog, listAliases, listChoices, resetAliases, setAlias } from './catalog.ts'
-import { compatFields, enrichDiscovered, enrichEntry, enrichOps, reasoningEfforts } from './enrich.ts'
+import { enrichDiscovered, enrichEntry, enrichOps, reasoningEfforts } from './enrich.ts'
 
 const index = indexCatalog({
   openai: {
@@ -141,9 +141,13 @@ test('slash-suffixed ids resolve to the bare catalog id', () => {
 })
 
 test('prefers a catalog row whose api matches the custom route', () => {
-  const entry = enrichEntry({ id: 'gpt-4o' }, index, 'openai-completions')
+  const entry = enrichEntry({ id: 'gpt-4o' }, index, 'openai-completions', (compat, api) => {
+    assert.equal(api, 'openai-completions')
+    assert.equal(compat?.thinkingFormat, 'openai')
+    return { supportsStore: false }
+  })
   assert.equal(entry.name, 'GPT-4o (xAI)')
-  assert.equal((entry.compat as { thinkingFormat: string }).thinkingFormat, 'openai')
+  assert.deepEqual(entry.compat, { supportsStore: false })
 })
 
 test('reasoningEfforts expands sparse maps and drops explicit nulls', () => {
@@ -179,29 +183,21 @@ test('reasoningEfforts expands sparse maps and drops explicit nulls', () => {
   assert.equal(reasoningEfforts({ id: 'm', reasoning: false }), undefined)
 })
 
-test('compat drops withheld keys and fields the route api cannot take', () => {
-  assert.deepEqual(
-    compatFields({ thinkingFormat: 'deepseek', sendSessionAffinityHeaders: true }, 'openai-completions'),
-    { thinkingFormat: 'deepseek' },
-  )
-  assert.equal(compatFields({ forceAdaptiveThinking: true }, 'openai-completions'), undefined)
-})
-
-test('alpha.2 catalog compat survives enrichment only on supported protocols', () => {
-  const completions = {
-    thinkingTokenBudgetField: 'thinking_budget', vllmPriority: -2,
-    chatTemplateKwargs: { budget: { $var: 'thinking.budget', omitWhenOff: true } },
-    chatTemplateArgs: { budget: { $var: 'thinking.budget' } },
+test('compat enrichment needs Host rules and preserves all explicit compat blocks', () => {
+  const catalog = indexCatalog({ openai: { model: { name: 'Model', compat: { futureField: true } } } })
+  assert.equal(enrichEntry({ id: 'model' }, catalog, 'openai-responses').compat, undefined)
+  const filtered = enrichEntry({ id: 'model' }, catalog, 'future-protocol', (compat, api) => {
+    assert.equal(api, 'future-protocol')
+    assert.deepEqual(compat, { futureField: true })
+    return compat
+  })
+  assert.deepEqual(filtered.compat, { futureField: true })
+  for (const explicit of [{ supportsMaxOutputTokens: true }, {}]) {
+    const entry = enrichEntry({ id: 'model', compat: explicit }, catalog, 'openai-responses', () => {
+      assert.fail('explicit compat must not be replaced or extended')
+    })
+    assert.deepEqual(entry.compat, explicit)
   }
-  const responses = { supportsMaxOutputTokens: false }
-  const catalog = indexCatalog({ openai: { model: { compat: {
-    ...completions, ...responses, supportsMidConvoEffort: true, allowedFallbackModels: ['other'],
-  } } } })
-  assert.deepEqual(enrichEntry({ id: 'model' }, catalog, 'openai-completions').compat, completions)
-  assert.deepEqual(enrichEntry({ id: 'model' }, catalog, 'openai-responses').compat, responses)
-  assert.equal(enrichEntry({ id: 'model' }, catalog, 'anthropic-messages').compat, undefined)
-  const explicit = { supportsMaxOutputTokens: true }
-  assert.deepEqual(enrichEntry({ id: 'model', compat: explicit }, catalog, 'openai-responses').compat, explicit)
 })
 
 test('mutate ops fill a new custom provider and a models-only edit', () => {
@@ -213,7 +209,10 @@ test('mutate ops fill a new custom provider and a models-only edit', () => {
       baseURL: 'https://gw.example/v1',
       models: [{ id: 'deepseek-chat' }, { id: 'local-only' }],
     },
-  }], {}, index)
+  }], {}, index, (compat, api) => {
+    assert.equal(api, 'openai-completions')
+    return compat
+  })
   const models = (created[0]!.value as { models: Record<string, unknown>[] }).models
   assert.equal(models[0]!.name, 'DeepSeek Chat')
   assert.deepEqual(models[0]!.input, ['text'])
@@ -279,7 +278,7 @@ test('enrichEntry fills openai gpt-5.6-sol onto an openai-responses route', () =
     xhigh: 'xhigh',
     max: 'max',
   })
-  assert.deepEqual(entry.compat, { supportsStrictMode: true })
+  assert.equal(entry.compat, undefined, 'without live Host rules no compat is guessed')
 })
 
 test('alias map fills unmatched ids and is stamped as catalogId', () => {

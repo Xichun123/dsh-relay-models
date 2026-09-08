@@ -1,4 +1,5 @@
 import { Data, Effect, Either } from 'effect'
+import { isCompatJson } from './compat.ts'
 
 /** Live pi.dev model catalog. Not the npm `@earendil-works/pi-ai` snapshot. */
 export const CATALOG_URL = 'https://pi.dev/api/models'
@@ -38,15 +39,6 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 }
 
 const THINKING_LEVELS = new Set(['off', 'minimal', 'low', 'medium', 'high', 'xhigh', 'max'])
-const BOOLEAN_COMPAT = new Set([
-  'supportsStore', 'supportsDeveloperRole', 'supportsReasoningEffort',
-  'supportsUsageInStreaming', 'supportsFinishReason', 'requiresToolResultName',
-  'requiresAssistantAfterToolResult', 'requiresThinkingAsText',
-  'requiresReasoningContentOnAssistantMessages', 'supportsThinkingTokenBudget',
-  'supportsStrictMode', 'supportsLongCacheRetention', 'supportsEagerToolInputStreaming',
-  'supportsCacheControlOnTools', 'supportsTemperature', 'forceAdaptiveThinking',
-  'allowEmptySignature', 'supportsStrictTools', 'supportsMaxOutputTokens',
-])
 
 function asModel(id: string, raw: unknown): PiModel | undefined {
   if (!isRecord(raw)) return undefined
@@ -84,29 +76,11 @@ function asModel(id: string, raw: unknown): PiModel | undefined {
     model.thinkingLevelMap = Object.fromEntries(entries)
   }
   if (raw.compat !== undefined) {
-    if (!isRecord(raw.compat)) return undefined
-    const entries: [string, unknown][] = []
-    for (const [key, value] of Object.entries(raw.compat)) {
-      if (BOOLEAN_COMPAT.has(key)) {
-        if (typeof value !== 'boolean') return undefined
-      } else if (key === 'thinkingFormat' || key === 'maxTokensField') {
-        if (typeof value !== 'string') return undefined
-      } else if (key === 'thinkingTokenBudgetField') {
-        if (value !== 'thinking_token_budget' && value !== 'thinking_budget' && value !== 'thinking_budget_tokens') return undefined
-      } else if (key === 'vllmPriority') {
-        if (typeof value !== 'number' || !Number.isSafeInteger(value)) return undefined
-      } else if (key === 'cacheControlFormat') {
-        if (value !== 'anthropic') return undefined
-      } else if (key === 'chatTemplateKwargs' || key === 'chatTemplateArgs') {
-        if (!isRecord(value) || !Object.values(value).every(item => item === null
-          || typeof item === 'string' || typeof item === 'boolean'
-          || (typeof item === 'number' && Number.isFinite(item))
-          || (isRecord(item) && (item.$var === 'thinking.enabled' || item.$var === 'thinking.effort' || item.$var === 'thinking.budget')
-            && (item.omitWhenOff === undefined || typeof item.omitWhenOff === 'boolean')))) return undefined
-      } else continue
-      entries.push([key, value])
-    }
-    model.compat = Object.fromEntries(entries)
+    // Preserve future keys/values until the running Host can judge them at save
+    // time. Discovery needs no compat, and a cached catalog must survive a Host
+    // namespace re-registration with a different vocabulary.
+    if (!isRecord(raw.compat) || !isCompatJson(raw.compat)) return undefined
+    model.compat = structuredClone(raw.compat)
   }
   return model
 }

@@ -123,14 +123,23 @@ test('catalog rows do not trust malformed or unknown external fields', () => {
     badCapacity: { maxTokens: -1 },
     badInput: { input: 'image' },
     badMap: { reasoning: true, thinkingLevelMap: { high: {} } },
-    badCompat: { compat: { supportsStrictMode: 'false' } },
-    badCache: { compat: { cacheControlFormat: 'unknown' } },
-    badTemplate: { compat: { chatTemplateKwargs: { thinking: { $var: 'unknown' } } } },
-    badBudget: { compat: { thinkingTokenBudgetField: 'unknown' } },
-    badPriority: { compat: { vllmPriority: 0.5 } },
-    badPriorityType: { compat: { vllmPriority: 'high' } },
-    badOutputCap: { compat: { supportsMaxOutputTokens: 'false' } },
+    badCompat: { compat: [] },
+    nonJsonCompat: { compat: { value: Infinity } },
+    unsafeCompat: { compat: JSON.parse('{"__proto__":{"polluted":true}}') },
+    unsafeNestedCompat: { compat: JSON.parse('{"futureField":{"constructor":{}}}') },
   } })
   assert.deepEqual([...index.keys()], ['valid'])
   assert.deepEqual(index.get('valid'), [{ id: 'valid', name: 'Valid', input: ['text', 'image'], reasoning: true }])
+})
+
+test('compat vocabulary and values are retained for the live Host to validate, not frozen at download', () => {
+  const compat = {
+    futureFlag: true, futureList: ['a', 'b'], futureOptions: { mode: 'new' },
+    supportsStrictMode: 'invalid-for-current-host',
+  }
+  const index = indexCatalog({ openai: { model: { compat } } })
+  assert.deepEqual(index.get('model')?.[0]?.compat, compat)
+  assert.notEqual(index.get('model')?.[0]?.compat, compat)
+  compat.futureOptions.mode = 'changed'
+  assert.deepEqual(index.get('model')?.[0]?.compat?.futureOptions, { mode: 'new' })
 })

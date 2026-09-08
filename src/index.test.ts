@@ -148,7 +148,10 @@ test('model writes preserve order, revision arguments and recovery after a rejec
   const second = settings.mutate('llm-pi-ai', [{ op: 'unset', path: ['providers', 'relay'] }], 2)
   await Promise.all([first, second])
   assert.deepEqual(writes.map(write => write.revision), [1, 2])
-  assert.deepEqual((writes[0]!.ops[0]!.value as Record<string, unknown>[])[0]?.input, ['text', 'image'])
+  const enriched = (writes[0]!.ops[0]!.value as Record<string, unknown>[])[0]!
+  assert.deepEqual(enriched.input, ['text', 'image'])
+  assert.equal(enriched.compat, undefined, 'a Host without a readable validator still saves other metadata')
+  assert.match(host.warnings.join('\n'), /Host compat rules unavailable/)
   assert.deepEqual(models[0]!.value, [{ id: 'claude-test' }])
 })
 
