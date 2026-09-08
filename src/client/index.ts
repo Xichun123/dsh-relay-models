@@ -1,4 +1,8 @@
-export const inject: string[] = []
+import { removeHeaders, syncHeaders } from './headers.ts'
+import type { HeadersRemote } from './headers.ts'
+import { createProviderSorting } from './provider-order.ts'
+
+export const inject = ['remote', 'remote.settings', 'remote.llm']
 
 interface CatalogChoice {
   id: string
@@ -22,8 +26,9 @@ function autoMatched(id: string, ids: Set<string>): boolean {
 
 function isIdInput(node: EventTarget | null): node is HTMLInputElement {
   if (!(node instanceof HTMLInputElement)) return false
-  const label = node.getAttribute('aria-label') ?? ''
-  return label.startsWith('模型 ID ') || label.startsWith('Model ID ')
+  // alpha.1 pi-ai entries are direct catalog children; DeepSeek adds a modelList wrapper.
+  return node.matches(ID_SELECTOR)
+    && node.parentElement?.parentElement?.parentElement?.matches('section[aria-label="Models"], section[aria-label="模型目录"]') === true
 }
 
 function zh(): boolean {
@@ -62,12 +67,12 @@ function paintSelect(select: HTMLSelectElement, choices: readonly CatalogChoice[
   select.dataset.dshPainted = '1'
 }
 
-function sync(choices: readonly CatalogChoice[], aliases: Record<string, string>): void {
+function sync(choices: readonly CatalogChoice[], aliases: Record<string, string>, signal: AbortSignal): void {
   if (choices.length === 0) return
   const ids = new Set(choices.map(choice => choice.id))
   const seen = new Set<HTMLElement>()
   for (const input of document.querySelectorAll(ID_SELECTOR)) {
-    if (!(input instanceof HTMLInputElement)) continue
+    if (!isIdInput(input)) continue
     const entry = input.parentElement?.parentElement
     if (!(entry instanceof HTMLElement)) continue
     const id = input.value.trim()
@@ -86,29 +91,64 @@ function sync(choices: readonly CatalogChoice[], aliases: Record<string, string>
       label.textContent = zh() ? '未匹配：从 pi.dev 选一条补全能力' : 'Unmatched: pick a pi.dev model to fill capabilities'
       const select = document.createElement('select')
       select.style.cssText = 'font-size:13px;line-height:20px;padding:4px 8px;border-radius:8px;border:1px solid var(--dsw-alias-border-l2);background:var(--dsw-alias-bg-primary);color:var(--dsw-alias-label-primary)'
-      select.addEventListener('change', () => {
+      const error = document.createElement('span')
+      error.setAttribute('role', 'alert')
+      error.style.cssText = 'font-size:12px;line-height:18px;color:var(--dsw-alias-state-error-primary)'
+      select.addEventListener('change', async () => {
         const modelId = input.value.trim()
-        if (modelId.length === 0) return
+        if (signal.aborted || input.disabled || select.disabled || modelId.length === 0) return
         const catalogId = select.value
-        if (catalogId.length === 0) delete aliases[modelId]
-        else aliases[modelId] = catalogId
-        const choice = choices.find(item => item.id === catalogId)
         const nameInput = entry.querySelector(NAME_SELECTOR)
-        if (choice !== undefined && nameInput instanceof HTMLInputElement && nameInput.value !== choice.name) {
-          setReactInput(nameInput, choice.name)
+        const originalName = nameInput instanceof HTMLInputElement ? nameInput.value : undefined
+        select.dataset.dshPending = '1'
+        select.disabled = true
+        error.textContent = ''
+        try {
+          const response = await fetch('/dsh-relay-models/alias', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({ id: modelId, catalogId }),
+            signal,
+          })
+          if (signal.aborted) return
+          if (!response.ok) throw new Error(`HTTP ${response.status}`)
+          if (catalogId.length === 0) delete aliases[modelId]
+          else aliases[modelId] = catalogId
+          const choice = choices.find(item => item.id === catalogId)
+          if (select.isConnected && input.value.trim() === modelId && choice !== undefined
+            && nameInput instanceof HTMLInputElement && !nameInput.disabled
+            && nameInput.value === originalName && nameInput.value !== choice.name) {
+            setReactInput(nameInput, choice.name)
+          }
+        } catch {
+          if (!signal.aborted && select.isConnected && input.value.trim() === modelId) {
+            error.textContent = zh() ? '保存失败，请重试。' : 'Could not save. Please try again.'
+          }
+        } finally {
+          if (!signal.aborted && select.isConnected) {
+            delete select.dataset.dshPending
+            select.disabled = input.disabled
+            select.value = aliases[input.value.trim()] ?? ''
+          }
         }
-        void fetch('/dsh-relay-models/alias', {
-          method: 'POST',
-          headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({ id: modelId, catalogId }),
-        })
-      })
+      }, { signal })
       paintSelect(select, choices)
-      box.append(label, select)
+      box.append(label, select, error)
       input.parentElement?.after(box)
     }
+    if (box.dataset.dshModelId !== id) {
+      box.dataset.dshModelId = id
+      const error = box.querySelector('[role="alert"]')
+      if (error !== null) error.textContent = ''
+    }
     const select = box.querySelector('select')
-    if (select instanceof HTMLSelectElement) select.value = aliases[id] ?? ''
+    if (select instanceof HTMLSelectElement) {
+      select.setAttribute('aria-label', zh() ? `补全能力 ${id}` : `Fill capabilities ${id}`)
+      if (select.dataset.dshPending !== '1') {
+        select.value = aliases[id] ?? ''
+        select.disabled = input.disabled
+      }
+    }
   }
   for (const stale of document.querySelectorAll(`[${MARK}]`)) {
     const parent = stale.parentElement
@@ -116,41 +156,60 @@ function sync(choices: readonly CatalogChoice[], aliases: Record<string, string>
   }
 }
 
-export function apply(): void {
-  let choices: CatalogChoice[] = []
-  let aliases: Record<string, string> = {}
-  let scheduled = false
-  const observer = new MutationObserver(() => { schedule() })
-  const observe = (): void => {
-    observer.observe(document.body, { childList: true, subtree: true })
-  }
-  const schedule = (): void => {
-    if (scheduled || choices.length === 0) return
-    scheduled = true
-    queueMicrotask(() => {
-      scheduled = false
+export function apply(ctx: { remote: HeadersRemote; effect: (setup: () => () => void) => unknown }): void {
+  ctx.effect(() => {
+    const controller = new AbortController()
+    const { signal } = controller
+    const syncProviderSorting = createProviderSorting(signal)
+    let choices: CatalogChoice[] = []
+    let aliases: Record<string, string> = {}
+    let scheduled = false
+    const observer = new MutationObserver(() => { schedule() })
+    const observe = (): void => {
+      if (!signal.aborted) observer.observe(document.body, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ['aria-label'] })
+    }
+    const schedule = (): void => {
+      if (signal.aborted || scheduled) return
+      scheduled = true
+      queueMicrotask(() => {
+        scheduled = false
+        if (signal.aborted) return
+        observer.disconnect()
+        try {
+          sync(choices, aliases, signal)
+          syncHeaders(ctx.remote, signal)
+          syncProviderSorting()
+        } finally {
+          observe()
+        }
+      })
+    }
+
+    void fetch('/dsh-relay-models/catalog', { signal })
+      .then(async response => response.ok ? await response.json() as unknown : [])
+      .then((body) => {
+        if (signal.aborted) return
+        const rows = Array.isArray(body) ? body : isRecord(body) && Array.isArray(body.choices) ? body.choices : []
+        if (isRecord(body) && isRecord(body.aliases)) {
+          aliases = Object.fromEntries(Object.entries(body.aliases).filter((entry): entry is [string, string] => typeof entry[1] === 'string'))
+        }
+        choices = rows.filter((row): row is CatalogChoice =>
+          isRecord(row) && typeof row.id === 'string' && typeof row.name === 'string' && typeof row.provider === 'string')
+        schedule()
+      })
+      .catch(() => {})
+
+    const onInput = (event: Event): void => { if (isIdInput(event.target)) schedule() }
+    syncHeaders(ctx.remote, signal, true)
+    syncProviderSorting()
+    observe()
+    document.addEventListener('input', onInput, true)
+    return () => {
+      controller.abort()
       observer.disconnect()
-      try {
-        sync(choices, aliases)
-      } finally {
-        observe()
-      }
-    })
-  }
-
-  void fetch('/dsh-relay-models/catalog')
-    .then(async response => response.ok ? await response.json() as unknown : [])
-    .then((body) => {
-      const rows = Array.isArray(body) ? body : isRecord(body) && Array.isArray(body.choices) ? body.choices : []
-      if (isRecord(body) && isRecord(body.aliases)) {
-        aliases = Object.fromEntries(Object.entries(body.aliases).filter((entry): entry is [string, string] => typeof entry[1] === 'string'))
-      }
-      choices = rows.filter((row): row is CatalogChoice =>
-        isRecord(row) && typeof row.id === 'string' && typeof row.name === 'string' && typeof row.provider === 'string')
-      schedule()
-    })
-    .catch(() => {})
-
-  observe()
-  document.addEventListener('input', (event) => { if (isIdInput(event.target)) schedule() }, true)
+      document.removeEventListener('input', onInput, true)
+      for (const box of document.querySelectorAll(`[${MARK}]`)) box.remove()
+      removeHeaders()
+    }
+  })
 }

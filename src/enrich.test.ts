@@ -113,6 +113,27 @@ test('fills missing discovery capacities; keeps endpoint values', () => {
   )
 })
 
+test('discovery and saved entries replace default names without changing ids or custom names', () => {
+  for (const id of ['gpt-5.6-sol', 'openai/gpt-5.6-sol']) {
+    for (const name of [undefined, '', '  ', id, 'My Sol']) {
+      const model = { id, name }
+      const expected = name === 'My Sol' ? name : 'GPT-5.6 Sol'
+      const discovered = enrichDiscovered([model], index, 'openai-responses')[0]!
+      const saved = enrichEntry(model, index, 'openai-responses')
+      assert.equal(discovered.id, id)
+      assert.equal(discovered.name, expected)
+      assert.equal(saved.id, id)
+      assert.equal(saved.name, expected)
+      assert.deepEqual(model, { id, name })
+    }
+  }
+  for (const catalog of [index, indexCatalog({ openai: { unknown: { id: 'unknown' } } })]) {
+    const model = { id: 'unknown', name: 'unknown' }
+    assert.deepEqual(enrichDiscovered([model], catalog), [model])
+    assert.deepEqual(enrichEntry(model, catalog), model)
+  }
+})
+
 test('slash-suffixed ids resolve to the bare catalog id', () => {
   const entry = enrichEntry({ id: 'anthropic/claude-sonnet-4.5' }, index, 'anthropic-messages')
   assert.equal(entry.name, 'Claude Sonnet 4.5')
@@ -166,6 +187,23 @@ test('compat drops withheld keys and fields the route api cannot take', () => {
   assert.equal(compatFields({ forceAdaptiveThinking: true }, 'openai-completions'), undefined)
 })
 
+test('alpha.2 catalog compat survives enrichment only on supported protocols', () => {
+  const completions = {
+    thinkingTokenBudgetField: 'thinking_budget', vllmPriority: -2,
+    chatTemplateKwargs: { budget: { $var: 'thinking.budget', omitWhenOff: true } },
+    chatTemplateArgs: { budget: { $var: 'thinking.budget' } },
+  }
+  const responses = { supportsMaxOutputTokens: false }
+  const catalog = indexCatalog({ openai: { model: { compat: {
+    ...completions, ...responses, supportsMidConvoEffort: true, allowedFallbackModels: ['other'],
+  } } } })
+  assert.deepEqual(enrichEntry({ id: 'model' }, catalog, 'openai-completions').compat, completions)
+  assert.deepEqual(enrichEntry({ id: 'model' }, catalog, 'openai-responses').compat, responses)
+  assert.equal(enrichEntry({ id: 'model' }, catalog, 'anthropic-messages').compat, undefined)
+  const explicit = { supportsMaxOutputTokens: true }
+  assert.deepEqual(enrichEntry({ id: 'model', compat: explicit }, catalog, 'openai-responses').compat, explicit)
+})
+
 test('mutate ops fill a new custom provider and a models-only edit', () => {
   const created = enrichOps([{
     op: 'set',
@@ -188,6 +226,16 @@ test('mutate ops fill a new custom provider and a models-only edit', () => {
     value: [{ id: 'gpt-4o' }],
   }], { providers: { 'my-gateway': { api: 'openai-completions' } } }, index)
   assert.equal((edited[0]!.value as Record<string, unknown>[])[0]!.name, 'GPT-4o (xAI)')
+})
+
+test('model-list enrichment observes earlier protocol edits in the same mutation', () => {
+  const previous = { providers: { relay: { api: 'openai-responses' } } }
+  const ops = enrichOps([
+    { op: 'set', path: ['providers', 'relay', 'api'], value: 'openai-completions' },
+    { op: 'set', path: ['providers', 'relay', 'models'], value: [{ id: 'gpt-4o' }] },
+  ], previous, index)
+  assert.equal((ops[1]!.value as Record<string, unknown>[])[0]?.name, 'GPT-4o (xAI)')
+  assert.equal(previous.providers.relay.api, 'openai-responses')
 })
 
 test('ignores catalog providers outside the allowlist', () => {

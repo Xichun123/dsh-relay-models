@@ -1,3 +1,4 @@
+import { Effect } from 'effect';
 /** Live pi.dev model catalog. Not the npm `@earendil-works/pi-ai` snapshot. */
 export declare const CATALOG_URL = "https://pi.dev/api/models";
 export interface PiModel {
@@ -26,4 +27,23 @@ export declare function resetAliases(): void;
 export declare function listAliases(): Record<string, string>;
 export declare function lookup(index: ModelIndex, id: string, api?: string): PiModel | undefined;
 export declare function listChoices(index: ModelIndex): CatalogChoice[];
-export declare function loadIndex(signal?: AbortSignal): Promise<ModelIndex>;
+declare const CatalogError_base: new <A extends Record<string, any> = {}>(args: import("effect/Types").VoidIfEmpty<{ readonly [P in keyof A as P extends "_tag" ? never : P]: A[P]; }>) => import("effect/Cause").YieldableError & {
+    readonly _tag: "CatalogError";
+} & Readonly<A>;
+/** A catalog failure is optional enrichment, never a provider discovery failure. */
+export declare class CatalogError extends CatalogError_base<{
+    message: string;
+    cause?: unknown;
+}> {
+}
+/**
+ * One plugin-owned successful snapshot. Concurrent readers share the download;
+ * interrupting a reader leaves other readers alive. Disposal aborts the download.
+ */
+export declare function createCatalog(options?: {
+    timeoutMs?: number;
+}): {
+    load: Effect.Effect<ModelIndex, CatalogError>;
+    dispose(): void;
+};
+export {};

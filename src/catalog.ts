@@ -1,3 +1,5 @@
+import { Data, Effect, Either } from 'effect'
+
 /** Live pi.dev model catalog. Not the npm `@earendil-works/pi-ai` snapshot. */
 export const CATALOG_URL = 'https://pi.dev/api/models'
 
@@ -31,11 +33,82 @@ export interface CatalogChoice {
   provider: string
 }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return value !== null && typeof value === 'object' && !Array.isArray(value)
+}
+
+const THINKING_LEVELS = new Set(['off', 'minimal', 'low', 'medium', 'high', 'xhigh', 'max'])
+const BOOLEAN_COMPAT = new Set([
+  'supportsStore', 'supportsDeveloperRole', 'supportsReasoningEffort',
+  'supportsUsageInStreaming', 'supportsFinishReason', 'requiresToolResultName',
+  'requiresAssistantAfterToolResult', 'requiresThinkingAsText',
+  'requiresReasoningContentOnAssistantMessages', 'supportsThinkingTokenBudget',
+  'supportsStrictMode', 'supportsLongCacheRetention', 'supportsEagerToolInputStreaming',
+  'supportsCacheControlOnTools', 'supportsTemperature', 'forceAdaptiveThinking',
+  'allowEmptySignature', 'supportsStrictTools', 'supportsMaxOutputTokens',
+])
+
 function asModel(id: string, raw: unknown): PiModel | undefined {
-  if (raw === null || typeof raw !== 'object' || Array.isArray(raw)) return undefined
-  const row = raw as Record<string, unknown>
-  const resolvedId = typeof row.id === 'string' && row.id.length > 0 ? row.id : id
-  return { ...row, id: resolvedId } as PiModel
+  if (!isRecord(raw)) return undefined
+  const model: PiModel = { id }
+  // Validate known fields before constructing a trusted model; never spread raw rows.
+  for (const key of ['id', 'name', 'api', 'provider'] as const) {
+    const value = raw[key]
+    if (value === undefined) continue
+    if (typeof value !== 'string' || value.length === 0) return undefined
+    model[key] = value
+  }
+  if (model.id.length === 0) return undefined
+  for (const key of ['contextWindow', 'maxTokens'] as const) {
+    const value = raw[key]
+    if (value === undefined) continue
+    if (typeof value !== 'number' || !Number.isSafeInteger(value) || value <= 0) return undefined
+    model[key] = value
+  }
+  if (raw.input !== undefined) {
+    if (!Array.isArray(raw.input) || !raw.input.every(value => value === 'text' || value === 'image')) return undefined
+    model.input = raw.input.map(value => String(value))
+  }
+  if (raw.reasoning !== undefined) {
+    if (typeof raw.reasoning !== 'boolean') return undefined
+    model.reasoning = raw.reasoning
+  }
+  if (raw.thinkingLevelMap !== undefined) {
+    if (!isRecord(raw.thinkingLevelMap)) return undefined
+    const entries: [string, string | null][] = []
+    for (const [key, value] of Object.entries(raw.thinkingLevelMap)) {
+      if (!THINKING_LEVELS.has(key)) continue
+      if (value !== null && typeof value !== 'string') return undefined
+      entries.push([key, value])
+    }
+    model.thinkingLevelMap = Object.fromEntries(entries)
+  }
+  if (raw.compat !== undefined) {
+    if (!isRecord(raw.compat)) return undefined
+    const entries: [string, unknown][] = []
+    for (const [key, value] of Object.entries(raw.compat)) {
+      if (BOOLEAN_COMPAT.has(key)) {
+        if (typeof value !== 'boolean') return undefined
+      } else if (key === 'thinkingFormat' || key === 'maxTokensField') {
+        if (typeof value !== 'string') return undefined
+      } else if (key === 'thinkingTokenBudgetField') {
+        if (value !== 'thinking_token_budget' && value !== 'thinking_budget' && value !== 'thinking_budget_tokens') return undefined
+      } else if (key === 'vllmPriority') {
+        if (typeof value !== 'number' || !Number.isSafeInteger(value)) return undefined
+      } else if (key === 'cacheControlFormat') {
+        if (value !== 'anthropic') return undefined
+      } else if (key === 'chatTemplateKwargs' || key === 'chatTemplateArgs') {
+        if (!isRecord(value) || !Object.values(value).every(item => item === null
+          || typeof item === 'string' || typeof item === 'boolean'
+          || (typeof item === 'number' && Number.isFinite(item))
+          || (isRecord(item) && (item.$var === 'thinking.enabled' || item.$var === 'thinking.effort' || item.$var === 'thinking.budget')
+            && (item.omitWhenOff === undefined || typeof item.omitWhenOff === 'boolean')))) return undefined
+      } else continue
+      entries.push([key, value])
+    }
+    model.compat = Object.fromEntries(entries)
+  }
+  return model
 }
 
 export function indexCatalog(catalog: Catalog): ModelIndex {
@@ -116,28 +189,80 @@ export function listChoices(index: ModelIndex): CatalogChoice[] {
   return out.sort((a, b) => a.id.localeCompare(b.id))
 }
 
-// ponytail: one in-flight fetch for the process; aborted/failed callers retry.
-let pending: Promise<ModelIndex> | undefined
+/** A catalog failure is optional enrichment, never a provider discovery failure. */
+export class CatalogError extends Data.TaggedError('CatalogError')<{
+  message: string
+  cause?: unknown
+}> {}
 
-export async function loadIndex(signal?: AbortSignal): Promise<ModelIndex> {
-  pending ??= fetchCatalog(signal).then(indexCatalog).catch((error: unknown) => {
-    pending = undefined
-    throw error
-  })
-  return pending
-}
+const catalogError = (cause: unknown): CatalogError => cause instanceof CatalogError
+  ? cause
+  : new CatalogError({ message: cause instanceof Error ? cause.message : String(cause), cause })
 
-async function fetchCatalog(signal?: AbortSignal): Promise<Catalog> {
-  const response = await fetch(CATALOG_URL, {
-    headers: { accept: 'application/json' },
-    ...signal === undefined ? {} : { signal },
+const download = Effect.gen(function*() {
+  const text = yield* Effect.tryPromise({
+    try: async (signal) => {
+      const response = await fetch(CATALOG_URL, { headers: { accept: 'application/json' }, signal })
+      const reader = response.body?.getReader()
+      try {
+        if (!response.ok) throw new CatalogError({ message: `pi.dev models HTTP ${String(response.status)}` })
+        const oversized = (): CatalogError => new CatalogError({ message: 'pi.dev models response too large' })
+        if (Number(response.headers.get('content-length')) > MAX_BYTES) throw oversized()
+        if (reader === undefined) return ''
+        const chunks: Uint8Array[] = []
+        let total = 0
+        for (;;) {
+          const { done, value } = await reader.read()
+          if (done) break
+          total += value.byteLength
+          if (total > MAX_BYTES) throw oversized()
+          chunks.push(value)
+        }
+        return Buffer.concat(chunks, total).toString('utf8')
+      } finally {
+        // The original read/status error wins over cleanup of a failed stream.
+        await reader?.cancel().catch(() => {})
+        reader?.releaseLock()
+      }
+    },
+    catch: catalogError,
   })
-  if (!response.ok) throw new Error(`pi.dev models HTTP ${String(response.status)}`)
-  const text = await response.text()
-  if (text.length > MAX_BYTES) throw new Error('pi.dev models response too large')
-  const body: unknown = JSON.parse(text)
-  if (body === null || typeof body !== 'object' || Array.isArray(body)) {
-    throw new Error('pi.dev models: expected a provider map')
+  const body: unknown = yield* Effect.try({ try: () => JSON.parse(text) as unknown, catch: catalogError })
+  if (!isRecord(body)) return yield* Effect.fail(new CatalogError({ message: 'pi.dev models: expected a provider map' }))
+  return indexCatalog(body as Catalog)
+})
+
+/**
+ * One plugin-owned successful snapshot. Concurrent readers share the download;
+ * interrupting a reader leaves other readers alive. Disposal aborts the download.
+ */
+export function createCatalog(options: { timeoutMs?: number } = {}): {
+  load: Effect.Effect<ModelIndex, CatalogError>
+  dispose(): void
+} {
+  const timeoutMs = options.timeoutMs ?? 30_000
+  if (!Number.isFinite(timeoutMs) || timeoutMs <= 0 || timeoutMs > 30_000) {
+    throw new RangeError('catalog timeoutMs must be in (0, 30000]')
   }
-  return body as Catalog
+  const lifetime = new AbortController()
+  let pending: Promise<ModelIndex> | undefined
+  const load = Effect.tryPromise({
+    try: () => {
+      if (lifetime.signal.aborted) return Promise.reject(new CatalogError({ message: 'catalog disposed' }))
+      // Caller interruption must not own the shared fetch's AbortSignal.
+      pending ??= Effect.runPromise(Effect.either(download.pipe(Effect.timeoutFail({
+        duration: timeoutMs,
+        onTimeout: () => new CatalogError({ message: 'pi.dev models request timed out' }),
+      }))), { signal: lifetime.signal }).then(result => {
+        if (Either.isLeft(result)) throw result.left
+        return result.right
+      }).catch((error: unknown) => {
+        pending = undefined
+        throw error
+      })
+      return pending
+    },
+    catch: catalogError,
+  })
+  return { load, dispose: () => { lifetime.abort(); pending = undefined } }
 }

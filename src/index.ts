@@ -1,6 +1,10 @@
-import { listAliases, listChoices, loadIndex, setAlias } from './catalog.ts'
+import { Effect } from 'effect'
+import type { IncomingMessage, ServerResponse } from 'node:http'
+import { createCatalog, listAliases, listChoices, setAlias } from './catalog.ts'
+import type { ModelIndex } from './catalog.ts'
 import { enrichDiscovered, enrichOps } from './enrich.ts'
 import type { DiscoveredModel, PathOp } from './enrich.ts'
+import { createUserAgentRewrite, userAgentTarget } from './headers.ts'
 
 const NS = 'llm-pi-ai'
 
@@ -8,178 +12,194 @@ interface Logger {
   warn(message: string, ...args: unknown[]): void
 }
 
-type Discover = (ns: string, request: { api?: string }, signal?: AbortSignal) => Promise<DiscoveredModel[]>
-type Mutate = (ns: string, ops: PathOp[], expectedRevision?: number) => Promise<void>
-
-interface LlmService {
-  discoverModels: Discover
+/** DSH 0.1.3-alpha.2 discovery draft; cancellation is a separate argument. */
+interface DiscoveryRequest {
+  provider?: string
+  baseURL?: string
+  api?: string
+  apiKey?: string
 }
+
+type Discover = (ns: string, request: DiscoveryRequest, signal?: AbortSignal) => Promise<DiscoveredModel[]>
+type Mutate = (ns: string, ops: readonly PathOp[], expectedRevision?: number) => Promise<void>
 
 interface SettingsService {
   get(ns: string): unknown
   mutate: Mutate
 }
 
-interface HttpResponse {
-  writeHead(status: number, headers?: Record<string, string>): void
-  end(body?: string): void
-}
-
-interface HttpRequest {
-  method?: string
-  on(event: 'data', cb: (chunk: Uint8Array) => void): void
-  on(event: 'end', cb: () => void): void
-  on(event: 'error', cb: (error: Error) => void): void
-}
-
 interface WebServer {
   register(route: {
-    kind: 'exact' | 'prefix'
+    kind: 'exact'
     path: string
-    handler: (req: HttpRequest, res: HttpResponse) => void | Promise<void>
+    handler: (req: IncomingMessage, res: ServerResponse) => void | Promise<void>
   }): () => void
 }
 
-function readBody(req: HttpRequest): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const chunks: Uint8Array[] = []
-    let size = 0
-    req.on('data', (chunk) => {
-      size += chunk.byteLength
-      if (size > 4096) {
-        reject(new Error('alias body too large'))
-        return
-      }
-      chunks.push(chunk)
-    })
-    req.on('end', () => {
-      const out = new Uint8Array(chunks.reduce((n, chunk) => n + chunk.byteLength, 0))
-      let at = 0
-      for (const chunk of chunks) {
-        out.set(chunk, at)
-        at += chunk.byteLength
-      }
-      resolve(new TextDecoder().decode(out))
-    })
-    req.on('error', reject)
-  })
-}
-
+/** Minimal structural Host face; no second Cordis runtime is bundled. */
 interface PluginContext {
-  llm: LlmService
+  llm: { discoverModels: Discover }
   settings?: SettingsService
   webServer?: WebServer
   logger: Logger
   inject(names: string[], callback: (ctx: PluginContext) => void): void
   effect(callback: () => (() => void) | void): void
+  on(event: 'llm/stream', listener: (options: { provider: string }, next: () => AsyncIterable<unknown>) => AsyncIterable<unknown>): () => void
+}
+
+function readBody(req: IncomingMessage): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const chunks: Buffer[] = []
+    let size = 0
+    const cleanup = (): void => {
+      req.off('data', data)
+      req.off('end', end)
+      req.off('error', fail)
+      req.off('aborted', aborted)
+    }
+    const fail = (error: Error): void => { cleanup(); reject(error) }
+    const aborted = (): void => { fail(new Error('alias request aborted')) }
+    const data = (chunk: Buffer): void => {
+      size += chunk.byteLength
+      if (size > 4096) { fail(new Error('alias body too large')); return }
+      chunks.push(chunk)
+    }
+    const end = (): void => { cleanup(); resolve(Buffer.concat(chunks).toString('utf8')) }
+    req.on('data', data)
+    req.on('end', end)
+    req.on('error', fail)
+    req.on('aborted', aborted)
+  })
 }
 
 export const name = 'dsh-relay-models'
 export const inject = ['llm']
 
+/** Enrich native discovery and model-list writes; all registrations belong to Cordis effects. */
 export function apply(ctx: PluginContext): void {
-  void loadIndex().catch(() => {})
+  const catalog = createCatalog()
+  const rewrite = createUserAgentRewrite()
+  let headerSettings: SettingsService | undefined
+  ctx.effect(() => rewrite.install())
+  const lifetime = new AbortController()
+  ctx.effect(() => () => { lifetime.abort(); catalog.dispose() })
+  const load = (signal?: AbortSignal): Promise<ModelIndex> => Effect.runPromise(catalog.load, {
+    signal: signal === undefined ? lifetime.signal : AbortSignal.any([signal, lifetime.signal]),
+  })
+  // Interruption is not a CatalogError and must not become a successful fallback.
+  const optionalIndex = (signal?: AbortSignal): Promise<ModelIndex | undefined> => Effect.runPromise(
+    catalog.load.pipe(Effect.catchTag('CatalogError', error => Effect.sync(() => {
+      ctx.logger.warn('dsh-relay-models: pi.dev catalog unavailable; leaving model fields unchanged')
+      ctx.logger.warn(error.message)
+      return undefined
+    }))),
+    { signal: signal === undefined ? lifetime.signal : AbortSignal.any([signal, lifetime.signal]) },
+  )
 
   ctx.effect(() => {
-    const orig = ctx.llm.discoverModels.bind(ctx.llm) as Discover
-    ctx.llm.discoverModels = async (ns, request, signal) => {
-      const models = await orig(ns, request, signal)
-      if (ns !== NS) return models
-      try {
-        return enrichDiscovered(models, await loadIndex(signal), request.api)
-      } catch (error) {
-        ctx.logger.warn('dsh-relay-models: pi.dev catalog unavailable; leaving discovered models unchanged')
-        ctx.logger.warn(String(error))
-        return models
-      }
+    const llm = ctx.llm
+    const original = llm.discoverModels
+    let active = true
+    const discover: Discover = async (ns, request, signal) => {
+      // 0.1.3 owns Anthropic listing, credentials, headers, parsing and LlmError codes.
+      const target = active && ns === NS ? userAgentTarget(headerSettings?.get(NS), request.provider, request.baseURL) : undefined
+      const models = await rewrite.run(target, () => original.call(llm, ns, request, signal))
+      if (!active || ns !== NS || models.length === 0) return models
+      signal?.throwIfAborted()
+      const index = await optionalIndex(signal)
+      return index === undefined ? models : enrichDiscovered(models, index, request.api)
     }
+    llm.discoverModels = discover
     return () => {
-      ctx.llm.discoverModels = orig
+      active = false
+      // Do not overwrite a wrapper installed by another plugin after this one.
+      if (llm.discoverModels === discover) llm.discoverModels = original
     }
   })
 
   ctx.inject(['webServer'], (webCtx) => {
     const server = webCtx.webServer!
-    webCtx.effect(() => {
-      const dropCatalog = server.register({
-        kind: 'exact',
-        path: '/dsh-relay-models/catalog',
-        handler: async (req, res) => {
-          if (req.method !== 'GET') {
-            res.writeHead(405)
-            res.end()
-            return
+    webCtx.effect(() => server.register({
+      kind: 'exact',
+      path: '/dsh-relay-models/catalog',
+      handler: async (req, res) => {
+        if (req.method !== 'GET') { res.writeHead(405, { allow: 'GET' }); res.end(); return }
+        try {
+          const body = JSON.stringify({ choices: listChoices(await load()), aliases: listAliases() })
+          res.writeHead(200, { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' })
+          res.end(body)
+        } catch (error) {
+          webCtx.logger.warn(`dsh-relay-models: catalog route failed: ${String(error)}`)
+          res.writeHead(502)
+          res.end()
+        }
+      },
+    }))
+    webCtx.effect(() => server.register({
+      kind: 'exact',
+      path: '/dsh-relay-models/alias',
+      handler: async (req, res) => {
+        if (req.method !== 'POST') { res.writeHead(405, { allow: 'POST' }); res.end(); return }
+        // JSON-only prevents cross-origin HTML form submissions to this local mutation route.
+        if (req.headers['content-type']?.split(';')[0]?.trim() !== 'application/json') {
+          res.writeHead(415); res.end(); return
+        }
+        try {
+          const body: unknown = JSON.parse(await readBody(req))
+          if (body === null || typeof body !== 'object' || Array.isArray(body)) throw new Error('expected an alias object')
+          const row = body as { id?: unknown; catalogId?: unknown }
+          if (typeof row.id !== 'string' || row.id.trim().length === 0
+            || (row.catalogId !== undefined && typeof row.catalogId !== 'string')) throw new Error('invalid alias')
+          if (typeof row.catalogId === 'string' && row.catalogId.length > 0 && !(await load()).has(row.catalogId)) {
+            throw new Error('unknown catalog model')
           }
-          try {
-            const body = JSON.stringify({
-              choices: listChoices(await loadIndex()),
-              aliases: listAliases(),
-            })
-            res.writeHead(200, { 'content-type': 'application/json; charset=utf-8' })
-            res.end(body)
-          } catch (error) {
-            webCtx.logger.warn('dsh-relay-models: catalog route failed')
-            webCtx.logger.warn(String(error))
-            res.writeHead(502)
-            res.end()
-          }
-        },
-      })
-      const dropAlias = server.register({
-        kind: 'exact',
-        path: '/dsh-relay-models/alias',
-        handler: async (req, res) => {
-          if (req.method !== 'POST') {
-            res.writeHead(405)
-            res.end()
-            return
-          }
-          try {
-            const body: unknown = JSON.parse(await readBody(req))
-            if (body === null || typeof body !== 'object' || Array.isArray(body)) {
-              res.writeHead(400)
-              res.end()
-              return
-            }
-            const row = body as { id?: unknown; catalogId?: unknown }
-            if (typeof row.id !== 'string' || row.id.length === 0) {
-              res.writeHead(400)
-              res.end()
-              return
-            }
-            setAlias(row.id, typeof row.catalogId === 'string' ? row.catalogId : undefined)
-            res.writeHead(204)
-            res.end()
-          } catch {
-            res.writeHead(400)
-            res.end()
-          }
-        },
-      })
-      return () => {
-        dropCatalog()
-        dropAlias()
-      }
-    })
+          setAlias(row.id, row.catalogId)
+          res.writeHead(204)
+          res.end()
+        } catch {
+          res.writeHead(400)
+          res.end()
+        }
+      },
+    }))
   })
 
   ctx.inject(['settings'], (settingsCtx) => {
     const settings = settingsCtx.settings!
     settingsCtx.effect(() => {
-      const orig = settings.mutate.bind(settings) as Mutate
-      settings.mutate = async (ns, ops, expectedRevision) => {
-        if (ns !== NS) return orig(ns, ops, expectedRevision)
-        let next = ops
-        try {
-          next = enrichOps(ops, settings.get(NS), await loadIndex())
-        } catch (error) {
-          settingsCtx.logger.warn('dsh-relay-models: pi.dev catalog unavailable; writing models without catalog fill')
-          settingsCtx.logger.warn(String(error))
-        }
-        return orig(ns, next, expectedRevision)
+      headerSettings = settings
+      return () => { if (headerSettings === settings) headerSettings = undefined }
+    })
+    // Shared waterfall covers direct streams AND registration-bound prepareCall streams.
+    settingsCtx.on('llm/stream', (options, next) =>
+      rewrite.stream(userAgentTarget(settings.get(NS), options.provider), next))
+    settingsCtx.effect(() => {
+      const original = settings.mutate
+      const pending = new AbortController()
+      let active = true
+      // Keep the Host's call-order guarantee while enrichment awaits the network.
+      let writes = Promise.resolve()
+      const mutate: Mutate = (ns, ops, expectedRevision) => {
+        if (!active || ns !== NS) return original.call(settings, ns, ops, expectedRevision)
+        const result = writes.then(async () => {
+          pending.signal.throwIfAborted()
+          const hasModels = ops.some(op => op.op === 'set' && op.path?.[0] === 'providers'
+            && ((op.path.length === 2 && op.value !== null && typeof op.value === 'object'
+              && Array.isArray((op.value as { models?: unknown }).models))
+              || (op.path.length === 3 && op.path[2] === 'models' && Array.isArray(op.value))))
+          const index = hasModels ? await optionalIndex(pending.signal) : undefined
+          pending.signal.throwIfAborted()
+          const next = index === undefined ? ops : enrichOps(ops, settings.get(NS), index)
+          return original.call(settings, ns, next, expectedRevision)
+        })
+        writes = result.catch(() => { /* A rejected write must not poison the next queued edit. */ })
+        return result
       }
+      settings.mutate = mutate
       return () => {
-        settings.mutate = orig
+        active = false
+        pending.abort()
+        if (settings.mutate === mutate) settings.mutate = original
       }
     })
   })

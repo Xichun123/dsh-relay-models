@@ -26,12 +26,13 @@ const COMPLETIONS_COMPAT = new Set([
   'requiresToolResultName', 'requiresAssistantAfterToolResult',
   'requiresThinkingAsText', 'requiresReasoningContentOnAssistantMessages',
   'thinkingFormat', 'chatTemplateKwargs', 'chatTemplateArgs',
-  'supportsThinkingTokenBudget', 'supportsStrictMode', 'cacheControlFormat',
+  'supportsThinkingTokenBudget', 'thinkingTokenBudgetField', 'vllmPriority',
+  'supportsStrictMode', 'cacheControlFormat',
   'supportsLongCacheRetention',
 ])
 
 const RESPONSES_COMPAT = new Set([
-  'supportsDeveloperRole', 'supportsStrictMode', 'supportsLongCacheRetention',
+  'supportsDeveloperRole', 'supportsStrictMode', 'supportsLongCacheRetention', 'supportsMaxOutputTokens',
 ])
 
 const ANTHROPIC_COMPAT = new Set([
@@ -118,6 +119,11 @@ function resolve(
     ?? lookup(index, id, api)
 }
 
+function isDefaultName(name: unknown, id: string): boolean {
+  // Native discovery uses the request id when the endpoint omits a display name.
+  return name == null || (typeof name === 'string' && (name.trim().length === 0 || name === id))
+}
+
 export function enrichDiscovered(
   models: readonly DiscoveredModel[],
   index: ModelIndex,
@@ -126,7 +132,7 @@ export function enrichDiscovered(
   return models.map((model) => {
     const hit = resolve(index, model.id, api)
     if (hit === undefined) return model
-    const name = model.name ?? hit.name
+    const name = isDefaultName(model.name, model.id) ? hit.name ?? model.name : model.name
     const contextWindow = model.contextWindow ?? (positive(hit.contextWindow) ? hit.contextWindow : undefined)
     const maxTokens = model.maxTokens ?? (positive(hit.maxTokens) ? hit.maxTokens : undefined)
     return {
@@ -152,7 +158,7 @@ export function enrichEntry(
     const mapped = aliasOf(id)
     if (mapped !== undefined) next.catalogId = mapped
   }
-  if (next.name == null && hit.name !== undefined) next.name = hit.name
+  if (isDefaultName(next.name, id) && hit.name !== undefined) next.name = hit.name
   if (!positive(next.contextWindow) && positive(hit.contextWindow)) next.contextWindow = hit.contextWindow
   if (!positive(next.maxTokens) && positive(hit.maxTokens)) next.maxTokens = hit.maxTokens
   const input = modalities(next.input) ?? modalities(hit.input)
@@ -175,9 +181,18 @@ function apiOf(section: unknown, route: string): string | undefined {
 }
 
 export function enrichOps(ops: readonly PathOp[], section: unknown, index: ModelIndex): PathOp[] {
+  const apis = new Map<string, string | undefined>()
   return ops.map((op) => {
-    if (op.op !== 'set' || op.path?.[0] !== 'providers') return op
+    if (op.path?.[0] !== 'providers') return op
     const path = op.path
+    const route = path[1] ?? ''
+    // Settings applies path edits in order, including protocol edits before a model list.
+    if (path.length === 2) {
+      apis.set(route, op.op === 'set' && isRecord(op.value) && typeof op.value.api === 'string' ? op.value.api : undefined)
+    } else if (path.length === 3 && path[2] === 'api') {
+      apis.set(route, op.op === 'set' && typeof op.value === 'string' ? op.value : undefined)
+    }
+    if (op.op !== 'set') return op
     if (path.length === 2 && isRecord(op.value) && Array.isArray(op.value.models)) {
       const api = typeof op.value.api === 'string' ? op.value.api : undefined
       return {
@@ -189,7 +204,7 @@ export function enrichOps(ops: readonly PathOp[], section: unknown, index: Model
       }
     }
     if (path.length === 3 && path[2] === 'models' && Array.isArray(op.value)) {
-      const api = apiOf(section, path[1] ?? '')
+      const api = apis.has(route) ? apis.get(route) : apiOf(section, route)
       return {
         ...op,
         value: op.value.map(model => isRecord(model) ? enrichEntry(model, index, api) : model),
