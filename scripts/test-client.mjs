@@ -329,8 +329,14 @@ function dragEvent(app, type, target, y = 0) {
   target.dispatchEvent(event)
   return event
 }
+const modelMarkup = `<div><button aria-haspopup="menu" aria-controls="picker-menu">Select model</button>
+  <div role="menu" aria-label="Model and reasoning effort" id="picker-menu"><div>${['a', 'b', 'c'].map(id => `
+    <section role="group" aria-labelledby="picker-${id}"><div id="picker-${id}">Same name</div>
+      <button role="menuitemradio" aria-checked="${id === 'b'}">Model ${id}</button></section>`).join('')}
+  </div></div></div>`
+const groupOrder = app => [...app.window.document.querySelectorAll('[role="menu"] section[role="group"]')].map(row => row.getAttribute('aria-labelledby').replace(/^.*?-/, ''))
 let persistedOrder
-const sorting = setup({ failedCatalog: true, initialMarkup: providerMarkup })
+const sorting = setup({ failedCatalog: true, initialMarkup: providerMarkup + modelMarkup })
 try {
   await settle()
   const doc = sorting.window.document
@@ -351,6 +357,8 @@ try {
   handleFor(sorting, 'a').focus()
   arrow(sorting, 'a', 'ArrowUp')
   assert.deepEqual(visibleOrder(sorting), ['c', 'a', 'b'])
+  assert.deepEqual(groupOrder(sorting), ['c', 'a', 'b'], 'settings saves immediately reorder open composer groups with duplicate display names')
+  assert.equal(doc.querySelector('[aria-checked="true"]').textContent, 'Model b', 'sorting never changes the selected model')
   assert.equal(doc.activeElement, handleFor(sorting, 'a'), 'keyboard reordering preserves focus')
   persistedOrder = sorting.window.localStorage.getItem(orderKey)
   assert.deepEqual(JSON.parse(persistedOrder), ['c', 'a', 'b'])
@@ -378,6 +386,7 @@ try {
   sorting.window.Storage.prototype.setItem = () => { throw new Error('quota exceeded') }
   arrow(sorting, 'a', 'ArrowDown')
   assert.deepEqual(visibleOrder(sorting), ['c', 'a', 'b'], 'storage failure leaves the previous order intact')
+  assert.deepEqual(groupOrder(sorting), ['c', 'a', 'b'], 'failed save cannot change composer order')
   assert.match(doc.querySelector('#dsh-relay-provider-order-hint').textContent, /Could not save/)
   sorting.window.Storage.prototype.setItem = originalSet
   await settle()
@@ -387,6 +396,7 @@ try {
   sorting.window.localStorage.removeItem(orderKey)
   sorting.window.dispatchEvent(new sorting.window.StorageEvent('storage', { key: orderKey }))
   assert.deepEqual(visibleOrder(sorting), ['a', 'b', 'c'], 'clearing the preference in another tab restores the native baseline')
+  assert.deepEqual(groupOrder(sorting), ['a', 'b', 'c'])
   sorting.window.localStorage.setItem(orderKey, persistedOrder)
   sorting.window.dispatchEvent(new sorting.window.StorageEvent('storage', { key: orderKey }))
   assert.deepEqual(visibleOrder(sorting), ['c', 'a', 'b'])
@@ -395,6 +405,7 @@ try {
   sorting.dispose()
   assert.equal(doc.activeElement, doc.querySelector('[data-route="a"] button[aria-label^="Edit "]'), 'unload hands focus back to the native edit button')
   assert.deepEqual(visibleOrder(sorting), ['a', 'b', 'c'], 'unloading restores the recorded native order')
+  assert.deepEqual(groupOrder(sorting), ['a', 'b', 'c'], 'unload restores the open composer too')
   assert.equal(doc.querySelector(handleSelector), null)
   assert.equal(doc.querySelector('#dsh-relay-provider-order-hint'), null)
   detachedHandle.dispatchEvent(new sorting.window.KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true }))
@@ -520,4 +531,117 @@ try {
   if (oldDocument === undefined) delete globalThis.document; else globalThis.document = oldDocument
 }
 
-console.log('Client bundle smoke passed: catalog/Headers independence, validation and draft protection; provider drag/keyboard sorting, persistence, storage failures, React reconciliation, focus and cleanup')
+for (const invalidMarkup of [
+  modelMarkup.replace('Model and reasoning effort', 'Unrelated menu'),
+  modelMarkup.replace('aria-controls="picker-menu"', 'aria-controls="other-menu"'),
+  modelMarkup.replace('aria-labelledby="picker-a"', 'aria-labelledby="wrong-heading"'),
+]) {
+  const guarded = setup({ initialMarkup: invalidMarkup, storedOrder: '["c","a","b"]' })
+  try {
+    await settle()
+    assert.deepEqual([...guarded.window.document.querySelectorAll('[role="menuitemradio"]')].map(button => button.textContent), ['Model a', 'Model b', 'Model c'], 'unrecognized menus remain untouched')
+  } finally { guarded.dispose(); guarded.close() }
+}
+
+// Render the current Harness ModelSelect itself; only decorative primitives are stubbed.
+const { build } = await import('esbuild')
+const compiled = await build({
+  entryPoints: [resolve(process.env.DSH_SOURCE, 'packages/client/ui-model-selection/src/client/ModelSelect.tsx')],
+  bundle: true, platform: 'node', format: 'cjs', write: false, loader: { '.module.css': 'empty' },
+  external: ['react', '@deepseek-ai/dsh-client-ui-primitives'], logLevel: 'silent',
+})
+const compiledModule = { exports: {} }
+new Function('require', 'module', 'exports', compiled.outputFiles[0].text)(name => {
+  if (name === 'react') return React
+  if (name === 'react/jsx-runtime') return reactRequire(name)
+  if (name === '@deepseek-ai/dsh-client-ui-primitives') return new Proxy({}, { get: () => () => null })
+  throw new Error(`unexpected ModelSelect dependency: ${name}`)
+}, compiledModule, compiledModule.exports)
+const { ModelSelect } = compiledModule.exports
+const picker = setup({ failedCatalog: true, initialMarkup: '<div id="picker-root"></div>', storedOrder: '["c","a","b"]' })
+globalThis.window = picker.window
+globalThis.document = picker.window.document
+const oldNode = globalThis.Node
+globalThis.Node = picker.window.Node
+const pickerRoot = createRoot(picker.window.document.querySelector('#picker-root'))
+let pickerState = {
+  current: { provider: 'b', model: 'model-b', reasoningEffort: 'high' }, routable: true,
+  groups: ['a', 'b', 'c'].map(id => ({ id, name: 'Same name', models: [{ id: `model-${id}`, name: `Model ${id}`, reasoning: {
+    efforts: [{ id: 'high', name: 'High' }], defaultEffort: 'high',
+  } }] })), failures: [], status: 'ready', error: null,
+}
+const listeners = new Set()
+const selections = []
+const props = {
+  locked: false, available: true,
+  directory: { subscribe(fn) { listeners.add(fn); return () => listeners.delete(fn) }, getSnapshot: () => pickerState },
+  load() {}, select: async selection => { selections.push(selection); return true },
+  t: key => key === 'menu.aria' ? 'Model and reasoning effort' : key,
+}
+const pickerDoc = picker.window.document
+const clickPicker = target => flushSync(() => target.click())
+const pickerTrigger = () => pickerDoc.querySelector('button[aria-haspopup="menu"]')
+const pickerModels = () => [...pickerDoc.querySelectorAll('section[role="group"] > button')]
+const pickerOrder = () => pickerModels().map(button => button.textContent)
+const openModels = async () => {
+  clickPicker(pickerTrigger())
+  clickPicker(pickerDoc.querySelector('[role="menuitem"]'))
+  await settle()
+}
+const pickerKey = (target, key) => flushSync(() => target.dispatchEvent(new picker.window.KeyboardEvent('keydown', { key, bubbles: true, cancelable: true })))
+try {
+  flushSync(() => pickerRoot.render(React.createElement(ModelSelect, props)))
+  await openModels()
+  assert.deepEqual(pickerOrder(), ['Model c', 'Model a', 'Model b'], 'real ModelSelect uses saved order without Settings mounted')
+  const selected = pickerDoc.querySelector('[aria-checked="true"]')
+  assert.equal(selected.textContent, 'Model b')
+  flushSync(() => selected.focus())
+  pickerKey(selected, 'ArrowDown')
+  assert.equal(pickerDoc.activeElement.textContent, 'Model c', 'arrow traversal wraps in visible rather than React ref order')
+  pickerKey(pickerDoc.activeElement, 'ArrowUp')
+  assert.equal(pickerDoc.activeElement, selected)
+  flushSync(() => pickerTrigger().focus())
+  pickerKey(pickerTrigger(), 'ArrowUp')
+  assert.equal(pickerDoc.activeElement, selected, 'trigger arrow traversal also uses the visible order')
+
+  // Exercise the insertBefore fallback: a native removal-induced blur would close ModelSelect.
+  const groupList = selected.parentElement.parentElement
+  groupList.moveBefore = undefined
+  picker.window.localStorage.setItem(orderKey, '["b","c","a"]')
+  flushSync(() => picker.window.dispatchEvent(new picker.window.StorageEvent('storage', { key: orderKey })))
+  assert.deepEqual(pickerOrder(), ['Model b', 'Model c', 'Model a'])
+  assert.equal(pickerDoc.activeElement, selected, 'fallback moves siblings around the focused group')
+  assert.equal(selections.length, 0)
+
+  pickerState = { ...pickerState, groups: [...pickerState.groups.filter(group => group.id !== 'a'), {
+    id: 'new-provider/with-hyphens', name: 'Same name', models: [{ id: 'new', name: 'New model' }],
+  }] }
+  flushSync(() => { for (const listener of listeners) listener() })
+  await settle()
+  assert.deepEqual(pickerOrder(), ['Model b', 'Model c', 'New model'], 'native add/remove preserves IDs and appends unknown providers')
+  assert.equal(pickerDoc.querySelector('[aria-checked="true"]'), selected)
+  assert.equal(pickerDoc.activeElement, selected)
+  clickPicker(pickerModels()[1])
+  await settle()
+  assert.deepEqual(selections, [{ provider: 'c', model: 'model-c' }], 'reordered native click still submits the exact provider/model')
+  assert.equal(pickerDoc.querySelector('[role="menu"]'), null)
+  await openModels()
+  assert.deepEqual(pickerOrder(), ['Model b', 'Model c', 'New model'], 'reopened menu reuses saved order')
+  pickerKey(pickerTrigger(), 'Escape')
+  assert.equal(pickerDoc.querySelector('section[role="group"]'), null)
+  clickPicker(pickerDoc.querySelectorAll('[role="menuitem"]')[1])
+  assert.equal(pickerDoc.querySelector('[role="menuitemradio"]').textContent, 'High', 'reasoning pane is not sorted')
+  pickerKey(pickerTrigger(), 'Escape')
+  clickPicker(pickerDoc.querySelector('[role="menuitem"]'))
+  await settle()
+  flushSync(() => picker.dispose())
+  assert.deepEqual(pickerOrder(), ['Model b', 'Model c', 'New model'], 'dispose restores current native group order without resurrecting removals')
+  flushSync(() => pickerRoot.unmount())
+} finally {
+  picker.dispose(); picker.close()
+  if (oldWindow === undefined) delete globalThis.window; else globalThis.window = oldWindow
+  if (oldDocument === undefined) delete globalThis.document; else globalThis.document = oldDocument
+  if (oldNode === undefined) delete globalThis.Node; else globalThis.Node = oldNode
+}
+
+console.log('Client bundle smoke passed: catalog/Headers, provider sorting and real Harness ModelSelect order, keyboard, selection, React updates and cleanup')

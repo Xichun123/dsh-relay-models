@@ -4,10 +4,14 @@ const DRAGGING = 'data-dsh-relay-provider-dragging'
 const DROP = 'data-dsh-relay-provider-drop'
 const HINT = 'dsh-relay-provider-order-hint'
 
-interface Row {
+interface OrderedRow {
+  element: HTMLElement
+  id: string
+}
+
+interface Row extends OrderedRow {
   element: HTMLLIElement
   head: HTMLElement
-  id: string
   label: string
 }
 
@@ -42,19 +46,26 @@ function readOrder(): string[] {
 }
 
 /** Keep React-owned rows in their original parent; never clone or replace an editor. */
-function arrange(list: HTMLUListElement, rows: Row[], order: string[]): void {
+function arrange(list: HTMLElement, rows: OrderedRow[], order: string[]): void {
   const rank = new Map(order.map((id, index) => [id, index]))
   const sorted = [...rows].sort((a, b) => (rank.get(a.id) ?? order.length) - (rank.get(b.id) ?? order.length))
   const focused = document.activeElement
   const selection = (focused instanceof HTMLInputElement || focused instanceof HTMLTextAreaElement)
     && focused.selectionStart !== null ? [focused.selectionStart, focused.selectionEnd, focused.selectionDirection] as const : undefined
   // moveBefore preserves focus/composition in supporting browsers; older ones need refocusing.
-  const move = (list as HTMLUListElement & { moveBefore?: (node: Node, child: Node | null) => void }).moveBefore
+  const move = (list as HTMLElement & { moveBefore?: (node: Node, child: Node | null) => void }).moveBefore
   let next = list.firstElementChild
   for (const row of sorted) {
     if (row.element !== next) {
       if (move !== undefined) move.call(list, row.element, next)
-      else list.insertBefore(row.element, next)
+      else if (row.element.contains(focused)) {
+        // Keep the focused subtree attached: ModelSelect closes on a removal-induced blur.
+        while (next !== null && next !== row.element) {
+          const displaced = next
+          next = next.nextElementSibling
+          list.append(displaced)
+        }
+      } else list.insertBefore(row.element, next)
     }
     next = row.element.nextElementSibling
   }
@@ -66,11 +77,49 @@ function arrange(list: HTMLUListElement, rows: Row[], order: string[]): void {
   }
 }
 
+const MODEL_MENU = '[role="menu"][aria-label="Model and reasoning effort"], [role="menu"][aria-label="模型与推理等级"]'
+
+/** alpha.2 ties menu and group heading IDs to the same useId; provider IDs stay opaque. */
+function modelRows(menu: HTMLElement): { list: HTMLElement; rows: OrderedRow[] } | undefined {
+  if (!menu.id.endsWith('-menu')) return undefined
+  const trigger = menu.parentElement?.querySelector('button[aria-haspopup="menu"]')
+  if (trigger?.getAttribute('aria-controls') !== menu.id) return undefined
+  const list = menu.querySelector('section[role="group"]')?.parentElement
+  if (!(list instanceof HTMLElement) || list.parentElement !== menu) return undefined
+  const prefix = `${menu.id.slice(0, -5)}-`
+  const rows: OrderedRow[] = []
+  for (const element of list.children) {
+    const heading = element.firstElementChild
+    if (!(element instanceof HTMLElement) || !element.matches('section[role="group"]')
+      || !heading?.id.startsWith(prefix) || element.getAttribute('aria-labelledby') !== heading.id
+      || !element.querySelector(':scope > button[role="menuitemradio"]')) return undefined
+    const id = heading.id.slice(prefix.length)
+    if (!id || rows.some(row => row.id === id)) return undefined
+    rows.push({ element, id })
+  }
+  return rows.length > 0 ? { list, rows } : undefined
+}
+
 /** Browser-only view preference: no settings revision or provider configuration writes. */
 export function createProviderSorting(signal: AbortSignal): () => void {
   let order = readOrder()
   let list: HTMLUListElement | undefined
   let original: string[] = []
+  const modelLists = new Map<HTMLElement, { menu: HTMLElement; original: string[] }>()
+  const syncModels = (): void => {
+    const seen = new Set<HTMLElement>()
+    for (const menu of document.querySelectorAll<HTMLElement>(MODEL_MENU)) {
+      const found = modelRows(menu)
+      if (found === undefined) continue
+      const { list, rows } = found
+      seen.add(list)
+      const baseline = modelLists.get(list) ?? { menu, original: [] }
+      for (const row of rows) if (!baseline.original.includes(row.id)) baseline.original.push(row.id)
+      modelLists.set(list, baseline)
+      arrange(list, rows, [...order, ...baseline.original.filter(id => !order.includes(id))])
+    }
+    for (const list of modelLists.keys()) if (!seen.has(list)) modelLists.delete(list)
+  }
   let hintLocale: string | undefined
   const handles = new Map<HTMLLIElement, HTMLButtonElement>()
   let dragged: HTMLLIElement | undefined
@@ -120,6 +169,7 @@ export function createProviderSorting(signal: AbortSignal): () => void {
 
   const sync = (): void => {
     if (signal.aborted) return
+    syncModels()
     // Only the Settings dialog's top-level provider rows, never model discovery lists.
     const candidates = [...document.querySelectorAll<HTMLUListElement>('[role="dialog"] ul')]
     const found = candidates.find(candidate => {
@@ -181,6 +231,7 @@ export function createProviderSorting(signal: AbortSignal): () => void {
     }
     order = ids
     arrange(list, rows, order)
+    syncModels()
     const row = rows.find(item => item.element === moved)!
     hint.textContent = text(
       `Order saved in this browser. ${row.label}: ${ids.indexOf(row.id) + 1} of ${ids.length}.`,
@@ -250,6 +301,28 @@ export function createProviderSorting(signal: AbortSignal): () => void {
     order = readOrder()
     sync()
   }, { signal })
-  signal.addEventListener('abort', () => { detach(); style.remove() }, { once: true })
+  document.addEventListener('keydown', event => {
+    if (!['ArrowUp', 'ArrowDown'].includes(event.key) || !(event.target instanceof Node)) return
+    for (const { menu } of modelLists.values()) {
+      if (!menu.isConnected || !menu.parentElement?.contains(event.target) || modelRows(menu) === undefined) continue
+      // Native React itemRefs still use catalog order; arrow keys must follow the visible order.
+      const items = [...menu.querySelectorAll<HTMLButtonElement>('button[role="menuitemradio"]')].filter(item => !item.disabled)
+      if (items.length === 0) return
+      event.preventDefault()
+      event.stopPropagation()
+      const active = Math.max(0, items.indexOf(document.activeElement as HTMLButtonElement))
+      items[(active + (event.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length]?.focus()
+      return
+    }
+  }, { capture: true, signal })
+  signal.addEventListener('abort', () => {
+    detach()
+    for (const [list, { menu, original }] of modelLists) {
+      const found = modelRows(menu)
+      if (found?.list === list) arrange(list, found.rows, original)
+    }
+    modelLists.clear()
+    style.remove()
+  }, { once: true })
   return sync
 }
