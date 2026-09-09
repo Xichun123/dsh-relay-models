@@ -79,11 +79,12 @@ function arrange(list: HTMLElement, rows: OrderedRow[], order: string[]): void {
 
 const MODEL_MENU = '[role="menu"][aria-label="Model and reasoning effort"], [role="menu"][aria-label="模型与推理等级"]'
 
-/** alpha.2 ties menu and group heading IDs to the same useId; provider IDs stay opaque. */
-function modelRows(menu: HTMLElement): { list: HTMLElement; rows: OrderedRow[] } | undefined {
+/** Match by aria-controls across portals; provider IDs and React useIds stay opaque. */
+function modelRows(menu: HTMLElement): { list: HTMLElement; rows: OrderedRow[]; trigger: HTMLButtonElement } | undefined {
   if (!menu.id.endsWith('-menu')) return undefined
-  const trigger = menu.parentElement?.querySelector('button[aria-haspopup="menu"]')
-  if (trigger?.getAttribute('aria-controls') !== menu.id) return undefined
+  const trigger = [...document.querySelectorAll<HTMLButtonElement>('button[aria-haspopup="menu"][aria-controls]')]
+    .find(button => button.getAttribute('aria-controls') === menu.id)
+  if (trigger === undefined) return undefined
   const list = menu.querySelector('section[role="group"]')?.parentElement
   if (!(list instanceof HTMLElement) || list.parentElement !== menu) return undefined
   const prefix = `${menu.id.slice(0, -5)}-`
@@ -97,7 +98,7 @@ function modelRows(menu: HTMLElement): { list: HTMLElement; rows: OrderedRow[] }
     if (!id || rows.some(row => row.id === id)) return undefined
     rows.push({ element, id })
   }
-  return rows.length > 0 ? { list, rows } : undefined
+  return rows.length > 0 ? { list, rows, trigger } : undefined
 }
 
 /** Browser-only view preference: no settings revision or provider configuration writes. */
@@ -304,7 +305,9 @@ export function createProviderSorting(signal: AbortSignal): () => void {
   document.addEventListener('keydown', event => {
     if (!['ArrowUp', 'ArrowDown'].includes(event.key) || !(event.target instanceof Node)) return
     for (const { menu } of modelLists.values()) {
-      if (!menu.isConnected || !menu.parentElement?.contains(event.target) || modelRows(menu) === undefined) continue
+      if (!menu.isConnected) continue
+      const found = modelRows(menu)
+      if (found === undefined || (!menu.contains(event.target) && !found.trigger.contains(event.target))) continue
       // Native React itemRefs still use catalog order; arrow keys must follow the visible order.
       const items = [...menu.querySelectorAll<HTMLButtonElement>('button[role="menuitemradio"]')].filter(item => !item.disabled)
       if (items.length === 0) return

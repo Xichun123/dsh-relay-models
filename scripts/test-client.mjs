@@ -548,17 +548,17 @@ const { build } = await import('esbuild')
 const compiled = await build({
   entryPoints: [resolve(process.env.DSH_SOURCE, 'packages/client/ui-model-selection/src/client/ModelSelect.tsx')],
   bundle: true, platform: 'node', format: 'cjs', write: false, loader: { '.module.css': 'empty' },
-  external: ['react', '@deepseek-ai/dsh-client-ui-primitives'], logLevel: 'silent',
+  external: ['react', 'react-dom', '@deepseek-ai/dsh-client-ui-primitives'], logLevel: 'silent',
 })
 const compiledModule = { exports: {} }
 new Function('require', 'module', 'exports', compiled.outputFiles[0].text)(name => {
   if (name === 'react') return React
-  if (name === 'react/jsx-runtime') return reactRequire(name)
+  if (name === 'react/jsx-runtime' || name === 'react-dom') return reactRequire(name)
   if (name === '@deepseek-ai/dsh-client-ui-primitives') return new Proxy({}, { get: () => () => null })
   throw new Error(`unexpected ModelSelect dependency: ${name}`)
 }, compiledModule, compiledModule.exports)
 const { ModelSelect } = compiledModule.exports
-const picker = setup({ failedCatalog: true, initialMarkup: '<div id="picker-root"></div>', storedOrder: '["c","a","b"]' })
+const picker = setup({ failedCatalog: true, initialMarkup: '<button id="other-trigger" aria-haspopup="menu" aria-controls="other-menu">Other menu</button><input id="outside-input"><div id="picker-root"></div>', storedOrder: '["c","a","b"]' })
 globalThis.window = picker.window
 globalThis.document = picker.window.document
 const oldNode = globalThis.Node
@@ -580,7 +580,7 @@ const props = {
 }
 const pickerDoc = picker.window.document
 const clickPicker = target => flushSync(() => target.click())
-const pickerTrigger = () => pickerDoc.querySelector('button[aria-haspopup="menu"]')
+const pickerTrigger = () => pickerDoc.querySelector('#picker-root button[aria-haspopup="menu"]')
 const pickerModels = () => [...pickerDoc.querySelectorAll('section[role="group"] > button')]
 const pickerOrder = () => pickerModels().map(button => button.textContent)
 const openModels = async () => {
@@ -592,7 +592,17 @@ const pickerKey = (target, key) => flushSync(() => target.dispatchEvent(new pick
 try {
   flushSync(() => pickerRoot.render(React.createElement(ModelSelect, props)))
   await openModels()
-  assert.deepEqual(pickerOrder(), ['Model c', 'Model a', 'Model b'], 'real ModelSelect uses saved order without Settings mounted')
+  assert.deepEqual(pickerOrder(), ['Model c', 'Model a', 'Model b'], 'real ModelSelect uses saved order with an unrelated menu trigger before it')
+  for (const id of ['other-trigger', 'outside-input']) {
+    const outside = pickerDoc.getElementById(id)
+    outside.focus()
+    for (const key of ['ArrowUp', 'ArrowDown']) {
+      const event = new picker.window.KeyboardEvent('keydown', { key, bubbles: true, cancelable: true })
+      flushSync(() => outside.dispatchEvent(event))
+      assert.equal(event.defaultPrevented, false, 'unrelated controls retain their arrow keys')
+      assert.equal(pickerDoc.activeElement === outside, true, 'unrelated controls retain focus')
+    }
+  }
   const selected = pickerDoc.querySelector('[aria-checked="true"]')
   assert.equal(selected.textContent, 'Model b')
   flushSync(() => selected.focus())

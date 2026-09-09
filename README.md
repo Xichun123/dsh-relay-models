@@ -2,7 +2,7 @@
 
 为 [DeepSeek Harness](https://github.com/deepseek-ai/DeepSeek-Harness) 的 `llm-pi-ai` 自定义提供方补全模型能力、编辑 Headers、覆写请求的 User-Agent，并支持供应商列表拖拽排序。
 
-当前代码按 **dsh-v0.1.3-alpha.2** 源码适配（验证 checkout：`82a5fd61a7`），peer 依赖最低要求同步为 `0.1.3-alpha.2`；不再兼容仅依赖插件实现 Anthropic 模型发现的旧版本。
+当前代码按 **dsh-v0.1.5-alpha.1** 源码适配（验证 checkout：`5dda764ed3`）。peer 依赖声明为 `^0.1.3-alpha.2 || ^0.1.5-alpha.1`，保留旧版范围并显式接受新版预发布版本；不再兼容仅依赖插件实现 Anthropic 模型发现的旧版本。
 
 `compat` 不再维护插件自己的字段、协议或枚举白名单：保存时直接使用当前运行 Host 的 `llm-pi-ai` schema 和校验函数，按实际协议与字段值决定是否补入。alpha.2 支持的 `thinkingTokenBudgetField`、`vllmPriority`、`supportsMaxOutputTokens`、模板变量 `thinking.budget` 会自动被接受；宿主未开放的字段仍不写入。已有显式配置优先。
 
@@ -62,7 +62,7 @@ npx @deepseek-ai/dsh@latest plugin --profile web add /path/to/dsh-relay-models
 
 排序同时应用到**对话输入框的模型选择器**：供应商分组与设置页一致，组内模型顺序、当前模型和推理等级不变；选择器内的 ↑ / ↓ 按显示顺序移动焦点。已有排序无需重新设置，重新打开选择器即可使用。
 
-顺序仅保存在当前浏览器、当前站点的 `localStorage`，刷新或重新打开设置后保留，同站点的其他标签页同步，不跨浏览器同步；不会写入供应商配置或影响调用优先级。`/model` 指令弹窗不在此 DOM 排序范围内。浏览器拒绝保存时提示错误并保留原顺序。实现针对 alpha.2 的设置列表和模型选择器结构，在同一列表内移动原有卡片或分组，保留编辑草稿和模型按钮；结构不匹配（例如首次配置卡片）时不接管。停用插件移除手柄并恢复本次挂载记录的原顺序，不删除已保存的排序偏好。
+顺序仅保存在当前浏览器、当前站点的 `localStorage`，刷新或重新打开设置后保留，同站点的其他标签页同步，不跨浏览器同步；不会写入供应商配置或影响调用优先级。`/model` 指令弹窗不在此 DOM 排序范围内。浏览器拒绝保存时提示错误并保留原顺序。实现兼容 `0.1.5-alpha.1` 的 Portal 模型菜单，通过 `aria-controls` 关联按钮与菜单，方向键仅在对应按钮或菜单内接管；在同一列表内移动原有卡片或分组，保留编辑草稿和模型按钮；结构不匹配（例如首次配置卡片）时不接管。停用插件移除手柄并恢复本次挂载记录的原顺序，不删除已保存的排序偏好。
 
 ### Headers 与 User-Agent 覆写
 
@@ -119,9 +119,9 @@ DSH_SOURCE=/Users/xichun/Downloads/agent/deepseek-harness pnpm run test:harness
 
 该检查运行构建后的 Host/Web 产物，覆盖真实 Cordis 装载与卸载、原生 Anthropic 发现、凭据优先级、错误透传、设置 schema/修订冲突、alpha.2 新字段的保存及适配器解析，并将当前全部 `compat` 字段在三种自定义协议下的过滤结果与真实 Host 校验结果对照（包含 Astra 未开放字段、错误类型和无写入副作用检查），以及 jsdom 中的行定位、手动映射、Headers 编辑/校验/草稿保护和供应商排序。排序检查覆盖拖拽/键盘、持久化/存储失败、真实 React 列表增删改名后的草稿与焦点保留、卸载恢复。三种协议的真实 pi-ai SDK 向临时本地 HTTP 服务发包，验证普通/预备调用、同地址多提供方并发、Headers 热更新、发现草稿地址和卸载恢复；允许 SDK 自带查询参数（例如 Anthropic 的 `?beta=true`），不修改其请求。不调用真实模型服务。先运行 `validate`，并确保源码 checkout 有 `tsx` 与 `jsdom` 依赖。
 
-模型选择器检查直接编译并渲染 checkout 中的 `ModelSelect`，覆盖保存顺序、跨组键盘导航、焦点保留、原生增删、选择提交、重开和卸载；仅图标/Toast 等装饰组件被替换，不调用真实模型服务。
+模型选择器检查直接编译并渲染 checkout 中的 `ModelSelect`，使用真实 `react-dom` Portal，覆盖保存顺序、跨组键盘导航、焦点保留、原生增删、选择提交、重开和卸载；同时验证页面前方存在其他菜单按钮时排序仍生效，无关按钮和输入框的方向键不会被截获。仅图标/Toast 等装饰组件被替换，不调用真实模型服务。
 
-验证边界：设置页检查使用复制的 DOM 与测试用 React 组件，不是完整 GUI 端到端测试；alpha.2 的实际设置页结构与 alpha.1 相同，已对照源码核查。该命令不验证当前运行的 Web profile 是否安装了本次构建，也不替代真实页面中“手动映射 → 保存”与“保存 Headers → 重新打开”的操作验收。
+验证边界：设置页检查使用复制的 DOM 与测试用 React 组件，不是完整 GUI 端到端测试；模型选择器直接使用 `0.1.5-alpha.1` checkout 的真实组件，但 jsdom 不验证浏览器布局和视觉效果。该命令不验证当前运行的 Web profile 是否安装了本次构建，也不替代真实页面中“手动映射 → 保存”与“保存 Headers → 重新打开”的操作验收。
 
 ## License
 

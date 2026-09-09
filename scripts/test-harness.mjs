@@ -6,7 +6,7 @@ import { resolve } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 
 const source = process.env.DSH_SOURCE
-if (!source) throw new Error('Set DSH_SOURCE to the dsh-v0.1.3-alpha.2 source checkout')
+if (!source) throw new Error('Set DSH_SOURCE to a Harness source checkout with its dependencies installed')
 const root = resolve(source)
 if (process.env.DSH_RELAY_SMOKE_CHILD !== '1') {
   const require = createRequire(resolve(root, 'package.json'))
